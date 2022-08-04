@@ -5,12 +5,13 @@ import cn.catguild.guild.domain.entity.Account;
 import cn.catguild.guild.domain.entity.CatUser;
 import cn.catguild.guild.service.AccountService;
 import cn.catguild.guild.service.CatUserService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author xiyan
@@ -35,6 +36,16 @@ public class UserController {
 		catUser.setAccountId(account.getId());
 		catUserService.save(catUser);
 		return ApiResponse.ok();
+	}
+
+	@GetMapping("/{id}")
+	public ApiResponse<CatUser> get(@PathVariable("id") Long id){
+		return ApiResponse.ok(catUserService.getById(id));
+	}
+
+	@GetMapping("")
+	public ApiResponse<IPage<CatUser>> page(@RequestParam Map<String, Object> user, Page<CatUser> page){
+		return ApiResponse.ok(catUserService.page(page));
 	}
 
 }
