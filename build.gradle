@@ -1,0 +1,122 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.2'
+    id 'java'
+    id 'groovy'
+}
+
+group 'cn.catguild'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "groovy"
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+    maven { url 'https://maven.aliyun.com/repository/central/' }
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+    maven { url 'https://maven.aliyun.com/repository/spring/' }
+    maven { url 'https://maven.aliyun.com/repository/google/' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
+    maven { url 'https://maven.aliyun.com/repository/spring-plugin/' }
+    maven { url 'https://maven.aliyun.com/repository/grails-core/' }
+    maven { url 'https://maven.aliyun.com/repository/apache-snapshots/' }
+    maven { url 'https://repo.spring.io/milestone/' }
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.3"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.0.1.0"
+    }
+}
+
+dependencies {
+    // spring 家族
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        transitive = true
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+
+    //cloud组件
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+
+    // 持久层依赖
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.2'
+    implementation 'com.alibaba:druid-spring-boot-starter:1.2.11'
+    implementation 'mysql:mysql-connector-java'
+
+    // 工具类
+    implementation 'com.google.guava:guava:31.1-jre'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    // 测试框架
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    // mock 框架
+    testImplementation "org.codehaus.groovy:groovy:3.0.8"
+    testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+    testImplementation "org.spockframework:spock-core"
+
+    // allows mocking of classes (in addition to interfaces)
+    testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.0"
+    testRuntimeOnly "org.objenesis:objenesis:3.2"
+
+    // test dao dependencies
+    testImplementation "com.h2database:h2:1.4.200"
+    testImplementation "org.codehaus.groovy:groovy-sql:3.0.8"
+    testImplementation "org.codehaus.groovy:groovy-xml:3.0.8"
+    testImplementation "org.dbunit:dbunit:2.5.1"
+}
+
+compileJava {
+    options.compilerArgs += [
+        '-Amapstruct.suppressGeneratorTimestamp=true',
+        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+        '-Amapstruct.verbose=true'
+    ]
+}
+
+sourceSets {
+    main {
+        resources {
+            //可以将java目录下的所有非.java资源打包到classes下
+            srcDir 'src/main/java'
+        }
+    }
+
+    test {
+        resources {
+            //可以将java目录下的所有非.java资源打包到classes下
+            srcDir 'src/test/groovy'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/resources/test"
+}
+processTestResources.dependsOn copyTestResources
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
