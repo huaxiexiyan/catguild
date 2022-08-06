@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.user.mapper.CatUserMapper">
+    <resultMap id="baseResult" type="cn.catguild.user.domain.entity.CatUser">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="level" property="level"/>
+        <result column="id_card" property="idCard"/>
+        <result column="status" property="status"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="last_modified_time" property="lastModifiedTime"/>
+        <result column="deleted_time" property="deletedTime"/>
+    </resultMap>
+</mapper>

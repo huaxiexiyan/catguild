@@ -1,0 +1,19 @@
+dependencies {
+    // 依赖项
+    implementation 'org.springframework:spring-core'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    // https://mvnrepository.com/artifact/cn.hutool/hutool-all
+    implementation 'cn.hutool:hutool-all:5.8.5'
+    implementation 'com.google.guava:guava:31.1-jre'
+
+
+    // 工具类
+    //compileOnly 'org.projectlombok:lombok:$lombokVersion'
+    //annotationProcessor 'org.projectlombok:lombok:$lombokVersion'
+    //
+    //// 测试框架
+    //testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    //testAnnotationProcessor 'org.projectlombok:lombok:$lombokVersion'
+}

@@ -1,6 +1,108 @@
 plugins {
     id 'org.springframework.boot' version '2.7.2'
     id 'java'
+}
+
+// 所有模块/项目的通用配置
+allprojects {
+    group = 'cn.catguild'
+    version = '1.0-SNAPSHOT'
+    repositories {
+        //maven仓库
+        mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/central/' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/spring/' }
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin/' }
+        maven { url 'https://maven.aliyun.com/repository/grails-core/' }
+        maven { url 'https://maven.aliyun.com/repository/apache-snapshots/' }
+        maven { url 'https://repo.spring.io/milestone/' }
+        mavenCentral()
+    }
+}
+
+// 版本管理
+description = "个人练习项目"
+
+// 子模块/项目的统一配置
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+    // 指定JDK版本
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    // 指定编码格式
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    // dependencyManagement版本统一管理，类似于父maven的dependencyManagement
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.3"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.0.1.0"
+        }
+    }
+
+    // 子项目依赖，类似于在父maven的dependencies
+    dependencies {
+        //lombok
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+        compileOnly 'org.projectlombok:lombok:1.18.24'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+        testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    }
+
+    compileJava {
+        options.compilerArgs += [
+            '-Amapstruct.suppressGeneratorTimestamp=true',
+            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+            '-Amapstruct.verbose=true'
+        ]
+    }
+
+    sourceSets {
+        main {
+            resources {
+                //可以将java目录下的所有非.java资源打包到classes下
+                srcDir 'src/main/java'
+            }
+        }
+
+        test {
+            resources {
+                //可以将java目录下的所有非.java资源打包到classes下
+                srcDir 'src/test/groovy'
+            }
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    task copyTestResources(type: Copy) {
+        from "${projectDir}/src/test/resources"
+        into "${buildDir}/resources/test"
+    }
+    processTestResources.dependsOn copyTestResources
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.warnings = false
+        options.deprecation = true
+        options.compilerArgs += ["-parameters"]
+    }
+}
+
+/*
+plugins {
+    id 'org.springframework.boot' version '2.7.2'
+    id 'java'
     id 'groovy'
 }
 
@@ -120,3 +222,4 @@ processTestResources.dependsOn copyTestResources
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
+*/
