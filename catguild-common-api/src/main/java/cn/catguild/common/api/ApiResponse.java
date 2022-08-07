@@ -88,11 +88,15 @@ public class ApiResponse<T> {
 	 * @return
 	 */
 	public static <T> ApiResponse<T> failCode(String errorCode) {
-		return new ApiResponse<>(errorCode);
+		return fail(errorCode, null);
 	}
 
 	public static <T> ApiResponse<T> failMessage(String errorMessage) {
-		return new ApiResponse<>("400", errorMessage);
+		return fail("400", errorMessage);
+	}
+
+	public static <T> ApiResponse<T> fail(String errorCode,String errorMessage) {
+		return new ApiResponse<>(errorCode, errorMessage);
 	}
 
 	public static <T> ApiResponse<T> fail() {

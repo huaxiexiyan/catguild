@@ -1,12 +1,15 @@
 package cn.catguild.user.controller;
 
 import cn.catguild.common.api.ApiResponse;
+import cn.catguild.user.domain.auth.JwtCredentials;
 import cn.catguild.user.domain.entity.Account;
 import cn.catguild.user.domain.entity.CatUser;
 import cn.catguild.user.service.AccountService;
 import cn.catguild.user.service.CatUserService;
+import cn.hutool.core.text.CharSequenceUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,24 +27,29 @@ public class AuthController {
 
 	private final CatUserService catUserService;
 	private final AccountService accountService;
+	private final PasswordEncoder passwordEncoder;
 
 	@PostMapping("/register")
 	public ApiResponse<Void> register(@RequestBody Account account){
 		//创建账号
+		account.setPassword(passwordEncoder.encode(account.getPassword()));
 		accountService.save(account);
 		//创建用户
 		CatUser catUser = new CatUser();
-		catUser.generateName();
+		if (CharSequenceUtil.isBlank(catUser.getName())){
+			catUser.generateName();
+		}else {
+			catUser.setName(account.getUsername());
+		}
 		catUser.setAccountId(account.getId());
 		catUserService.save(catUser);
 		return ApiResponse.ok();
 	}
 
 	@PostMapping("/login")
-	public ApiResponse<?> login(@RequestBody Account account){
-		Map<String,Object> map = new HashMap<>();
-		map.put("token","!23");
-		return ApiResponse.ok(map);
+	public ApiResponse<JwtCredentials> login(@RequestBody Account account){
+		JwtCredentials jwtCredentials = accountService.authorization(account);
+		return ApiResponse.ok(jwtCredentials);
 	}
 
 	@GetMapping("/getUserInfo")
@@ -49,6 +57,11 @@ public class AuthController {
 		Map<String,Object> map = new HashMap<>();
 		map.put("username","123");
 		return ApiResponse.ok(map);
+	}
+
+	@GetMapping("/logout")
+	public ApiResponse<?> logout(){
+		return ApiResponse.ok();
 	}
 
 }

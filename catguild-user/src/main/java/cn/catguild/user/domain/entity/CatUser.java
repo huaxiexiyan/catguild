@@ -7,7 +7,6 @@ import cn.catguild.user.domain.type.Sex;
 import cn.hutool.core.text.CharSequenceUtil;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -45,10 +44,8 @@ public class CatUser extends GuildBaseEntity {
 
 	private CatUserStatus status;
 
-	private LocalDateTime registerTime;
-
 	public void generateName() {
-		if (CharSequenceUtil.isNotBlank(this.name)) {
+		if (CharSequenceUtil.isBlank(this.name)) {
 			this.name = "cat_" + UUID.randomUUID();
 		}
 	}
