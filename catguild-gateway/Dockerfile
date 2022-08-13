@@ -3,10 +3,9 @@ FROM openjdk:17-jdk-slim AS build-env
 COPY . /app
 WORKDIR /app
 RUN chmod +x ./gradlew \
-  && ./gradlew tasks --all \
-   && ./gradlew --max-workers=12 \
-   && ./gradlew :catguild-gateway clean  \
-   && ./gradlew :catguild-gateway build
+   && ./gradlew --max-workers=6 \
+   && ./gradlew catguild-gateway:clean  \
+   && ./gradlew catguild-gateway:build
 
 # 二阶段构建运行环境
 #FROM gcr.io/distroless/java17
