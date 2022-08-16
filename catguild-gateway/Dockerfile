@@ -10,7 +10,7 @@ RUN chmod +x ./gradlew \
 # 二阶段构建运行环境
 #FROM gcr.io/distroless/java17
 FROM openjdk:17-jdk
-COPY --from=build-env /app/build/libs/catguild-gateway-1.0-SNAPSHOT.jar /app/main.jar
+COPY --from=build-env /app/catguild-gateway/build/libs/catguild-gateway-1.0-SNAPSHOT.jar /app/main.jar
 WORKDIR /app
 EXPOSE 80
 ENTRYPOINT ["java","-Xms64m","-Xmx128m","-Dfile.encoding=UTF8","-Duser.timezone=GMT+08","-jar","main.jar"]
