@@ -1,6 +1,6 @@
 # 一阶段编译打包
 FROM openjdk:17-jdk-slim AS build-env
-RUN ll
+RUN ls
 ADD ./setting.gradle ./build.gradle ./gradlew ./gradle /app/
 RUN chmod +x ./gradlew \
    && ./gradlew --max-workers=6 \
