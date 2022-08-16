@@ -1,10 +1,14 @@
 # 一阶段编译打包
 FROM openjdk:17-jdk-slim AS build-env
 RUN ls
-ADD ./setting.gradle ./build.gradle ./gradlew ./gradle /app/
-RUN chmod +x ./gradlew \
-   && ./gradlew --max-workers=6 \
-   && ./gradlew catguild-gateway:dependencies  \
+ADD ./setting.gradle /app
+ADD ./build.gradle /app
+ADD ./gradlew /app
+ADD ./gradle /app
+
+RUN chmod +x ./app/gradlew \
+   && ./app/gradlew --max-workers=6 \
+   && ./app/gradlew catguild-gateway:dependencies  \
 COPY . /app
 WORKDIR /app
 RUN chmod +x ./gradlew \
