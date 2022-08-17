@@ -1,6 +1,7 @@
 # 一阶段编译打包
 FROM openjdk:17-jdk-slim AS build-env
-ADD settings.gradle build.gradle gradlew gradle  /app/
+ADD settings.gradle build.gradle gradlew   /app/
+ADD gradle  /app/gradle/
 RUN cd /app/ \
     && ls
 RUN chmod +x /app/gradlew \
