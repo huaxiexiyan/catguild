@@ -3,7 +3,7 @@ FROM openjdk:17-jdk-slim AS build-env
 ADD settings.gradle build.gradle gradlew gradle  /app/
 RUN chmod +x ./app/gradlew \
    && ./app/gradlew --max-workers=6 \
-   && ./app/gradlew catguild-gateway:dependencies  \
+   && ./app/gradlew catguild-gateway:dependencies
 COPY . /app
 WORKDIR /app
 RUN chmod +x ./gradlew \
