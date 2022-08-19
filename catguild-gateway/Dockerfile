@@ -3,6 +3,7 @@ FROM openjdk:17-jdk-slim AS build-env
 ADD settings.gradle build.gradle gradlew   /app/
 ADD gradle  /app/gradle/
 ADD catguild-gateway/build.gradle  /app/catguild-gateway/
+COPY . /app
 RUN cd /app/ \
     && ls
 RUN chmod +x /app/gradlew \
