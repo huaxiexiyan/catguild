@@ -7,7 +7,7 @@ RUN cd /app/ \
     && ls
 RUN chmod +x /app/gradlew \
    && /app/gradlew --max-workers=6 \
-   && /app/gradlew catguild-gateway:dependencies
+   && /app/gradlew dependencies
 COPY . /app
 WORKDIR /app
 RUN ./gradlew catguild-gateway:clean  \
