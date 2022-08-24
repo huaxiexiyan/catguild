@@ -5,6 +5,9 @@ plugins {
     id 'com.google.cloud.tools.jib'
 }
 
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
 dependencies {
     //cloud组件
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
