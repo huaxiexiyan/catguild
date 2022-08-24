@@ -17,4 +17,5 @@ jobs:
       - name: Build project
         run: |
           # TODO: run integration test? (Requries auth with GCP.)
+          chmod +x ./gradlew
           ./gradlew :catguild-gateway:jib --stacktrace
