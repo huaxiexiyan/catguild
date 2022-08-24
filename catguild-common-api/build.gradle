@@ -17,3 +17,10 @@ dependencies {
     //testCompileOnly 'org.projectlombok:lombok:1.18.24'
     //testAnnotationProcessor 'org.projectlombok:lombok:$lombokVersion'
 }
+
+// Since this library is included as a jar in our jib projects, we want the
+// jar to built reproducibly.
+jar {
+    preserveFileTimestamps false
+    reproducibleFileOrder true
+}

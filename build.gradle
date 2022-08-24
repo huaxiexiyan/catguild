@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.7.2'
     id 'java'
+    id 'com.google.cloud.tools.jib' version '3.2.1' apply false
 }
 
 // 所有模块/项目的通用配置
