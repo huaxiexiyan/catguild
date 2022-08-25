@@ -23,7 +23,7 @@ public class TestController {
 		String signature = parameters.get("signature");
 		String timestamp = parameters.get("timestamp");
 		String nonce = parameters.get("nonce");
-		String echoStr = parameters.get("echoStr");
+		String echoStr = parameters.get("echostr");
 		WXBizMsgCrypt wxBizMsgCrypt = new WXBizMsgCrypt("catguild", "", "wx87e0cdf060bc4717");
 		wxBizMsgCrypt.verifyUrl(signature, timestamp, nonce, echoStr);
 		return true;
