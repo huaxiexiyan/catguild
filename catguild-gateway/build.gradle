@@ -18,18 +18,13 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 }
 
-jib.to.image = "huaxiexiyan/catguild-gateway"
-
 jib {
     from {
         image = "openjdk:17-jdk-slim"
     }
     to {
         image = "huaxiexiyan/catguild-gateway:jib"
-        auth {
-            username = "${registry_username}"
-            password = "${registry_password}"
-        }
+        credHelper = 'osxkeychain'
     }
     container {
         jvmFlags = ['-Duser.timezone=Asia/Shanghai', '-Dmy.property=example.value', '-Xms512m', '-Xdebug']
