@@ -18,11 +18,4 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 }
 
-jib{
-    from{
-        image = "eclipse-temurin:17-jre"
-    }
-    to{
-        image = "huaxiexiyan/catguild-gateway:jib"
-    }
-}
+jib.to.image = "huaxiexiyan/catguild-gateway:jib"
