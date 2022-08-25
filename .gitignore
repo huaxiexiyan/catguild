@@ -24,7 +24,13 @@ hs_err_pid*
 
 # idea
 .gradle
+*/build
 .idea
 */out/
 /build/
 /src/main/generated/
+
+# 区分国内源，忽略部分文件
+gradle
+./build.gradle
+settings.gradle
