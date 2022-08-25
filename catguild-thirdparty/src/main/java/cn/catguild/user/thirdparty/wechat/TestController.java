@@ -32,12 +32,6 @@ public class TestController {
 		return true;
 	}
 
-	public static void main(String[] args) throws AesException {
-		//	{signature=2b414d2f34a43a76cbc4a02b340e5e48761f1891, nonce=1768908138, echostr=3206410336166476601, timestamp=1661444153}
-		WXBizMsgCrypt wxBizMsgCrypt = new WXBizMsgCrypt("catguild", "", "wx87e0cdf060bc4717");
-		wxBizMsgCrypt.verifyUrl("2b414d2f34a43a76cbc4a02b340e5e48761f1891", "1661444153", "1768908138", "3206410336166476601");
-	}
-
 	@GetMapping("/check2")
 	public String check2(@RequestParam Map<String,String> parameters) throws AesException {
 		log.info("接口入参:{}", parameters);
@@ -45,8 +39,6 @@ public class TestController {
 		String timestamp = parameters.get("timestamp");
 		String nonce = parameters.get("nonce");
 		String echoStr = parameters.get("echostr");
-		WXBizMsgCrypt wxBizMsgCrypt = new WXBizMsgCrypt("catguild", "", "wx87e0cdf060bc4717");
-		wxBizMsgCrypt.verifyUrl(signature, timestamp, nonce, echoStr);
 		ArrayList<String> list=new ArrayList<String>();
 		list.add(nonce);
 		list.add(timestamp);
@@ -59,9 +51,6 @@ public class TestController {
 			return "";
 		}
 	}
-
-
-
 
 
 }
