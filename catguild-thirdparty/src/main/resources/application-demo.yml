@@ -1,0 +1,7 @@
+# 服务器配置
+server:
+  port: 20003
+
+# 日志配置
+logging:
+  config: classpath:log/logback.xml
