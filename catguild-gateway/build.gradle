@@ -18,4 +18,4 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 }
 
-jib.to.image = "huaxiexiyan/catguild-gateway:jib"
+jib.to.image = "huaxiexiyan/catguild-gateway:main"
