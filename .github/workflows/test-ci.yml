@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - run: |
+        run: |
           chmod +x ./gradlew
           ./gradlew :catguild-gateway:build --no-daemon
 
