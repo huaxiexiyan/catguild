@@ -22,15 +22,17 @@ jib.to.image = "huaxiexiyan/catguild-gateway"
 
 jib {
     from {
-        image = 'aws_account_id.dkr.ecr.region.amazonaws.com/my-base-image'
-        credHelper = 'ecr-login'
+        image = "openjdk:17-jdk-slim"
     }
     to {
-        image = 'gcr.io/my-gcp-project/my-app'
-        credHelper = 'gcr'
+        image = "huaxiexiyan/catguild-gateway:jib"
+        auth {
+            username = "${registryUsername}"
+            password = "${registryPassword}"
+        }
     }
     container {
-        jvmFlags = ['-Dmy.property=example.value', '-Xms512m', '-Xdebug']
+        jvmFlags = ['-Duser.timezone=Asia/Shanghai', '-Dmy.property=example.value', '-Xms512m', '-Xdebug']
         mainClass = 'mypackage.GatewayApp'
         args = ['some', 'args']
         ports = ['1000', '2000-2003/udp']
