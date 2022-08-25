@@ -27,8 +27,8 @@ jib {
     to {
         image = "huaxiexiyan/catguild-gateway:jib"
         auth {
-            username = "${registryUsername}"
-            password = "${registryPassword}"
+            username = "${DOCKERHUB_USERNAME}"
+            password = "${DOCKERHUB_TOKEN}"
         }
     }
     container {
