@@ -1,4 +1,4 @@
-name: ci
+name: thirdparty-ci
 
 on:
   push:
