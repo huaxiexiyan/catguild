@@ -23,4 +23,4 @@ jobs:
       - name: Build project
         run: |
           chmod +x ./gradlew
-          ./gradlew :catguild-gateway:jib
+          ./gradlew :catguild-gateway:jib -Dregistry_username=${{ secrets.DOCKERHUB_USERNAME }} -Dregistry_password=${{ secrets.DOCKERHUB_TOKEN }}
