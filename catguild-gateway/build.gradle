@@ -8,6 +8,8 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
+    //服务健康
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     //cloud组件
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
