@@ -53,13 +53,13 @@ public class WXBizMsgCrypt {
 	 * @throws AesException 执行失败，请查看该异常的错误码和具体的错误信息
 	 */
 	public WXBizMsgCrypt(String token, String encodingAesKey, String appId) throws AesException {
-		if (encodingAesKey.length() != 43) {
-			throw new AesException(AesException.IllegalAesKey);
-		}
+		//if (encodingAesKey.length() != 43) {
+		//	throw new AesException(AesException.IllegalAesKey);
+		//}
 
 		this.token = token;
 		this.appId = appId;
-		aesKey = Base64.decodeBase64(encodingAesKey + "=");
+		//aesKey = Base64.decodeBase64(encodingAesKey + "=");
 	}
 
 	// 生成4个字节的网络字节序
