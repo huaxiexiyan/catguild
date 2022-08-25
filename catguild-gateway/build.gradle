@@ -18,11 +18,16 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 }
 
-jib.to.image = "gcr.io/${System.getenv('PROJECT_ID')}/${project.name}:${version}"
+jib.to.image = "huaxiexiyan/catguild-gateway"
 
 jib {
     from {
-        image = 'openjdk:17-jdk-slim'
+        image = 'aws_account_id.dkr.ecr.region.amazonaws.com/my-base-image'
+        credHelper = 'ecr-login'
+    }
+    to {
+        image = 'gcr.io/my-gcp-project/my-app'
+        credHelper = 'gcr'
     }
     container {
         jvmFlags = ['-Dmy.property=example.value', '-Xms512m', '-Xdebug']
