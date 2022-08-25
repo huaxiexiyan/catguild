@@ -19,19 +19,3 @@ dependencies {
 }
 
 jib.to.image = "huaxiexiyan/catguild-gateway:jib"
-
-//jib {
-//    from {
-//        image = "openjdk:17-jdk-slim"
-//    }
-//    to {
-//        image = "huaxiexiyan/catguild-gateway:jib"
-//    }
-//    container {
-//        jvmFlags = ['-Duser.timezone=Asia/Shanghai', '-Dmy.property=example.value', '-Xms512m', '-Xdebug']
-//        mainClass = 'mypackage.GatewayApp'
-//        args = ['some', 'args']
-//        ports = ['1000', '2000-2003/udp']
-//        format = 'OCI'
-//    }
-//}
