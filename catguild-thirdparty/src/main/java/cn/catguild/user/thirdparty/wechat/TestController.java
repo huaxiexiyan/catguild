@@ -1,5 +1,7 @@
 package cn.catguild.user.thirdparty.wechat;
 
+import cn.catguild.user.thirdparty.wechat.ase.AesException;
+import cn.catguild.user.thirdparty.wechat.ase.WXBizMsgCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;

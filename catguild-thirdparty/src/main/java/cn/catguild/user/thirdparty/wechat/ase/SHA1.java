@@ -6,7 +6,7 @@
 
 // ------------------------------------------------------------------------
 
-package cn.catguild.user.thirdparty.wechat;
+package cn.catguild.user.thirdparty.wechat.ase;
 
 import java.security.MessageDigest;
 import java.util.Arrays;

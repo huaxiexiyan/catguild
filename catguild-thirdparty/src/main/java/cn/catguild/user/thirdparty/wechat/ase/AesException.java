@@ -1,4 +1,4 @@
-package cn.catguild.user.thirdparty.wechat;
+package cn.catguild.user.thirdparty.wechat.ase;
 
 @SuppressWarnings("serial")
 public class AesException extends Exception {

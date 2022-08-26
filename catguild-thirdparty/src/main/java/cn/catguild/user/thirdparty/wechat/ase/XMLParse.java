@@ -6,7 +6,7 @@
 
 // ------------------------------------------------------------------------
 
-package cn.catguild.user.thirdparty.wechat;
+package cn.catguild.user.thirdparty.wechat.ase;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
