@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'groovy'
+    id 'com.google.cloud.tools.jib'
 }
 
 dependencies {
@@ -43,3 +44,5 @@ dependencies {
     // 断言库
     testImplementation 'org.assertj:assertj-core:3.23.1'
 }
+
+jib.to.image = "huaxiexiyan/catguild-user:main"
