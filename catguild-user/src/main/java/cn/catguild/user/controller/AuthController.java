@@ -3,19 +3,10 @@ package cn.catguild.user.controller;
 import cn.catguild.common.api.ApiResponse;
 import cn.catguild.user.domain.entity.Account;
 import cn.catguild.user.service.AccountService;
-import cn.hutool.crypto.KeyUtil;
-import cn.hutool.jwt.JWT;
-import cn.hutool.jwt.JWTUtil;
-import cn.hutool.jwt.signers.AlgorithmUtil;
-import cn.hutool.jwt.signers.JWTSigner;
-import cn.hutool.jwt.signers.JWTSignerUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,36 +22,36 @@ public class AuthController {
 
 	private final AccountService accountService;
 
-	public static void main(String[] args) {
-		// 密钥
-		String id = "ES256";
-		KeyPair keyPair = KeyUtil.generateKeyPair(AlgorithmUtil.getAlgorithm(id));
-		//生成公私钥对
-		PrivateKey privateKey = keyPair.getPrivate();
-		PublicKey publicKey = keyPair.getPublic();
-		//获得私钥
-		String privateKeyStr = bytesToBase64(privateKey.getEncoded());
-		System.out.println("私钥：\n" + privateKeyStr);
-		//获得公钥
-		String publicKeyStr = bytesToBase64(publicKey.getEncoded());
-		System.out.println("公钥：\n" + publicKeyStr);
-
-		// SHA256withRSA
-		JWTSigner signer = JWTSignerUtil.createSigner(id, keyPair);
-
-
-		String token = JWT.create()
-			.setHeader("alg","ES256")
-			.setPayload("sub", "1234567890")
-			.setPayload("name", "loolycccc")
-			.setPayload("admin", true)
-			.setSigner(signer)
-			.sign();
-
-
-		System.out.println("token:\n"+token);
-		System.out.println(JWTUtil.verify(token,signer));
-	}
+	//public static void main(String[] args) {
+	//	// 密钥
+	//	String id = "ES256";
+	//	KeyPair keyPair = KeyUtil.generateKeyPair(AlgorithmUtil.getAlgorithm(id));
+	//	//生成公私钥对
+	//	PrivateKey privateKey = keyPair.getPrivate();
+	//	PublicKey publicKey = keyPair.getPublic();
+	//	//获得私钥
+	//	String privateKeyStr = bytesToBase64(privateKey.getEncoded());
+	//	System.out.println("私钥：\n" + privateKeyStr);
+	//	//获得公钥
+	//	String publicKeyStr = bytesToBase64(publicKey.getEncoded());
+	//	System.out.println("公钥：\n" + publicKeyStr);
+	//
+	//	// SHA256withRSA
+	//	JWTSigner signer = JWTSignerUtil.createSigner(id, keyPair);
+	//
+	//
+	//	String token = JWT.create()
+	//		.setHeader("alg","ES256")
+	//		.setPayload("sub", "1234567890")
+	//		.setPayload("name", "loolycccc")
+	//		.setPayload("admin", true)
+	//		.setSigner(signer)
+	//		.sign();
+	//
+	//
+	//	System.out.println("token:\n"+token);
+	//	System.out.println(JWTUtil.verify(token,signer));
+	//}
 
 	//@PostMapping("/login")
 	//public ApiResponse<?> login(@RequestBody Account account){
