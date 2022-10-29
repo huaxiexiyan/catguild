@@ -1,4 +1,4 @@
-package cn.catguild.user.mapper;
+package cn.catguild.user.repository.mapper;
 
 import cn.catguild.user.domain.entity.Account;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

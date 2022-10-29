@@ -46,7 +46,7 @@ public class ApiResponse<T> {
 		this.data = data;
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
-		this.showType = "error";
+		this.showType = showType;
 		this.traceId = traceId;
 		this.host = host;
 	}

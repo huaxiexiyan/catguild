@@ -1,38 +1,34 @@
 package cn.catguild.user.controller;
 
 import cn.catguild.common.api.ApiResponse;
-import cn.catguild.user.domain.entity.CatUser;
-import cn.catguild.user.service.AccountService;
-import cn.catguild.user.service.CatUserService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import cn.catguild.user.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author xiyan
  * @date 2022-08-04 17:45
  */
-@Slf4j
+@RequestMapping("/users")
 @RestController
 @AllArgsConstructor
-@RequestMapping("/user/users")
 public class UserController {
 
-	private final CatUserService catUserService;
-	private final AccountService accountService;
+	private final UserService userService;
 
+	// 查询用户的分页列表
+	public ApiResponse<?> page(){
+		return ApiResponse.ok();
+	}
+
+	// 用户的详情
 	@GetMapping("/{id}")
-	public ApiResponse<CatUser> get(@PathVariable("id") Long id){
-		return ApiResponse.ok(catUserService.getById(id));
+	public ApiResponse<?> detail(@PathVariable("id") Long id){
+		return ApiResponse.ok(userService.get(id));
 	}
-
-	@GetMapping("")
-	public ApiResponse<IPage<CatUser>> page(@RequestParam Map<String, Object> user, Page<CatUser> page){
-		return ApiResponse.ok(catUserService.page(page));
-	}
+	// 当前用户
 
 }

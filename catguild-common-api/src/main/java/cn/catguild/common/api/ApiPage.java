@@ -20,6 +20,10 @@ public class ApiPage<T> {
 
 	private long total;
 
+	public ApiPage() {
+
+	}
+
 	public ApiPage(CatPage<?> search) {
 		this.current = search.getCurrent() < 0 ? 0 : search.getCurrent();
 		this.pageSize = search.getSize() < 0 ? 0 : search.getSize();

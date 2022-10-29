@@ -1,52 +1,37 @@
 package cn.catguild.user.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
-import cn.catguild.common.entity.GuildBaseEntity;
-import cn.catguild.user.domain.type.CatUserStatus;
-import cn.catguild.user.domain.type.Sex;
-import cn.hutool.core.text.CharSequenceUtil;
-import lombok.*;
-
-import java.util.UUID;
+import java.util.List;
 
 /**
- * 用户实体
+ * 用户是唯一主体（映射现实的行为人）
  *
  * @author xiyan
- * @date 2022-07-23 17:16
+ * @date 2022/9/30 15:01
  */
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class CatUser extends GuildBaseEntity {
+public class CatUser {
 
 	/**
-	 * 匿名账号-和用户绑定的唯一账号
-	 **/
+	 * 主键id（唯一标识，其他都是附属内容）
+	 */
+	@TableId
+	private Long id;
+
+	/**
+	 * 一个行为人可以被授予多种身份(特定行为权限)
+	 */
+	@TableField(exist = false)
+	private List<Identity>  identities;
+
+	/**
+	 * 一个行为人，只能有一个账号
+	 */
 	private Long accountId;
 
 	private String name;
 
-	private Sex sex;
-
-	private Integer age;
-
-	/**
-	 * 人物等级
-	 **/
-	private Integer level;
-
-	private String address;
-
-	private String idCard;
-
-	private CatUserStatus status;
-
-	public void generateName() {
-		if (CharSequenceUtil.isBlank(this.name)) {
-			this.name = "cat_" + UUID.randomUUID();
-		}
-	}
 }

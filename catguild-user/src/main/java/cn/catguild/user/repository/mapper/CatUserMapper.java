@@ -1,4 +1,4 @@
-package cn.catguild.user.mapper;
+package cn.catguild.user.repository.mapper;
 
 import cn.catguild.user.domain.entity.CatUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -8,5 +8,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @date 2022-04-03 21:14
  */
 public interface CatUserMapper extends BaseMapper<CatUser> {
-
 }

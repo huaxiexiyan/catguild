@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.user.tradingview.mapper.TradeViewMapper">
+    <resultMap id="baseResult" type="cn.catguild.user.tradingview.domain.TradeView">
+        <id column="id" property="id"/>
+        <result column="open" property="open"/>
+        <result column="high" property="high"/>
+        <result column="low" property="low"/>
+        <result column="close" property="close"/>
+        <result column="adj_close" property="adjClose"/>
+        <result column="volume" property="volume"/>
+        <result column="date" property="date"/>
+    </resultMap>
+
+</mapper>

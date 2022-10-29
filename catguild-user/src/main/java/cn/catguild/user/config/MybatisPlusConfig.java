@@ -1,4 +1,4 @@
-package cn.catguild.user.configuration;
+package cn.catguild.user.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author xiyan
- * @date 2022-04-03 22:58
+ * @date 2022/10/14 15:43
  */
 @MapperScan("cn.catguild.**.mapper")
 @Configuration
@@ -24,5 +24,11 @@ public class MybatisPlusConfig {
 		interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
 		return interceptor;
 	}
+
+	//@Bean
+	//public GlobalConfig globalConfig() {
+	//	GlobalConfig conf = new GlobalConfig();
+	//	return conf;
+	//}
 
 }
