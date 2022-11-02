@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.user.tradingview.mapper.TradeStockMapper">
+    <resultMap id="baseResult" type="cn.catguild.user.tradingview.domain.TradeStock">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="open" property="open"/>
+        <result column="high" property="high"/>
+        <result column="low" property="low"/>
+        <result column="close" property="close"/>
+        <result column="adj_close" property="adjClose"/>
+        <result column="volume" property="volume"/>
+        <result column="date" property="date"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="selectByDay" resultMap="baseResult">
+        select * from trade_stock_day
+        order by date
+    </select>
+
+    <select id="selectByWeek" resultMap="baseResult">
+        select * from trade_stock_week
+        order by date
+    </select>
+
+    <select id="selectByMonth" resultMap="baseResult">
+        select * from trade_stock_month
+        order by date
+    </select>
+
+</mapper>

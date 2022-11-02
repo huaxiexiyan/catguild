@@ -1,7 +1,6 @@
 package cn.catguild.user.tradingview.domain;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.catguild.user.tradingview.type.TradeStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,14 +8,14 @@ import java.time.LocalDate;
 
 /**
  * @author xiyan
- * @date 2022/10/23 15:08
+ * @date 2022/11/2 13:05
  */
-@TableName("test")
 @Data
-public class TradeView {
+public class TradeStock {
 
-	@TableId
 	private Long id;
+
+	private String code;
 
 	private BigDecimal open;
 
@@ -31,5 +30,7 @@ public class TradeView {
 	private BigDecimal volume;
 
 	private LocalDate date;
+
+	private TradeStatus status;
 
 }
