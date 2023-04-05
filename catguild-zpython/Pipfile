@@ -13,6 +13,8 @@ scrapydweb = "*"
 sqlalchemy = ">=1.2.15,<1.4.0"
 werkzeug = "==2.0.2"
 apscheduler = "==3.9.1"
+logparser = "*"
+pywin32 = "*"
 
 [dev-packages]
 
