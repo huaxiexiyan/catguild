@@ -18,6 +18,8 @@ FROM gcr.io/distroless/python3-debian11
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 WORKDIR /app/catguild_spider
+RUN pip install pipenv && \
+    pipenv run scrapyd
 #RUN ls -a
 #ENV PATH="/app/.venv/bin:${PATH}"
 #RUN export PATH=/app/.venv/bin:PATH && \
