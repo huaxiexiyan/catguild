@@ -17,6 +17,8 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
 FROM gcr.io/distroless/python3-debian11
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
+COPY sleep /bin/sleep
+RUN chmod +x /bin/sleep
 WORKDIR /app/catguild_spider
 #RUN ls -a
 ENV PATH="/app/.venv/bin:$PATH"
