@@ -21,4 +21,4 @@ WORKDIR /app
 ENV PATH="/app/.venv/bin:$PATH"
 RUN pip install pipenv && \
     cd catguild_spider
-ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
+ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); scrapydweb"]
