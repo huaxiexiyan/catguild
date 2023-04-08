@@ -17,7 +17,6 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
 FROM python:3.11.2
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
-WORKDIR /app
-RUN pip pipenv && \
-    cd catguild_spider
+WORKDIR /app/catguild_spider
+RUN pip install pipenv
 ENTRYPOINT ["pipenv", "run", "scrapyd", "&", "pipenv", "run", "scrapydweb"]
