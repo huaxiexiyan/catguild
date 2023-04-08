@@ -10,10 +10,11 @@ FROM build AS build-venv
 COPY Pipfile /app/Pipfile
 WORKDIR /app
 #COPY Pipfile.lock /Pipfile.lock
-RUN ls
+RUN ls -a
 RUN export PIPENV_VENV_IN_PROJECT=1
 RUN pipenv install
-RUN ls
+RUN ls -a
+RUN pipenv --venv
 
 # 将虚拟环境复制到无发行版映像中
 FROM python:3.11.2
