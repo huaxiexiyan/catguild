@@ -22,9 +22,8 @@ COPY . /app
 WORKDIR /app/catguild_spider
 #RUN ls -a
 ENV PATH="/app/.venv/bin:$PATH"
-RUN scrapyd
 #RUN export PATH=/app/.venv/bin:PATH && \
 #    pipenv run scrapyd
 #ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
 #ENTRYPOINT ["sh", "-c", "pipenv run scrapyd & while ! python -c \"import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); exit(result)\"; do sleep 1; done; pipenv run scrapydweb"]
-ENTRYPOINT ["sh", "-c", "export PATH=$PATH:/app/.venv/bin/pipenv && pipenv run scrapyd & while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done; pipenv run scrapydweb"]
+ENTRYPOINT ["sh", "-c", "scrapyd & while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done; scrapydweb"]
