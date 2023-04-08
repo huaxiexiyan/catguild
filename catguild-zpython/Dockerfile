@@ -17,12 +17,8 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
 FROM gcr.io/distroless/python3-debian11
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
-WORKDIR /app
+WORKDIR /app/catguild_spider
 ENV PATH="/app/.venv/bin:$PATH"
-RUN apt-get update && \
-    apt-get install -y netcat && \
-    rm -rf /var/lib/apt/lists/* && \
-    cd catguild_spider && \
-    ls -a
+RUN ls -a
 #ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
 ENTRYPOINT ["sh", "-c", "pipenv run scrapyd & while ! python -c \"import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); exit(result)\"; do sleep 1; done; pipenv run scrapydweb"]
