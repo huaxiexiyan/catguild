@@ -11,7 +11,7 @@ COPY Pipfile /app/Pipfile
 WORKDIR /app
 #COPY Pipfile.lock /Pipfile.lock
 RUN ls -a
-RUN export PIPENV_VENV_IN_PROJECT=1
+RUN env PIPENV_VENV_IN_PROJECT=1
 RUN echo $PIPENV_VENV_IN_PROJECT
 RUN pipenv install
 RUN ls -a
