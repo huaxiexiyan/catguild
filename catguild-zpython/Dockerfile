@@ -14,13 +14,14 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
     pipenv install
 
 # 将虚拟环境复制到无发行版映像中
-FROM python:3.11.2
+FROM gcr.io/distroless/python3-debian11
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 WORKDIR /app
 ENV PATH="/app/.venv/bin:$PATH"
-RUN pip install pipenv && \
+RUN apt-get update && \
     apt-get install -y netcat && \
+    rm -rf /var/lib/apt/lists/* && \
     cd catguild_spider && \
     ls -a
 ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
