@@ -18,4 +18,6 @@ FROM python:3.11.2
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 WORKDIR /app
-#ENTRYPOINT [".venv/Scripts/scrapyd && .venv/Scripts/scrapydweb"]
+RUN pip pipenv && \
+    cd catguild_spider
+ENTRYPOINT ["pipenv", "run", "scrapyd", "&", "pipenv", "run", "scrapydweb"]
