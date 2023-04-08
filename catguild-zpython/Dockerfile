@@ -16,7 +16,7 @@ RUN pipenv install
 RUN ls
 
 # 将虚拟环境复制到无发行版映像中
-FROM gcr.io/distroless/python3-debian11
+FROM python:3.11.2
 RUN ls
 COPY --from=build-venv /.venv /.venv
 COPY . /app
