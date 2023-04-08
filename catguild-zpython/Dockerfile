@@ -17,10 +17,9 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
 FROM gcr.io/distroless/python3-debian11
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
-COPY sleep /bin/sleep
-RUN chmod +x /bin/sleep
 WORKDIR /app/catguild_spider
 #RUN ls -a
 ENV PATH="/app/.venv/bin:$PATH"
 #ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
-ENTRYPOINT ["sh", "-c", "pipenv run scrapyd & while ! python -c \"import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); exit(result)\"; do sleep 1; done; pipenv run scrapydweb"]
+#ENTRYPOINT ["sh", "-c", "pipenv run scrapyd & while ! python -c \"import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); exit(result)\"; do sleep 1; done; pipenv run scrapydweb"]
+ENTRYPOINT ["sh", "-c", "pipenv run scrapyd & while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done; pipenv run scrapydweb"]
