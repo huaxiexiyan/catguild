@@ -3,6 +3,8 @@
 # * 安装 gcc lib python3-dev 来编译 C Python 模块
 # * 在虚拟环境中：更新 pip setup和 wheel 以支持构建新包
 FROM python:3.11.2 AS build
+RUN apt-get install -y coreutils
+RUN ls
 RUN pip install --upgrade pip setuptools wheel pipenv
 
 # 将 pipenv 构建为单独的步骤：仅在依赖更改时重新执行此步骤
