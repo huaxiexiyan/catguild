@@ -24,4 +24,5 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     cd catguild_spider && \
     ls -a
-ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
+#ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
+ENTRYPOINT ["sh", "-c", "pipenv run scrapyd & while ! python -c \"import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); exit(result)\"; do sleep 1; done; pipenv run scrapydweb"]
