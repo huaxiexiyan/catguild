@@ -20,5 +20,6 @@ COPY . /app
 WORKDIR /app
 ENV PATH="/app/.venv/bin:$PATH"
 RUN pip install pipenv && \
+    apt-get install -y netcat && \
     cd catguild_spider
-ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); scrapydweb"]
+ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
