@@ -20,4 +20,4 @@ COPY . /app
 WORKDIR /app
 RUN pip install pipenv && \
     cd catguild_spider
-ENTRYPOINT ["pipenv", "run", "scrapyd", "&", "pipenv", "run", "scrapydweb"]
+ENTRYPOINT ["scrapyd"]
