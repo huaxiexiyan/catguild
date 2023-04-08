@@ -11,13 +11,11 @@ COPY Pipfile /app/Pipfile
 WORKDIR /app
 #COPY Pipfile.lock /Pipfile.lock
 RUN export PIPENV_VENV_IN_PROJECT=1 && \
-    pipenv install && \
-    pipenv --venv
+    pipenv install
 
 # 将虚拟环境复制到无发行版映像中
 FROM python:3.11.2
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
-RUN ls
 WORKDIR /app
-ENTRYPOINT ["/venv/bin/python3", "psutil_example.py"]
+ENTRYPOINT ["./entrypoint.sh"]
