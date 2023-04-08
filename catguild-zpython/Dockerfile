@@ -22,8 +22,7 @@ COPY . /app
 WORKDIR /app/catguild_spider
 #RUN ls -a
 ENV PATH="/app/.venv/bin:$PATH"
-RUN scrapyd && \
-    pipenv run scrapyd
+RUN scrapyd
 #RUN export PATH=/app/.venv/bin:PATH && \
 #    pipenv run scrapyd
 #ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
