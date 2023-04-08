@@ -8,9 +8,9 @@ RUN pip install --upgrade pip setuptools wheel pipenv
 # 将 pipenv 构建为单独的步骤：仅在依赖更改时重新执行此步骤
 FROM build AS build-venv
 COPY Pipfile /Pipfile
-COPY Pipfile.lock /Pipfile.lock
+#COPY Pipfile.lock /Pipfile.lock
 RUN export PIPENV_VENV_IN_PROJECT=1
-RUN pipenv install --skip-lock
+RUN pipenv install
 
 # 将虚拟环境复制到无发行版映像中
 FROM gcr.io/distroless/python3-debian11
