@@ -1,11 +1,11 @@
 [[source]]
-#url = "https://pypi.org/simple"
-url = "https://mirrors.aliyun.com/pypi/simple/"
+url = "https://pypi.org/simple"
+#url = "https://mirrors.aliyun.com/pypi/simple/"
 verify_ssl = true
 name = "pypi"
 
 [packages]
-pycurl = {path = "./whl/pycurl-7.45.1-cp311-cp311-win_amd64.whl"}
+#pycurl = {path = "./whl/pycurl-7.45.1-cp311-cp311-win_amd64.whl"}
 scrapy = "*"
 scrapyd = "*"
 scrapyd-client = "*"
