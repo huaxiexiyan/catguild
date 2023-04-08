@@ -20,7 +20,5 @@ COPY . /app
 WORKDIR /app
 ENV PATH="/app/.venv/bin:$PATH"
 RUN pip install pipenv && \
-    ls -a && \
-    cd catguild_spider && \
-    ls -a
-ENTRYPOINT ["pipenv", "run", "scrapyd"]
+    cd catguild_spider
+ENTRYPOINT ["pipenv", "run", "scrapyd","&", "pipenv", "run", "scrapydweb"]
