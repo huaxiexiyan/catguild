@@ -22,6 +22,7 @@ COPY . /app
 WORKDIR /app/catguild_spider
 #RUN ls -a
 #ENV PATH="/app/.venv/bin:${PATH}"
+SHELL ["/bin/bash", "-c"]
 RUN pipenv run scrapyd
 #RUN export PATH=/app/.venv/bin:PATH && \
 #    pipenv run scrapyd
