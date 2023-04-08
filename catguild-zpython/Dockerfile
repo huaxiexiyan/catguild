@@ -18,6 +18,9 @@ FROM python:3.11.2
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 WORKDIR /app
+ENV PATH="/app/.venv/bin:$PATH"
 RUN pip install pipenv && \
-    cd catguild_spider
-ENTRYPOINT ["scrapyd"]
+    ls -a && \
+    cd catguild_spider && \
+    ls -a
+ENTRYPOINT ["pipenv", "run", "scrapyd"]
