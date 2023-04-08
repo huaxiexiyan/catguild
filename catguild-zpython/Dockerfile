@@ -10,11 +10,13 @@ FROM build AS build-venv
 COPY Pipfile /Pipfile
 COPY Pipfile.lock /Pipfile.lock
 RUN export PIPENV_VENV_IN_PROJECT=1 \
-    pipenv update
+    pipenv update \
+    ls
 
 # 将虚拟环境复制到无发行版映像中
 FROM gcr.io/distroless/python3-debian11
-COPY --from=build-venv /venv /venv
+RUN ls
+COPY --from=build-venv /.venv /.venv
 COPY . /app
 WORKDIR /app
 ENTRYPOINT ["/venv/bin/python3", "psutil_example.py"]
