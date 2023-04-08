@@ -17,9 +17,9 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
 FROM gcr.io/distroless/python3-debian11
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
+RUN /app/.venv/bin/pip install pipenv && \
+    /app/.venv/bin/pipenv run scrapyd \
 WORKDIR /app/catguild_spider
-RUN pip install pipenv && \
-    pipenv run scrapyd
 #RUN ls -a
 #ENV PATH="/app/.venv/bin:${PATH}"
 #RUN export PATH=/app/.venv/bin:PATH && \
