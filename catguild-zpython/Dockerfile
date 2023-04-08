@@ -21,5 +21,6 @@ WORKDIR /app
 ENV PATH="/app/.venv/bin:$PATH"
 RUN pip install pipenv && \
     apt-get install -y netcat && \
-    cd catguild_spider
+    cd catguild_spider && \
+    ls -a
 ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
