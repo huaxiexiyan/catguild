@@ -11,10 +11,10 @@ COPY Pipfile /app/Pipfile
 WORKDIR /app
 #COPY Pipfile.lock /Pipfile.lock
 RUN ls -a
-RUN env PIPENV_VENV_IN_PROJECT=1
-RUN echo $PIPENV_VENV_IN_PROJECT
-RUN pipenv install
-RUN ls -a
+RUN env PIPENV_VENV_IN_PROJECT=1 && \
+    echo $PIPENV_VENV_IN_PROJECT && \
+    pipenv install && \
+    ls -a
 RUN pipenv --venv
 
 # 将虚拟环境复制到无发行版映像中
