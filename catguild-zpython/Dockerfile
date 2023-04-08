@@ -10,7 +10,7 @@ FROM build AS build-venv
 COPY Pipfile /Pipfile
 COPY Pipfile.lock /Pipfile.lock
 RUN export PIPENV_VENV_IN_PROJECT=1
-RUN pipenv install
+RUN pipenv install --skip-lock
 
 # 将虚拟环境复制到无发行版映像中
 FROM gcr.io/distroless/python3-debian11
