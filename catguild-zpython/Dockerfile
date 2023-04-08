@@ -18,4 +18,4 @@ FROM python:3.11.2
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 WORKDIR /app
-ENTRYPOINT [".venv/Scripts/scrapyd && .venv/Scripts/scrapydweb"]
+#ENTRYPOINT [".venv/Scripts/scrapyd && .venv/Scripts/scrapydweb"]
