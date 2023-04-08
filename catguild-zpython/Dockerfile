@@ -11,19 +11,16 @@ COPY Pipfile /app/Pipfile
 WORKDIR /app
 #COPY Pipfile.lock /Pipfile.lock
 RUN export PIPENV_VENV_IN_PROJECT=1 && \
-    pipenv install
+    pipenv install && \
+    scrapyd
 
 # 将虚拟环境复制到无发行版映像中
 FROM python:3.11.2-alpine
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
-#RUN /app/.venv/bin/pip install pipenv && \
-#    /app/.venv/bin/pipenv run scrapyd \
 WORKDIR /app/catguild_spider
 #RUN ls -a
 ENV PATH="/app/.venv/bin:$PATH"
-#RUN export PATH=/app/.venv/bin:PATH && \
-#    pipenv run scrapyd
-#ENTRYPOINT ["sh", "-c", "(pipenv run scrapyd &); while ! nc -z localhost 6800; do sleep 1; done; scrapydweb"]
-#ENTRYPOINT ["sh", "-c", "pipenv run scrapyd & while ! python -c \"import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); exit(result)\"; do sleep 1; done; pipenv run scrapydweb"]
+RUN scrapyd
+
 ENTRYPOINT ["sh", "-c", "scrapyd & while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done; scrapydweb"]
