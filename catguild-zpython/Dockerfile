@@ -11,7 +11,7 @@ COPY Pipfile /app/Pipfile
 WORKDIR /app
 #COPY Pipfile.lock /Pipfile.lock
 RUN export PIPENV_VENV_IN_PROJECT=1 && \
-    pipenv install --system --deploy
+    pipenv install
 
 # 将虚拟环境复制到无发行版映像中
 FROM python:3.11.2-alpine
