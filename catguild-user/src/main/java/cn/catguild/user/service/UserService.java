@@ -20,7 +20,15 @@ public interface UserService {
 	 * @param catuser 用户基本信息
 	 * @return 创建后的用户信息
 	 */
-	CatUser add(CatUser catuser);
+	CatUser add(Long guildId, CatUser catuser);
+
+	/**
+	 *
+	 * @param guildId
+	 * @param catUserId
+	 * @return
+	 */
+	CatUser get(Long guildId, Long catUserId);
 
 	/**
 	 * 根据单一条件查询账号
@@ -28,7 +36,7 @@ public interface UserService {
 	 * @param query
 	 * @return
 	 */
-	CatUser get(CatUserQuery query);
+	CatUser get(Long guildId, CatUserQuery query);
 
 	/**
 	 * 根据多种条件查询list
@@ -36,15 +44,15 @@ public interface UserService {
 	 * @param query
 	 * @return
 	 */
-	List<CatUser> list(CatUserQuery query);
+	List<CatUser> list(Long guildId, CatUserQuery query);
 
 	/**
 	 * 分页查询条件
 	 *
 	 * @param apiPage 分页参数
-	 * @param query 查询条件
+	 * @param query   查询条件
 	 * @return 分页对象
 	 */
-	ApiPage<CatUser> page(ApiPage<CatUser> apiPage, CatUserQuery query);
+	ApiPage<CatUser> page(Long guildId, ApiPage<CatUser> apiPage, CatUserQuery query);
 
 }

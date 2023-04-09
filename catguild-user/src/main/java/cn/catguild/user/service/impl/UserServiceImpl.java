@@ -23,22 +23,27 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public CatUser add(CatUser catuser) {
+	public CatUser add(Long guildId, CatUser catuser) {
 		return null;
 	}
 
 	@Override
-	public CatUser get(CatUserQuery query) {
+	public CatUser get(Long guildId, Long catUserId) {
 		return null;
 	}
 
 	@Override
-	public List<CatUser> list(CatUserQuery query) {
+	public CatUser get(Long guildId, CatUserQuery query) {
 		return null;
 	}
 
 	@Override
-	public ApiPage<CatUser> page(ApiPage<CatUser> apiPage, CatUserQuery query) {
+	public List<CatUser> list(Long guildId, CatUserQuery query) {
+		return null;
+	}
+
+	@Override
+	public ApiPage<CatUser> page(Long guildId, ApiPage<CatUser> apiPage, CatUserQuery query) {
 		return null;
 	}
 

@@ -15,10 +15,11 @@ public interface AccountService {
 	/**
 	 * 新增账号
 	 *
+	 * @param guildId 租户id
 	 * @param account 账号基本信息
 	 * @return 创建后的账号信息
 	 */
-	Account add(Account account);
+	Account add(Long guildId, Account account);
 
 	/**
 	 * 检查账号是否存在
@@ -26,7 +27,7 @@ public interface AccountService {
 	 * @param username 登录凭证名
 	 * @return 如果存在，返回该账号信息，否则返回空
 	 */
-	Account check(String username);
+	Account check(Long guildId, String username);
 
 	/**
 	 * 冻结账号
@@ -34,7 +35,16 @@ public interface AccountService {
 	 * @param accountId 账号id
 	 * @return 成功返回true，否则返回false
 	 */
-	boolean frozen(Long accountId);
+	boolean frozen(Long guildId, Long accountId);
+
+	/**
+	 * 更新密码
+	 *
+	 * @param accountId   账号id
+	 * @param newPassword 新密码
+	 * @return 成功返回true，否则返回false
+	 */
+	boolean updatePassword(Long guildId, Long accountId, String newPassword);
 
 	/**
 	 * 根据单一条件查询账号
@@ -42,7 +52,7 @@ public interface AccountService {
 	 * @param query
 	 * @return
 	 */
-	Account get(AccountQuery query);
+	Account get(Long guildId, AccountQuery query);
 
 	/**
 	 * 根据多种条件查询list
@@ -50,15 +60,15 @@ public interface AccountService {
 	 * @param query
 	 * @return
 	 */
-	List<Account> list(AccountQuery query);
+	List<Account> list(Long guildId, AccountQuery query);
 
 	/**
 	 * 分页查询条件
 	 *
 	 * @param apiPage 分页参数
-	 * @param query 查询条件
+	 * @param query   查询条件
 	 * @return 分页对象
 	 */
-	ApiPage<Account> page(ApiPage<Account> apiPage,AccountQuery query);
+	ApiPage<Account> page(Long guildId, ApiPage<Account> apiPage, AccountQuery query);
 
 }

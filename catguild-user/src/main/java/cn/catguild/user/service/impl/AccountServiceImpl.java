@@ -21,33 +21,37 @@ public class AccountServiceImpl implements AccountService {
 
 
 	@Override
-	public Account add(Account account) {
+	public Account add(Long guildId, Account account) {
 		return null;
 	}
 
 	@Override
-	public Account check(String username) {
+	public Account check(Long guildId, String username) {
 		return null;
 	}
 
 	@Override
-	public boolean frozen(Long accountId) {
+	public boolean frozen(Long guildId, Long accountId) {
 		return false;
 	}
 
 	@Override
-	public Account get(AccountQuery query) {
+	public boolean updatePassword(Long guildId, Long accountId, String newPassword) {
+		return false;
+	}
+
+	@Override
+	public Account get(Long guildId, AccountQuery query) {
 		return null;
 	}
 
 	@Override
-	public List<Account> list(AccountQuery query) {
+	public List<Account> list(Long guildId, AccountQuery query) {
 		return null;
 	}
 
 	@Override
-	public ApiPage<Account> page(ApiPage<Account> apiPage, AccountQuery query) {
+	public ApiPage<Account> page(Long guildId, ApiPage<Account> apiPage, AccountQuery query) {
 		return null;
 	}
-
 }
