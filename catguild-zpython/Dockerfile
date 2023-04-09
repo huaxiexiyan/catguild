@@ -20,6 +20,6 @@ COPY . /app
 #WORKDIR /app/catguild_spider
 ENV PATH="/app/.venv/bin:$PATH"
 RUN pip install pipenv && \
-    pipenv run scrapyd & while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done;pipenv run scrapydweb
+    pipenv run scrapyd & pipenv run scrapydweb
 
 ENTRYPOINT ["sh", "-c", "scrapyd & while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done; scrapydweb"]
