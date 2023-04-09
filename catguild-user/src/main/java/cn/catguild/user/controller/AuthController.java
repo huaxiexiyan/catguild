@@ -1,15 +1,10 @@
 package cn.catguild.user.controller;
 
-import cn.catguild.common.api.ApiResponse;
-import cn.catguild.user.domain.entity.Account;
 import cn.catguild.user.service.AccountService;
+import cn.catguild.user.service.AuthService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author xiyan
@@ -21,6 +16,9 @@ import java.util.Map;
 public class AuthController {
 
 	private final AccountService accountService;
+
+	private final AuthService authService;
+
 
 	//public static void main(String[] args) {
 	//	// 密钥
@@ -84,41 +82,62 @@ public class AuthController {
 	 * @param bytes 字节数组
 	 * @return Base64编码
 	 */
-	private static String bytesToBase64(byte[] bytes) {
-		byte[] encodedBytes = Base64.getEncoder().encode(bytes);
-		return new String(encodedBytes, StandardCharsets.UTF_8);
-	}
-
-	/**
-	 * Base64编码转字节数组
-	 *
-	 * @param base64Str Base64编码
-	 * @return 字节数组
-	 */
-	private static byte[] base64ToBytes(String base64Str) {
-		byte[] bytes = base64Str.getBytes(StandardCharsets.UTF_8);
-		return Base64.getDecoder().decode(bytes);
-	}
-
-	@PostMapping("/login")
-	public ApiResponse<?> login(@RequestBody Account account){
-		Map<String,String> map = new HashMap<>();
-		map.put("token","dasjoidjaiosdkjio");
-		// 财务交易
-		return ApiResponse.ok(map);
-	}
-
-
-	@GetMapping("/getUserInfo")
-	public ApiResponse<?> getUserInfo(){
-		Map<String,Object> map = new HashMap<>();
-		map.put("username","123");
-		return ApiResponse.ok(map);
-	}
-
-	@GetMapping("/logout")
-	public ApiResponse<?> logout(){
-		return ApiResponse.ok();
-	}
+	//private static String bytesToBase64(byte[] bytes) {
+	//	byte[] encodedBytes = Base64.getEncoder().encode(bytes);
+	//	return new String(encodedBytes, StandardCharsets.UTF_8);
+	//}
+	//
+	///**
+	// * Base64编码转字节数组
+	// *
+	// * @param base64Str Base64编码
+	// * @return 字节数组
+	// */
+	//private static byte[] base64ToBytes(String base64Str) {
+	//	byte[] bytes = base64Str.getBytes(StandardCharsets.UTF_8);
+	//	return Base64.getDecoder().decode(bytes);
+	//}
+	//
+	///**
+	// * 登录
+	// *
+	// * @param account
+	// * @return
+	// */
+	//@PostMapping("/login")
+	//public Map<String, String> login(@RequestBody Account account) {
+	//	Map<String, String> map = new HashMap<>();
+	//	map.put("token", "dasjoidjaiosdkjio");
+	//	authService.login(1, account);
+	//	Map<String, String> resultMap = new HashMap<>();
+	//	resultMap.put("status","ok");
+	//	resultMap.put("currentAuthority","admin");
+	//	return resultMap;
+	//}
+	//
+	//
+	///**
+	// * 获取当前登录用户的信息
+	// *
+	// * @return
+	// */
+	//@GetMapping("/currentUser")
+	//public ApiResponse<?> getUserInfo() {
+	//	Map<String, Object> map = new HashMap<>();
+	//	map.put("name", "admin");
+	//	map.put("userid", "00000001");
+	//	map.put("avatar", "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png");
+	//	return ApiResponse.ok(map);
+	//}
+	//
+	///**
+	// * 登出
+	// *
+	// * @return
+	// */
+	//@PostMapping("/logout")
+	//public ApiResponse<?> logout() {
+	//	return ApiResponse.ok();
+	//}
 
 }

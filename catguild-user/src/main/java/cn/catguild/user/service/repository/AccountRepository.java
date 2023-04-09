@@ -9,4 +9,5 @@ import cn.catguild.user.domain.entity.Account;
 public interface AccountRepository {
 	void save(Account account);
 
+	Account getByUsername(String username);
 }

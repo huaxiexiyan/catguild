@@ -1,10 +1,6 @@
 package cn.catguild.user.controller;
 
-import cn.catguild.common.api.ApiResponse;
-import cn.catguild.user.domain.entity.Account;
-import cn.catguild.user.service.AccountService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,12 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AccountController {
 
-	private final AccountService accountService;
-
-	@PostMapping("/register")
-	public ApiResponse<?> register(Account account){
-		accountService.register(account);
-		return ApiResponse.ok();
-	}
+	//private final AccountService accountService;
+	//
+	////@PostMapping("/register")
+	////public ApiResponse<?> register(Account account){
+	////	accountService.register(account);
+	////	return ApiResponse.ok();
+	////}
+	//
+	///**
+	// * 3、创建账号
+	// */
+	///**
+	// * 2、修改账号密码
+	// */
+	///**
+	// * 4、删除账号
+	// */
+	///**
+	// * 5、获取账号信息
+	// */
+	///**
+	// * 1、分页获取账号的列表（租户id必填）
+	// */
 
 }

@@ -54,4 +54,9 @@ public class UserRepositoryImpl implements UserRepository {
 		return IPageUtils.toApiPage(page);
 	}
 
+	@Override
+	public CatUser getByAccountId(Integer accountId) {
+		return catUserMapper.selectOne(Wrappers.<CatUser>lambdaQuery().eq(CatUser::getAccountId,accountId));
+	}
+
 }

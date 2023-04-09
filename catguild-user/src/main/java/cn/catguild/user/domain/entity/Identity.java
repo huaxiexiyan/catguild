@@ -11,9 +11,6 @@ public class Identity {
 
 	private Long id;
 
-	/**
-	 * 一个具体的身份，也可以拥有唯一一个账号（此账号与用户中的账号不冲突）
-	 */
-	private Long accountId;
+	private String appType;
 
 }

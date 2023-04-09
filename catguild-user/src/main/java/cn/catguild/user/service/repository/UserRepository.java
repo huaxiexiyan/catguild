@@ -23,4 +23,5 @@ public interface UserRepository {
 
 	ApiPage<CatUser> page(CatUserQuery query);
 
+	CatUser getByAccountId(Integer id);
 }

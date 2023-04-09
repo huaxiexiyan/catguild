@@ -1,7 +1,8 @@
 package cn.catguild.user.domain.entity;
 
-import cn.catguild.user.domain.type.AccountBindType;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * 账号（系统的登录凭证，并只用作凭证）
@@ -13,7 +14,12 @@ import lombok.Data;
 @Data
 public class Account {
 
-	private Long id;
+	private Integer id;
+
+	/**
+	 * 登录名
+	 */
+	private Integer guildId;
 
 	/**
 	 * 登录名
@@ -25,9 +31,6 @@ public class Account {
 	 */
 	private String password;
 
-	/**
-	 * 绑定类型
-	 */
-	private AccountBindType bindType;
+	private LocalDateTime createdTime;
 
 }

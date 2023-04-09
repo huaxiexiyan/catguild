@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -21,17 +22,28 @@ public class CatUser {
 	@TableId
 	private Long id;
 
+	private Long guildId;
+
+	/**
+	 * 昵称
+	 */
+	private String name;
+
+	private String sex;
+
+	private String age;
+
 	/**
 	 * 一个行为人可以被授予多种身份(特定行为权限)
 	 */
 	@TableField(exist = false)
-	private List<Identity>  identities;
+	private List<Identity> identities;
 
 	/**
 	 * 一个行为人，只能有一个账号
 	 */
-	private Long accountId;
+	private Integer accountId;
 
-	private String name;
+	private LocalDateTime createdTime;
 
 }
