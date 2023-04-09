@@ -14,7 +14,7 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
     pipenv install
 
 # 将虚拟环境复制到无发行版映像中
-FROM python:3.11.2-alpine
+FROM gcr.io/distroless/python3-debian11
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 WORKDIR /app/catguild_spider
