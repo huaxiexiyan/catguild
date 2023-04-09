@@ -7,6 +7,7 @@ name = "pypi"
 [packages]
 #pycurl = {path = "./whl/pycurl-7.45.1-cp311-cp311-win_amd64.whl"}
 #pipenv = "*"
+lxml = "*"
 scrapy = "*"
 scrapyd = "*"
 scrapyd-client = "*"
