@@ -14,13 +14,12 @@ RUN export PIPENV_VENV_IN_PROJECT=1 && \
     pipenv install
 
 # 将虚拟环境复制到无发行版映像中
-FROM gcr.io/distroless/python3-debian11
+FROM python:3.11.2
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 WORKDIR /app/catguild_spider
 ENV PATH="/app/.venv/bin:$PATH"
-RUN /app/.venv/bin/pip install pipenv && \
-    /app/.venv/bin/pipenv run scrapyd
+RUN pip install pipenv
 #ENTRYPOINT ["sh", "-c",
 #            "pipenv run scrapyd",
 #            "&", "while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done;",
