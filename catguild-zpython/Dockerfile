@@ -18,8 +18,8 @@ FROM python:3.11.2
 COPY --from=build-venv /app/.venv /app/.venv
 COPY . /app
 #WORKDIR /app/catguild_spider
-#ENV PATH="/app/.venv/bin:$PATH"
-RUN pip install --upgrade pip setuptools wheel pipenv && \
+ENV PATH="/app/.venv/bin:$PATH"
+RUN pip install pipenv && \
     pipenv run scrapyd
 
 ENTRYPOINT ["sh", "-c", "scrapyd & while ! python -c \"import socket, time; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); result = s.connect_ex(('localhost', 6800)); s.close(); time.sleep(1); exit(result)\"; do true; done; scrapydweb"]
