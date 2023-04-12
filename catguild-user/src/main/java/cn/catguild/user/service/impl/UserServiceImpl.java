@@ -4,6 +4,7 @@ import cn.catguild.common.api.ApiPage;
 import cn.catguild.user.domain.entity.CatUser;
 import cn.catguild.user.domain.query.CatUserQuery;
 import cn.catguild.user.service.UserService;
+import cn.catguild.user.service.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,30 +22,26 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private final UserRepository userRepository;
 
 	@Override
 	public CatUser add(Long guildId, CatUser catuser) {
-		return null;
+		return userRepository.save(catuser);
 	}
 
 	@Override
-	public CatUser get(Long guildId, Long catUserId) {
-		return null;
-	}
-
-	@Override
-	public CatUser get(Long guildId, CatUserQuery query) {
-		return null;
+	public CatUser get(Long guildId, Long id) {
+		return userRepository.find(id);
 	}
 
 	@Override
 	public List<CatUser> list(Long guildId, CatUserQuery query) {
-		return null;
+		return userRepository.list(query);
 	}
 
 	@Override
 	public ApiPage<CatUser> page(Long guildId, ApiPage<CatUser> apiPage, CatUserQuery query) {
-		return null;
+		return userRepository.page(apiPage, query);
 	}
 
 }

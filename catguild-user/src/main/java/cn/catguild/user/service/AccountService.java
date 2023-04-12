@@ -33,9 +33,8 @@ public interface AccountService {
 	 * 冻结账号
 	 *
 	 * @param accountId 账号id
-	 * @return 成功返回true，否则返回false
 	 */
-	boolean frozen(Long guildId, Long accountId);
+	void frozen(Long guildId, Long accountId);
 
 	/**
 	 * 更新密码
@@ -49,10 +48,11 @@ public interface AccountService {
 	/**
 	 * 根据单一条件查询账号
 	 *
-	 * @param query
+	 * @param guildId
+	 * @param accountId
 	 * @return
 	 */
-	Account get(Long guildId, AccountQuery query);
+	Account get(Long guildId, Long accountId);
 
 	/**
 	 * 根据多种条件查询list

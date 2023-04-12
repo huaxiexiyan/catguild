@@ -25,18 +25,10 @@ public interface UserService {
 	/**
 	 *
 	 * @param guildId
-	 * @param catUserId
+	 * @param id
 	 * @return
 	 */
-	CatUser get(Long guildId, Long catUserId);
-
-	/**
-	 * 根据单一条件查询账号
-	 *
-	 * @param query
-	 * @return
-	 */
-	CatUser get(Long guildId, CatUserQuery query);
+	CatUser get(Long guildId, Long id);
 
 	/**
 	 * 根据多种条件查询list

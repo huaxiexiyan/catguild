@@ -1,6 +1,7 @@
 package cn.catguild.user.domain.entity;
 
-import lombok.Data;
+import cn.catguild.user.domain.type.AccountStatus;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
  * @author xiyan
  * @date 2022/9/30 15:04
  */
-@Data
+@Getter
 public class Account {
 
 	private Integer id;
@@ -31,6 +32,19 @@ public class Account {
 	 */
 	private String password;
 
+	private AccountStatus status;
+
 	private LocalDateTime createdTime;
+
+	/**
+	 * 冻结
+	 */
+	public void frozen() {
+		status = AccountStatus.FROZEN;
+	}
+
+	public void thaw() {
+		status = AccountStatus.NORMAL;
+	}
 
 }
