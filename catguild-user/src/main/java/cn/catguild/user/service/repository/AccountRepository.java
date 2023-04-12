@@ -13,14 +13,14 @@ import java.util.List;
  */
 public interface AccountRepository {
 
-	Account save(Account account);
+	Account save(Long guildId, Account account);
 
-	Account remove(Long id);
+	void remove(Long guildId, Long id);
 
-	Account find(Long id);
+	Account find(Long guildId, Long id);
 
-	List<Account> list(AccountQuery query);
+	List<Account> list(Long guildId, AccountQuery query);
 
-    ApiPage<Account> page(ApiPage<Account> apiPage, AccountQuery query);
+	ApiPage<Account> page(Long guildId, ApiPage<Account> apiPage, AccountQuery query);
 
 }

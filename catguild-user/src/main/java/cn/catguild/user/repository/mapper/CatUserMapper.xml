@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.catguild.user.repository.mapper.CatUserMapper">
-    <resultMap id="baseResult" type="cn.catguild.user.domain.entity.CatUser">
+    <resultMap id="baseResult" type="cn.catguild.user.domain.po.CatUserDO">
         <id column="id" property="id"/>
-        <result column="account_id" property="accountId"/>
+        <result column="guild_id" property="guildId"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="identity_type" property="identityType"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="deleted_time" property="deletedTime"/>
     </resultMap>
 </mapper>

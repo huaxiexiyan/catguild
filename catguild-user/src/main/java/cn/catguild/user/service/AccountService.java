@@ -43,7 +43,7 @@ public interface AccountService {
 	 * @param newPassword 新密码
 	 * @return 成功返回true，否则返回false
 	 */
-	boolean updatePassword(Long guildId, Long accountId, String newPassword);
+	void updatePassword(Long guildId, Long accountId, String newPassword);
 
 	/**
 	 * 根据单一条件查询账号

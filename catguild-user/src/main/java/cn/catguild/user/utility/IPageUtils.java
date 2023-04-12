@@ -1,9 +1,10 @@
 package cn.catguild.user.utility;
 
 import cn.catguild.common.api.ApiPage;
-import cn.catguild.common.entity.BaseQuery;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.util.Collection;
 
 /**
  * @author xiyan
@@ -11,17 +12,31 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  */
 public class IPageUtils {
 
-	public static <T> IPage<T> getIPage(BaseQuery query) {
-		return new Page<>(query.getCurrent(), query.getSize());
+	public static <T> Page<T> toIPage(ApiPage<T> apiPage) {
+		return new Page<>(apiPage.getCurrent(), apiPage.getSize());
+	}
+
+	public static <T> Page<T> toIPage(Page<T> targetPage, ApiPage<?> apiPage) {
+		targetPage.setCurrent(apiPage.getCurrent());
+		targetPage.setSize(apiPage.getSize());
+		return targetPage;
 	}
 
 	public static <T> ApiPage<T> toApiPage(IPage<T> page) {
 		ApiPage<T> apiPage = new ApiPage<>();
 		apiPage.setCurrent(page.getCurrent());
-		apiPage.setPageSize(page.getSize());
+		apiPage.setSize(page.getSize());
 		apiPage.setTotal(page.getTotal());
 		apiPage.setList(page.getRecords());
 		return apiPage;
+	}
+
+	public static <T> ApiPage<T> toApiPage(ApiPage<T> targetApiPage, Page<?> accountDOPage) {
+		targetApiPage.setCurrent(accountDOPage.getCurrent());
+		targetApiPage.setSize(accountDOPage.getSize());
+		targetApiPage.setTotal(accountDOPage.getTotal());
+		targetApiPage.setList((Collection<T>) accountDOPage.getRecords());
+		return targetApiPage;
 	}
 
 }

@@ -20,6 +20,6 @@ public class CatUserDO extends BaseGuildDO{
 
 	private String age;
 
-	private IdentityType identity_type;
+	private IdentityType identityType;
 
 }

@@ -25,7 +25,7 @@ public class AccountDO extends BaseGuildDO{
 	 */
 	private String password;
 
-	private Long cat_user_id;
+	private Long catUserId;
 
 	private AccountStatus status;
 

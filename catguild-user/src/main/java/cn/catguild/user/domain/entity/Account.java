@@ -1,5 +1,6 @@
 package cn.catguild.user.domain.entity;
 
+import cn.catguild.user.domain.po.AccountDO;
 import cn.catguild.user.domain.type.AccountStatus;
 import lombok.Getter;
 
@@ -15,12 +16,12 @@ import java.time.LocalDateTime;
 @Getter
 public class Account {
 
-	private Integer id;
+	private Long id;
 
 	/**
-	 * 登录名
+	 *
 	 */
-	private Integer guildId;
+	private Long guildId;
 
 	/**
 	 * 登录名
@@ -36,6 +37,14 @@ public class Account {
 
 	private LocalDateTime createdTime;
 
+	public Account(AccountDO accountDO){
+		this.id = accountDO.getId();
+		this.guildId = accountDO.getGuildId();
+		this.username = accountDO.getUsername();
+		this.status = accountDO.getStatus();
+		this.createdTime = accountDO.getCreatedTime();
+	}
+
 	/**
 	 * 冻结
 	 */
@@ -45,6 +54,10 @@ public class Account {
 
 	public void thaw() {
 		status = AccountStatus.NORMAL;
+	}
+
+	public void updatePassword(String newPassword) {
+		password = newPassword;
 	}
 
 }

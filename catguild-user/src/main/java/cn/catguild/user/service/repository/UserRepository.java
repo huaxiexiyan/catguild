@@ -12,14 +12,14 @@ import java.util.List;
  */
 public interface UserRepository {
 
-	CatUser save(CatUser catUser);
+	CatUser save(Long guildId, CatUser catUser);
 
-	void remove(Long id);
+	void remove(Long guildId, Long id);
 
-	CatUser find(Long id);
+	CatUser find(Long guildId, Long id);
 
-	List<CatUser> list(CatUserQuery query);
+	List<CatUser> list(Long guildId, CatUserQuery query);
 
-	ApiPage<CatUser> page(ApiPage<CatUser> apiPage, CatUserQuery query);
+	ApiPage<CatUser> page(Long guildId, ApiPage<CatUser> apiPage, CatUserQuery query);
 
 }

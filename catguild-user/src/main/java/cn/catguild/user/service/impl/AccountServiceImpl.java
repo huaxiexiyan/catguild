@@ -25,40 +25,43 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account add(Long guildId, Account account) {
-		return accountRepository.save(account);
+		return accountRepository.save(guildId, account);
 	}
 
 	@Override
 	public Account check(Long guildId, String username) {
 		AccountQuery query = new AccountQuery();
-		List<Account> list = accountRepository.list(query);
+		query.setUsername(username);
+		List<Account> list = accountRepository.list(guildId, query);
 		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
 
 	@Override
 	public void frozen(Long guildId, Long id) {
-		Account account = accountRepository.find(id);
+		Account account = accountRepository.find(guildId, id);
 		account.frozen();
-		accountRepository.save(account);
+		accountRepository.save(guildId, account);
 	}
 
 	@Override
-	public boolean updatePassword(Long guildId, Long id, String newPassword) {
-		return false;
+	public void updatePassword(Long guildId, Long id, String newPassword) {
+		Account account = accountRepository.find(guildId, id);
+		account.updatePassword(newPassword);
+		accountRepository.save(guildId, account);
 	}
 
 	@Override
 	public Account get(Long guildId, Long id) {
-		return accountRepository.find(id);
+		return accountRepository.find(guildId, id);
 	}
 
 	@Override
 	public List<Account> list(Long guildId, AccountQuery query) {
-		return accountRepository.list(query);
+		return accountRepository.list(guildId, query);
 	}
 
 	@Override
 	public ApiPage<Account> page(Long guildId, ApiPage<Account> apiPage, AccountQuery query) {
-		return accountRepository.page(apiPage, query);
+		return accountRepository.page(guildId, apiPage, query);
 	}
 }

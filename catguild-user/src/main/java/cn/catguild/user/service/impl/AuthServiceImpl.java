@@ -33,4 +33,5 @@ public class AuthServiceImpl implements AuthService {
 	public boolean unbinding(Long guildId, Long catUserId, Long accountId) {
 		return false;
 	}
+
 }

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- *
- *
  * @author xiyan
  * @date 2022/9/30 15:54
  */
@@ -26,22 +24,22 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public CatUser add(Long guildId, CatUser catuser) {
-		return userRepository.save(catuser);
+		return userRepository.save(guildId, catuser);
 	}
 
 	@Override
 	public CatUser get(Long guildId, Long id) {
-		return userRepository.find(id);
+		return userRepository.find(guildId, id);
 	}
 
 	@Override
 	public List<CatUser> list(Long guildId, CatUserQuery query) {
-		return userRepository.list(query);
+		return userRepository.list(guildId, query);
 	}
 
 	@Override
 	public ApiPage<CatUser> page(Long guildId, ApiPage<CatUser> apiPage, CatUserQuery query) {
-		return userRepository.page(apiPage, query);
+		return userRepository.page(guildId, apiPage, query);
 	}
 
 }

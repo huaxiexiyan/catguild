@@ -1,8 +1,9 @@
 package cn.catguild.user.domain.entity;
 
+import cn.catguild.user.domain.po.CatUserDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author xiyan
  * @date 2022/9/30 15:01
  */
-@Data
+@Getter
 public class CatUser {
 
 	/**
@@ -45,5 +46,14 @@ public class CatUser {
 	private Integer accountId;
 
 	private LocalDateTime createdTime;
+
+	public CatUser(CatUserDO catUserDO){
+		id = catUserDO.getId();
+		guildId = catUserDO.getGuildId();
+		name =catUserDO.getName();
+		sex = catUserDO.getSex();
+		age = catUserDO.getAge();
+		createdTime = catUserDO.getCreatedTime();
+	}
 
 }
