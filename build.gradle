@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.2'
+    id 'org.springframework.boot' version '3.0.0' apply false
     id 'java'
     id 'com.google.cloud.tools.jib' version '3.2.1' apply false
 }
@@ -41,8 +41,8 @@ subprojects {
     // dependencyManagement版本统一管理，类似于父maven的dependencyManagement
     dependencyManagement {
         imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.3"
-            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.0.1.0"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.0"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2022.0.0.0-RC1"
         }
     }
 

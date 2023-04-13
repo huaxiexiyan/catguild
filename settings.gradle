@@ -9,4 +9,5 @@ include 'catguild-gateway'
 include 'catguild-user'
 include 'catguild-common-api'
 include 'catguild-thirdparty'
+include 'catguild-ztest'
 
