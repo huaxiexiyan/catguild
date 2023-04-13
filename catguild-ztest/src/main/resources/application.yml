@@ -1,0 +1,5 @@
+server:
+  port: 21000
+#logging:
+#  level:
+#    root: debug

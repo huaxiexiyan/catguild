@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+dependencies {
+    // spring 家族
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        transitive = true
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    //安全框架
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // 测试框架
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:'
+    // mandatory dependencies for using Spock
+    testImplementation 'org.codehaus.groovy:groovy:3.0.10'
+    testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+    testImplementation "org.spockframework:spock-core"
+    // allows mocking of classes (in addition to interfaces)
+    testRuntimeOnly 'net.bytebuddy:byte-buddy:1.12.9'
+    testRuntimeOnly "org.objenesis:objenesis:3.2"
+    // 断言库
+    testImplementation 'org.assertj:assertj-core:3.23.1'
+}
