@@ -1,4 +1,4 @@
-package spock.support
+package cn.catguild.user.test
 
 import org.springframework.core.io.ClassPathResource
 import org.springframework.lang.Nullable

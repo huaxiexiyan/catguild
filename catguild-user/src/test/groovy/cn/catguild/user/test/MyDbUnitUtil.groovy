@@ -1,4 +1,4 @@
-package spock.support
+package cn.catguild.user.test
 
 import groovy.util.logging.Slf4j
 import org.dbunit.dataset.IDataSet

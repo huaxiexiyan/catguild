@@ -1,4 +1,4 @@
-package spock.support;
+package cn.catguild.user.test;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
