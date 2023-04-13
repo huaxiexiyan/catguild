@@ -1,8 +1,6 @@
 package cn.catguild.user.domain.entity;
 
 import cn.catguild.user.domain.po.CatUserDO;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -20,7 +18,6 @@ public class CatUser {
 	/**
 	 * 主键id（唯一标识，其他都是附属内容）
 	 */
-	@TableId
 	private Long id;
 
 	private Long guildId;
@@ -37,7 +34,6 @@ public class CatUser {
 	/**
 	 * 一个行为人可以被授予多种身份(特定行为权限)
 	 */
-	@TableField(exist = false)
 	private List<Identity> identities;
 
 	/**

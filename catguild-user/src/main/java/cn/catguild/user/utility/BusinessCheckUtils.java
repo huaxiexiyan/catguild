@@ -1,6 +1,6 @@
 package cn.catguild.user.utility;
 
-import cn.catguild.user.exception.BusinessException;
+import cn.catguild.user.exception.BizException;
 
 /**
  * @author xiyan
@@ -15,7 +15,7 @@ public class BusinessCheckUtils {
 	 * @param msg
 	 */
 	public static void checkBoolean(boolean check, String msg) {
-		if (check) throw new BusinessException(msg);
+		if (check) throw new BizException(msg);
 	}
 
 }

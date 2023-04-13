@@ -1,7 +1,7 @@
 package cn.catguild.user.service;
 
 import cn.catguild.user.domain.bo.AuthUser;
-import cn.catguild.user.domain.entity.Account;
+import cn.catguild.user.domain.query.AccountQuery;
 
 /**
  * 用户服务
@@ -19,7 +19,7 @@ public interface AuthService {
 	 * @param account
 	 * @return
 	 */
-	AuthUser login(Long guildId, Integer appType, Account account);
+	AuthUser login(Long guildId, Integer appType, AccountQuery accountQuery);
 
 	/**
 	 * 账号与用户绑定

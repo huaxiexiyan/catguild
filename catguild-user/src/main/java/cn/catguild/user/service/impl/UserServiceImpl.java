@@ -3,7 +3,7 @@ package cn.catguild.user.service.impl;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.user.domain.entity.CatUser;
 import cn.catguild.user.domain.query.CatUserQuery;
-import cn.catguild.user.service.UserService;
+import cn.catguild.user.service.CatUserService;
 import cn.catguild.user.service.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements CatUserService {
 
 	private final UserRepository userRepository;
 

@@ -37,12 +37,16 @@ public class Account {
 
 	private LocalDateTime createdTime;
 
+	private Long catUserId;
+
 	public Account(AccountDO accountDO){
 		this.id = accountDO.getId();
 		this.guildId = accountDO.getGuildId();
 		this.username = accountDO.getUsername();
+		this.password = accountDO.getPassword();
 		this.status = accountDO.getStatus();
 		this.createdTime = accountDO.getCreatedTime();
+		this.catUserId = accountDO.getCatUserId();
 	}
 
 	/**

@@ -12,7 +12,7 @@ import java.util.List;
  * @author xiyan
  * @date 2022/9/30 15:19
  */
-public interface UserService {
+public interface CatUserService {
 
 	/**
 	 * 新增用户

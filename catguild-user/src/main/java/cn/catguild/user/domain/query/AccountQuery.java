@@ -11,4 +11,6 @@ public class AccountQuery {
 
 	private String username;
 
+	private String password;
+
 }
