@@ -1,4 +1,4 @@
-package cn.catguild.ztest.controller;
+package cn.catguild.ztest.springscurity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -34,6 +35,7 @@ import java.util.Map;
  * @author xiyan
  * @date 2023/4/13 11:21
  */
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -66,9 +68,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain web(HttpSecurity http) throws Exception {
         // @formatter:off
-        // * 1、自定义登录请求地址
-        // * 2、自定义登录成功、失败响应
-        // * 3、请求、响应以json形式进行
+        // * 1、自定义登录请求地址（实现）
+        // * 2、自定义登录成功、失败响应（实现）
+        // * 3、请求、响应以json形式进行（实现）
         // * 4、使用jwt令牌
         // * 5、令牌存储到缓存中
         // * 6、登出移除缓存
@@ -95,26 +97,6 @@ public class SecurityConfig {
         // @formatter:on
         return http.build();
     }
-
-    /**
-     * Spring Security 使用基于 UserDetails 的身份验证
-     *
-     * @return
-     */
-    //@Bean
-    //public UserDetailsService users() {
-    //    UserDetails user = User.builder()
-    //            .username("user")
-    //            .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
-    //            .roles("USER")
-    //            .build();
-    //    UserDetails admin = User.builder()
-    //            .username("admin")
-    //            .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
-    //            .roles("USER", "ADMIN")
-    //            .build();
-    //    return new InMemoryUserDetailsManager(user, admin);
-    //}
 
     /**
      * 认证架构，主要类

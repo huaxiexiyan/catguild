@@ -1,4 +1,4 @@
-package cn.catguild.ztest.controller;
+package cn.catguild.ztest.springscurity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;

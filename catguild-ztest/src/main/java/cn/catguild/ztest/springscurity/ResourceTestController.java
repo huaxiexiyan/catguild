@@ -1,4 +1,4 @@
-package cn.catguild.ztest.controller;
+package cn.catguild.ztest.springscurity;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
