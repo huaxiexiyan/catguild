@@ -1,6 +1,6 @@
 package cn.catguild.common.utility;
 
-import cn.hutool.core.util.ObjectUtil;
+import org.springframework.util.ObjectUtils;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -13,14 +13,14 @@ import java.time.ZonedDateTime;
 public class CatDateUtils {
 
 	public static ZonedDateTime toLocalDateTime(Long epochMilli) {
-		if (ObjectUtil.isEmpty(epochMilli)) {
+		if (ObjectUtils.isEmpty(epochMilli)) {
 			return null;
 		}
 		return ZonedDateTime.ofInstant(Instant.ofEpochMilli(epochMilli), ZoneId.systemDefault());
 	}
 
 	public static Long toEpochMilli(ZonedDateTime zonedDateTime) {
-		if (ObjectUtil.isEmpty(zonedDateTime)) {
+		if (ObjectUtils.isEmpty(zonedDateTime)) {
 			return null;
 		}
 		return zonedDateTime.toInstant().toEpochMilli();

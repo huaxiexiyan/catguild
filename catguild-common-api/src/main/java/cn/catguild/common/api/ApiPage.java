@@ -16,7 +16,7 @@ public class ApiPage<T> {
 
 	private long current;
 
-	private long pageSize;
+	private long size;
 
 	private long total;
 
@@ -26,7 +26,7 @@ public class ApiPage<T> {
 
 	public ApiPage(CatPage<?> search) {
 		this.current = search.getCurrent() < 0 ? 0 : search.getCurrent();
-		this.pageSize = search.getSize() < 0 ? 0 : search.getSize();
+		this.size = search.getSize() < 0 ? 0 : search.getSize();
 		this.total = search.getTotal() < 0 ? 0 : search.getTotal();
 	}
 

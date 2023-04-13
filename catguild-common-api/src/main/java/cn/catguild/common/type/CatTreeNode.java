@@ -1,6 +1,6 @@
 package cn.catguild.common.type;
 
-import cn.hutool.core.util.ObjectUtil;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,12 +25,12 @@ public interface CatTreeNode<T, R> {
 		for (U node : allNode) {
 			boolean isTop = false;
 			if (node.getParentId() instanceof Long) {
-				isTop = ObjectUtil.equals(node.getParentId(), 0L);
+				isTop = ObjectUtils.nullSafeEquals(node.getParentId(), 0L);
 			}
 			if (node.getParentId() instanceof Integer) {
-				isTop = ObjectUtil.equals(node.getParentId(), 0);
+				isTop = ObjectUtils.nullSafeEquals(node.getParentId(), 0);
 			}
-			if (isTop || ObjectUtil.equals(node.getParentId(), 0)) {
+			if (isTop || ObjectUtils.nullSafeEquals(node.getParentId(), 0)) {
 				// 根节点
 				forestRoots.add(node);
 				node.setChildren(collectChildren(node, allNode));
@@ -50,7 +50,7 @@ public interface CatTreeNode<T, R> {
 	private static <U extends CatTreeNode<U, ?>> List<U> collectChildren(U rootNode, List<U> allNode) {
 		List<U> children = new ArrayList<>();
 		for (U node : allNode) {
-			if (ObjectUtil.equals(node.getParentId(), rootNode.getId())) {
+			if (ObjectUtils.nullSafeEquals(node.getParentId(), rootNode.getId())) {
 				children.add(node);
 				node.setChildren(collectChildren(node, allNode));
 			}
