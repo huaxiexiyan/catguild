@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.server.authorization.settings.ClientS
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 /**
  * @author xiyan
@@ -63,10 +62,6 @@ public class Oauth2RegisteredClientRepositoryImpl implements Oauth2RegisteredCli
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 //.tokenSettings(TokenSettings.builder().build())
                 .build();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(UUID.randomUUID().toString().replace("-",""));
     }
 
     @Override
