@@ -1,4 +1,4 @@
-name: gateway-ci
+name: auth-ci
 
 on:
   push:
