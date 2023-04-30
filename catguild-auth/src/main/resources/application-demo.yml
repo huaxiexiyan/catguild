@@ -1,0 +1,16 @@
+server:
+  port: 20000
+
+#spring配置
+spring:
+  #数据源配置
+  datasource:
+    # 自动执行sql
+    url: jdbc:mysql://127.0.0.1:3306/catguild_auth?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# 日志配置
+logging:
+  config: classpath:log/logback.xml

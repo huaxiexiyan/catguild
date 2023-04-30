@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: catguild-auth
+  cloud:
+    nacos:
+      config:
+        # 配置中心配置
+        server-addr: ${nacos.server.address}
+        file-extension: yaml
+        username: ${nacos.username} # 账号
+        password: ${nacos.password} # 密码
+        namespace: ${nacos.namespace}
+      discovery:
+        server-addr: ${nacos.server.address}
+        username: ${nacos.username} # 账号
+        password: ${nacos.password} # 密码
+        namespace: ${nacos.namespace}
+
+logging:
+  level:
+    com:
+      alibaba:
+        nacos:
+          client:
+            config: INFO
+            naming: INFO
