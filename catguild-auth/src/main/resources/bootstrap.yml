@@ -15,12 +15,3 @@ spring:
         username: ${nacos.username} # 账号
         password: ${nacos.password} # 密码
         namespace: ${nacos.namespace}
-
-logging:
-  level:
-    com:
-      alibaba:
-        nacos:
-          client:
-            config: INFO
-            naming: INFO
