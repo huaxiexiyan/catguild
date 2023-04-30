@@ -1,4 +1,4 @@
-package cn.catguild.ztest.springscurity;
+package cn.catguild.ztest.springscurity.helloword;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
