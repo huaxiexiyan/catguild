@@ -8,13 +8,13 @@ import lombok.Getter;
  * @author xiyan
  * @date 2023/5/1 11:41
  */
-public class GuildId {
+public class GuildId{
 
     @Getter
-    private long id;
+    private long value;
 
-    public GuildId(long id){
-        this.id = id;
+    public GuildId(long value){
+        this.value = value;
     }
 
 }

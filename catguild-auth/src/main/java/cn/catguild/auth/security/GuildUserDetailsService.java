@@ -29,7 +29,7 @@ public class GuildUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 能进行公会信息授权的仅有公会长可以
-        CatUser catUser = catUserService.findGuildMasterByAccountName(new GuildId(0L),username);
+        CatUser catUser = catUserService.findGuildMaster(new GuildId(0L),username);
         return toUserDetails(catUser);
     }
 

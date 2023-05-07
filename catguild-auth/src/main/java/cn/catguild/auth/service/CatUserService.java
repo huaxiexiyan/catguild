@@ -16,6 +16,6 @@ public interface CatUserService {
      * @param username
      * @return
      */
-    CatUser findGuildMasterByAccountName(GuildId guild, String username);
+    CatUser findGuildMaster(GuildId guild, String username);
 
 }

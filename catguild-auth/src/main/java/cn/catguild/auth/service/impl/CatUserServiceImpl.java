@@ -21,7 +21,7 @@ public class CatUserServiceImpl implements CatUserService {
     private CatUserRepository catUserRepository;
 
     @Override
-    public CatUser findGuildMasterByAccountName(GuildId guild, String username) {
+    public CatUser findGuildMaster(GuildId guild, String username) {
         return null;
     }
 
