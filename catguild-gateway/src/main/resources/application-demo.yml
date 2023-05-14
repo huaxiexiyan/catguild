@@ -2,6 +2,48 @@
 server:
   port: 20000
 
+# 路由配置
+spring:
+  cloud:
+    # 路由规则
+    gateway:
+      # 跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: '*'
+            maxAge: 3628800
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+
+      discovery:
+        locator:
+          #使用服务发现路由
+          enabled: true
+      routes:
+        - id: catguild-user
+          uri: lb://catguild-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - RewritePath=/api/user/(?<segment>.*),/$\{segment}
+        - id: catguild-thirdparty
+          uri: lb://catguild-thirdparty
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+        - id: catguild-auth
+          uri: lb://catguild-auth
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - RewritePath=/api/auth/(?<segment>.*),/$\{segment}
+
 # 日志配置
 logging:
   config: classpath:log/logback.xml
