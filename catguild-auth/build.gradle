@@ -19,7 +19,7 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     // 授权服务器
-    implementation "org.springframework.security:spring-security-oauth2-authorization-server:1.0.2"
+//    implementation "org.springframework.security:spring-security-oauth2-authorization-server:1.0.2"
 //    implementation "org.springframework.boot:spring-boot-starter-security"
 
     // 持久层依赖

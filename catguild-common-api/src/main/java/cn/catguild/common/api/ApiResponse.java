@@ -28,7 +28,7 @@ public class ApiResponse<T> {
 	 * 错误显示类型： 0 无声； 1条消息。警告； 2 message.error; 4 通知； 9 页
 	 * 'success' | 'error' | 'warning';
 	 */
-	private String showType;
+	private Integer showType;
 	/**
 	 * 方便后端排查：唯一的请求ID
 	 */
@@ -41,7 +41,7 @@ public class ApiResponse<T> {
 	public ApiResponse() {
 	}
 
-	public ApiResponse(Boolean success, T data, String errorCode, String errorMessage, String showType, String traceId, String host) {
+	public ApiResponse(Boolean success, T data, String errorCode, String errorMessage, Integer showType, String traceId, String host) {
 		this.success = success;
 		this.data = data;
 		this.errorCode = errorCode;
