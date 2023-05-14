@@ -1,18 +1,18 @@
-package cn.catguild.auth.domain;
+package cn.catguild.auth.repository.domain;
 
-import cn.catguild.auth.domain.type.GuildId;
+import cn.catguild.common.entity.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * 公会实体类
- *
  * @author xiyan
- * @date 2023/5/13 11:47
+ * @date 2023/5/14 17:16
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class Guild {
-
-    private GuildId id;
+@TableName("guild")
+public class GuildDO extends BaseDO {
 
     private String name;
 
@@ -29,7 +29,5 @@ public class Guild {
     private String registerAddress;
 
     private String status;
-
-    private Long createdTime;
 
 }

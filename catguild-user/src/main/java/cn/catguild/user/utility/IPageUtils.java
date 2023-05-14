@@ -3,7 +3,6 @@ package cn.catguild.user.utility;
 import cn.catguild.common.api.ApiPage;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
 import java.util.Collection;
 
 /**
@@ -27,7 +26,7 @@ public class IPageUtils {
 		apiPage.setCurrent(page.getCurrent());
 		apiPage.setSize(page.getSize());
 		apiPage.setTotal(page.getTotal());
-		apiPage.setList(page.getRecords());
+		apiPage.setRecords(page.getRecords());
 		return apiPage;
 	}
 
@@ -35,7 +34,7 @@ public class IPageUtils {
 		targetApiPage.setCurrent(accountDOPage.getCurrent());
 		targetApiPage.setSize(accountDOPage.getSize());
 		targetApiPage.setTotal(accountDOPage.getTotal());
-		targetApiPage.setList((Collection<T>) accountDOPage.getRecords());
+		targetApiPage.setRecords((Collection<T>) accountDOPage.getRecords());
 		return targetApiPage;
 	}
 

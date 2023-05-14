@@ -1,14 +1,14 @@
 DROP TABLE IF EXISTS cat_account;
 CREATE TABLE cat_account
 (
-    id           bigint            NOT NULL,
-    guild_id     bigint            NOT NULL,
-    username     text NOT NULL,
-    password     text NOT NULL,
-    status       text NOT NULL,
-    cat_user_id  bigint            NOT NULL,
-    created_time bigint            NOT NULL,
-    updated_time bigint            NOT NULL,
+    id           bigint NOT NULL,
+    guild_id     bigint NOT NULL,
+    username     text   NOT NULL,
+    password     text   NOT NULL,
+    status       text   NOT NULL,
+    cat_user_id  bigint NOT NULL,
+    created_time bigint NOT NULL,
+    updated_time bigint NOT NULL,
     UNIQUE (guild_id, username),
     PRIMARY KEY (id)
 );
@@ -25,12 +25,12 @@ COMMENT ON TABLE "cat_account" IS '登录账号凭证表';
 DROP TABLE IF EXISTS cat_user;
 CREATE TABLE cat_user
 (
-    id           bigint            NOT NULL,
-    guild_id     bigint            NOT NULL,
-    name         text NOT NULL,
+    id           bigint NOT NULL,
+    guild_id     bigint NOT NULL,
+    name         text   NOT NULL,
     identity     text[] NOT NULL,
-    created_time bigint            NOT NULL,
-    updated_time bigint            NOT NULL,
+    created_time bigint NOT NULL,
+    updated_time bigint NOT NULL,
     PRIMARY KEY (id)
 );
 COMMENT ON COLUMN "cat_user"."id" IS '主键';
@@ -44,12 +44,12 @@ COMMENT ON TABLE "cat_user" IS '用户基本信息表';
 DROP TABLE IF EXISTS adventurer;
 CREATE TABLE adventurer
 (
-    cat_user_id  bigint            NOT NULL,
-    guild_id     bigint            NOT NULL,
-    name         text NOT NULL,
-    id_card      text NOT NULL,
-    created_time bigint            NOT NULL,
-    updated_time bigint            NOT NULL,
+    cat_user_id  bigint NOT NULL,
+    guild_id     bigint NOT NULL,
+    name         text   NOT NULL,
+    id_card      text   NOT NULL,
+    created_time bigint NOT NULL,
+    updated_time bigint NOT NULL,
     PRIMARY KEY (cat_user_id)
 );
 COMMENT ON COLUMN "adventurer"."cat_user_id" IS '主键';
@@ -63,11 +63,11 @@ COMMENT ON TABLE "adventurer" IS '用户-冒险家表';
 DROP TABLE IF EXISTS guild_staff;
 CREATE TABLE guild_staff
 (
-    cat_user_id  bigint            NOT NULL,
-    guild_id     bigint            NOT NULL,
-    name         text NOT NULL,
-    created_time bigint            NOT NULL,
-    updated_time bigint            NOT NULL,
+    cat_user_id  bigint NOT NULL,
+    guild_id     bigint NOT NULL,
+    name         text   NOT NULL,
+    created_time bigint NOT NULL,
+    updated_time bigint NOT NULL,
     PRIMARY KEY (cat_user_id)
 );
 COMMENT ON COLUMN "guild_staff"."cat_user_id" IS '主键';
@@ -80,11 +80,11 @@ COMMENT ON TABLE "guild_staff" IS '用户-公会职员表';
 DROP TABLE IF EXISTS principal;
 CREATE TABLE principal
 (
-    cat_user_id  bigint            NOT NULL,
-    guild_id     bigint            NOT NULL,
-    name         text NOT NULL,
-    created_time bigint            NOT NULL,
-    updated_time bigint            NOT NULL,
+    cat_user_id  bigint NOT NULL,
+    guild_id     bigint NOT NULL,
+    name         text   NOT NULL,
+    created_time bigint NOT NULL,
+    updated_time bigint NOT NULL,
     PRIMARY KEY (cat_user_id)
 );
 COMMENT ON COLUMN "principal"."cat_user_id" IS '主键';
@@ -97,14 +97,28 @@ COMMENT ON TABLE "principal" IS '用户-委托人表';
 DROP TABLE IF EXISTS guild;
 CREATE TABLE guild
 (
-    id           bigint            NOT NULL,
-    name         text NOT NULL,
-    created_time bigint            NOT NULL,
-    updated_time bigint            NOT NULL,
+    id                bigint NOT NULL,
+    name              text   NOT NULL,
+    code              text   NOT NULL,
+    avatar            text   NOT NULL,
+    register_country  text   NOT NULL,
+    register_province text   NOT NULL,
+    register_city     text   NOT NULL,
+    register_address  text   NOT NULL,
+    status  text   NOT NULL,
+    created_time      bigint NOT NULL,
+    last_modified_time      bigint NOT NULL,
     PRIMARY KEY (id)
 );
 COMMENT ON COLUMN "guild"."id" IS '主键';
 COMMENT ON COLUMN "guild"."name" IS '用户名';
+COMMENT ON COLUMN "guild"."code" IS '公会唯一代号';
+COMMENT ON COLUMN "guild"."avatar" IS '公会标志图片';
+COMMENT ON COLUMN "guild"."register_country" IS '注册国家';
+COMMENT ON COLUMN "guild"."register_province" IS '注册国家-省';
+COMMENT ON COLUMN "guild"."register_city" IS '注册国家-省-市/镇';
+COMMENT ON COLUMN "guild"."register_address" IS '注册详细地址';
+COMMENT ON COLUMN "guild"."status" IS '公会状态';
 COMMENT ON COLUMN "guild"."created_time" IS '创建时间戳';
-COMMENT ON COLUMN "guild"."updated_time" IS '修改时间戳';
+COMMENT ON COLUMN "guild"."last_modified_time" IS '修改时间戳';
 COMMENT ON TABLE "guild" IS '公会信息表';

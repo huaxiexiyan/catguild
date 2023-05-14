@@ -1,9 +1,8 @@
 package cn.catguild.common.api;
 
 import cn.catguild.common.entity.CatPage;
-import lombok.Data;
-
 import java.util.Collection;
+import lombok.Data;
 
 /**
  * @author xiyan
@@ -12,7 +11,7 @@ import java.util.Collection;
 @Data
 public class ApiPage<T> {
 
-	private Collection<T> list;
+	private Collection<T> records;
 
 	private long current;
 

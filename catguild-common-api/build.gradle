@@ -6,6 +6,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.google.guava:guava:31.1-jre'
 
+    implementation 'com.baomidou:mybatis-plus-annotation:3.5.3.1'
+    implementation 'com.baomidou:mybatis-plus-extension:3.5.3.1'
 
     // 工具类
     //compileOnly 'org.projectlombok:lombok:$lombokVersion'
