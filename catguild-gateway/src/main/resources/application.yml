@@ -1,3 +1,4 @@
+# application.yml
 spring:
   application:
     name: catguild-gateway
@@ -15,12 +16,9 @@ spring:
         username: ${nacos.username} # 账号
         password: ${nacos.password} # 密码
         namespace: ${nacos.namespace}
-
-logging:
-  level:
-    com:
-      alibaba:
-        nacos:
-          client:
-            config: INFO
-            naming: INFO
+  config:
+    import:
+      - optional:nacos:catguild-gateway.yaml  # 监听 DEFAULT_GROUP:test.yml
+#      - optional:nacos:test01.yml?group=group_01 # 覆盖默认 group，监听 group_01:test01.yml
+#      - optional:nacos:test02.yml?group=group_02&refreshEnabled=false # 不开启动态刷新
+#      - nacos:test03.yml # 在拉取nacos配置异常时会快速失败，会导致 spring 容器启动失败
