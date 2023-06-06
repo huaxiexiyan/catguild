@@ -1,4 +1,4 @@
-package cn.catguild.auth.oauth;
+package cn.catguild.auth.oauth.grant;
 
 import java.util.Map;
 import lombok.Getter;

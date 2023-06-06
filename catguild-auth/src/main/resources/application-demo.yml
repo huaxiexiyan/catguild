@@ -1,16 +1,34 @@
 server:
-  port: 20000
+  port: 20010
 
 #spring配置
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
   #数据源配置
   datasource:
     # 自动执行sql
-    url: jdbc:mysql://127.0.0.1:3306/catguild_auth?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
-    username: root
+    url: jdbc:postgresql://127.0.0.1:5432/catguild_test
+    username: postgres
     password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
+    #HikariPool 较佳配置
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 3000
+      idle-timeout: 60000
+      login-timeout: 5
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 10
+      read-only: false
 
 # 日志配置
 logging:
-  config: classpath:log/logback.xml
+  config: classpath:log/logback-test.xml

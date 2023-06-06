@@ -1,4 +1,4 @@
-package cn.catguild.auth.oauth;
+package cn.catguild.auth.oauth.grant;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;

@@ -1,5 +1,7 @@
 package cn.catguild.auth.oauth;
 
+import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationConverter;
+import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationProvider;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -17,14 +19,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.token.DelegatingOAuth2TokenGenerator;
@@ -43,19 +39,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-  private static KeyPair generateRsaKey() {
-    KeyPair keyPair;
-    try {
-      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-      keyPairGenerator.initialize(2048);
-      keyPair = keyPairGenerator.generateKeyPair();
-    }
-    catch (Exception ex) {
-      throw new IllegalStateException(ex);
-    }
-    return keyPair;
-  }
 
   @Bean
   SecurityFilterChain authorizationServerSecurityFilterChain(
@@ -87,27 +70,6 @@ public class SecurityConfig {
   }
 
   @Bean
-  RegisteredClientRepository registeredClientRepository() {
-    RegisteredClient messagingClient =
-        RegisteredClient.withId(UUID.randomUUID().toString())
-            .clientId("messaging-client")
-            .clientSecret("{noop}secret")
-            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-            .authorizationGrantType(
-                new AuthorizationGrantType("urn:ietf:params:oauth:grant-type:password"))
-            .scope("message.read")
-            .scope("message.write")
-            .build();
-
-    return new InMemoryRegisteredClientRepository(messagingClient);
-  }
-
-  @Bean
-  OAuth2AuthorizationService authorizationService() {
-    return new InMemoryOAuth2AuthorizationService();
-  }
-
-  @Bean
   OAuth2TokenGenerator<?> tokenGenerator(JWKSource<SecurityContext> jwkSource) {
     JwtGenerator jwtGenerator = new JwtGenerator(new NimbusJwtEncoder(jwkSource));
     OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
@@ -134,11 +96,6 @@ public class SecurityConfig {
     return AuthorizationServerSettings.builder().build();
   }
 
-  //@Bean
-  //public PasswordEncoder passwordEncoder(){
-  //  return new BCryptPasswordEncoder();
-  //}
-
   @Bean
   public UserDetailsService userDetailsService() {
     UserDetails userDetails = User.withDefaultPasswordEncoder()
@@ -148,6 +105,19 @@ public class SecurityConfig {
             .build();
 
     return new InMemoryUserDetailsManager(userDetails);
+  }
+
+  private static KeyPair generateRsaKey() {
+    KeyPair keyPair;
+    try {
+      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+      keyPairGenerator.initialize(2048);
+      keyPair = keyPairGenerator.generateKeyPair();
+    }
+    catch (Exception ex) {
+      throw new IllegalStateException(ex);
+    }
+    return keyPair;
   }
 
 }
