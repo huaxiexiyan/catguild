@@ -45,7 +45,7 @@ public class TenantApplicationService {
     }
 
     public ApiPage<Tenant> page(TenantQuery query) {
-        Pageable pageable = PageRequest.of((int)query.getCurrent(), (int)query.getSize());
+        Pageable pageable = PageRequest.of((int)query.getCurrent() - 1, (int)query.getSize());
         Page<Tenant> tenantPage = repository.findAll(pageable);
         ApiPage<Tenant> apiPage = new ApiPage<>();
         apiPage.setCurrent(tenantPage.getNumber());
