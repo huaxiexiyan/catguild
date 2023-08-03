@@ -31,6 +31,4 @@
     <Logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/>
     <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
 
-<!--    <Logger name="io.grpc" level="DEBUG"/>-->
-
 </configuration>

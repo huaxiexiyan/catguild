@@ -11,4 +11,6 @@ include 'catguild-common-api'
 include 'catguild-thirdparty'
 include 'catguild-ztest'
 include 'catguild-auth'
-
+include 'catguild-system'
+include 'catguild-system:catguild-system-api'
+findProject(':catguild-system:catguild-system-api')?.name = 'catguild-system-api'
