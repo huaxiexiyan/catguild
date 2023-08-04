@@ -19,7 +19,7 @@
     </appender>
 
     <!-- 日志输出级别 -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 
@@ -31,6 +31,9 @@
     <Logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/>
     <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
 
-<!--    <Logger name="io.grpc" level="DEBUG"/>-->
+    <!-- 减少debug日志   -->
+    <Logger name="com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty" level="INFO"/>
+    <Logger name="com.zaxxer.hikari.pool" level="INFO"/>
+    <Logger name="com.alibaba.nacos.client.naming" level="INFO"/>
 
 </configuration>

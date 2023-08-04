@@ -19,10 +19,7 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     // 授权服务器
-    implementation "org.springframework.security:spring-security-oauth2-authorization-server:1.1.0"
-    implementation "org.springframework.boot:spring-boot-starter-security:3.1.0"
-//    implementation "org.springframework.boot:spring-boot-starter-oauth2-authorization-server"
-
+    implementation "org.springframework.security:spring-security-oauth2-authorization-server:1.1.1"
     // 远程调用组件
     implementation 'net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE'
 
