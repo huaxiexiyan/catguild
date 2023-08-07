@@ -10,6 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author xiyan
  * @date 2023/8/7 11:24
@@ -45,6 +50,25 @@ public class UserResource {
 	public ApiResponse<ApiPage<User>> search(@ModelAttribute UserQuery query) {
 		ApiPage<User> page = service.page(query);
 		return ApiResponse.ok(page);
+	}
+
+	@GetMapping("/info")
+	public ApiResponse<Map<String,Object>> info() {
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("userId",1);
+		resultMap.put("username","小趴菜");
+		resultMap.put("realName", "小趴菜");
+		resultMap.put("avatar", "");
+		resultMap.put("desc", "小趴菜");
+
+		List<Map<String,Object>> roles = new ArrayList<>();
+		Map<String,Object> role = new HashMap<>();
+		role.put("roleName","User");
+		role.put("value","1");
+		roles.add(role);
+		resultMap.put("roles",roles);
+		log.info("执行");
+		return ApiResponse.ok(resultMap);
 	}
 
 }

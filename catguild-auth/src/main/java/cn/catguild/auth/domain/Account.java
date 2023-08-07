@@ -2,9 +2,7 @@ package cn.catguild.auth.domain;
 
 import cn.catguild.auth.domain.common.BaseTenant;
 import cn.catguild.common.type.YesNoStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Comment;
@@ -32,6 +30,7 @@ public class Account extends BaseTenant {
     private Long userId;
 
 	@Comment("是否被禁用")
+	@Enumerated(EnumType.STRING)
 	private YesNoStatus disabled;
 
 }

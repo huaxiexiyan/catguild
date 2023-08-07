@@ -1,8 +1,6 @@
 package cn.catguild.auth.oauth.grant;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +11,9 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author xiyan
@@ -39,7 +40,7 @@ public class PasswordGrantAuthenticationConverter implements AuthenticationConve
   public Authentication convert(HttpServletRequest request) {
     // grant_type (REQUIRED)
     String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
-    if (!"urn:ietf:params:oauth:grant-type:password".equals(grantType)) {
+    if (!"password".equals(grantType)) {
       return null;
     }
 

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -62,6 +63,7 @@ public class SecurityConfig {
     }
 
     @Bean
+	@Order(1)
     SecurityFilterChain authorizationServerSecurityFilterChain(
             HttpSecurity http,
             OAuth2AuthorizationService authorizationService,
@@ -77,8 +79,7 @@ public class SecurityConfig {
                 tokenEndpoint ->
                         tokenEndpoint
                                 .accessTokenRequestConverter(new PasswordGrantAuthenticationConverter())
-                                .authenticationProvider(
-                                        passwordGrantAuthenticationProvider));
+                                .authenticationProvider(passwordGrantAuthenticationProvider));
 
         RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
@@ -92,6 +93,21 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+//	@Bean
+//	@Order(2)
+//	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
+//		throws Exception {
+//		http
+//			.authorizeHttpRequests((authorize) -> authorize
+//				.anyRequest().authenticated()
+//			)
+//			// Form login handles the redirect to the login page from the
+//			// authorization server filter chain
+//			.formLogin(Customizer.withDefaults());
+//
+//		return http.build();
+//	}
 
     @Bean
     OAuth2TokenGenerator<?> tokenGenerator(JWKSource<SecurityContext> jwkSource) {
