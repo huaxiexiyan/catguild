@@ -67,7 +67,7 @@ public class UserResource {
 		role.put("value","1");
 		roles.add(role);
 		resultMap.put("roles",roles);
-		log.info("执行");
+		log.info("执行了");
 		return ApiResponse.ok(resultMap);
 	}
 

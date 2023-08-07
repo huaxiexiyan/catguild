@@ -19,6 +19,7 @@ public class SystemResource {
 	@RequestMapping("/client")
 	public String getCurrentDomain(HttpServletRequest request) {
 		String domain = request.getServerName();
+		log.info("执行");
 		return "Current domain: " + domain;
 	}
 
