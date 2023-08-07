@@ -25,9 +25,11 @@ public class CatUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByUsername(username);
+//		disabled
         UserDetails userDetails =
                 User.withUsername(account.getUsername())
                         .password(account.getPassword())
+						.disabled(account.getDisabled().isCode())
                         .roles("USER")
                         .build();
         return userDetails;

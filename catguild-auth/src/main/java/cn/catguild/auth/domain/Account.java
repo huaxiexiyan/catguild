@@ -1,6 +1,7 @@
 package cn.catguild.auth.domain;
 
 import cn.catguild.auth.domain.common.BaseTenant;
+import cn.catguild.common.type.YesNoStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -29,5 +30,8 @@ public class Account extends BaseTenant {
 
     @Comment("用户id")
     private Long userId;
+
+	@Comment("是否被禁用")
+	private YesNoStatus disabled;
 
 }

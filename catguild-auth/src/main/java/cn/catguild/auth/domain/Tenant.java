@@ -26,4 +26,7 @@ public class Tenant extends AbstractEntity {
     @Comment("租户名")
     private String name;
 
+	@Comment("密码")
+	private String password;
+
 }

@@ -31,7 +31,7 @@ public class TenantResource {
     }
 
     @PostMapping
-    public ApiResponse<Void> createTenant(@RequestBody Tenant tenant) {
+    public ApiResponse<Void> addTenant(@RequestBody Tenant tenant) {
         service.createTenant(tenant);
         return ApiResponse.ok();
     }
