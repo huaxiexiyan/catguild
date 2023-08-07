@@ -86,21 +86,23 @@ subprojects {
         }
     }
 
-    task copyTestResources(type: Copy) {
+    tasks.register('copyTestResources', Copy) {
         from "${projectDir}/src/test/resources"
         into "${buildDir}/resources/test"
     }
     processTestResources.dependsOn copyTestResources
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = 'UTF-8'
         options.warnings = false
         options.deprecation = true
         options.compilerArgs += ["-parameters"]
     }
 
-    tasks.withType(Test) {
-        enabled = false
+    tasks.withType(Test).tap {
+        configureEach {
+            enabled = false
+        }
     }
 
 }
