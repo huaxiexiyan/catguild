@@ -33,17 +33,6 @@ public class SnowflakeIdGenerator implements IdGenerator{
         this.datacenterId = datacenterId;
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        SnowflakeIdGenerator generator = new SnowflakeIdGenerator(1, 1);
-
-        // Generate 10 IDs
-        for (int i = 0; i < 10; i++) {
-            long id = generator.nextId();
-            System.out.println("Generated ID: " + id);
-        }
-    }
-
     @Override
     public synchronized long nextId() {
         long timestamp = timeGen();
@@ -77,5 +66,18 @@ public class SnowflakeIdGenerator implements IdGenerator{
     protected long timeGen() {
         return Instant.now().toEpochMilli();
     }
+
+
+    // Example usage
+    //public static void main(String[] args) {
+    //    SnowflakeIdGenerator generator = new SnowflakeIdGenerator(1, 1);
+    //
+    //    // Generate 10 IDs
+    //    for (int i = 0; i < 10; i++) {
+    //        long id = generator.nextId();
+    //        System.out.println("Generated ID: " + id);
+    //    }
+    //}
+
 }
 
