@@ -2,7 +2,10 @@ package cn.catguild.auth.domain;
 
 import cn.catguild.auth.domain.common.BaseTenant;
 import cn.catguild.common.type.YesNoStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Comment;
@@ -16,9 +19,6 @@ import org.hibernate.annotations.Comment;
 @Entity
 @Table(name = "`auth_account`")
 public class Account extends BaseTenant {
-
-    @Id
-    private Long id;
 
     @Comment("登录凭证")
     private String username;

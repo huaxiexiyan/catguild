@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IdGenerationClientImpl implements IdGenerationClient {
 
-    @GrpcClient("cloud-grpc-server")
+    @GrpcClient("catguild-system")
     private IdGenerationClientGrpc.IdGenerationClientBlockingStub idGenerationClientBlockingStub;
 
     @Override

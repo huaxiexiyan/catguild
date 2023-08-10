@@ -25,3 +25,22 @@
 ## 日志配置
 #logging:
 #  config: classpath:log/logback-test.xml
+spring:
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: catguild@qq.com
+    password: rfumcekfphkecajg
+
+
+##邮箱配置
+##平台地址，这里用的是qq邮箱，使用其他邮箱请更换
+#spring.mail.host=smtp.qq.com
+##端口号
+#spring.mail.port=XXX
+##发送邮件的邮箱地址：改成自己的邮箱
+#spring.mail.username=xxxxxxxxxxx
+##发送短信后它给你的授权码 填写到这里
+#spring.mail.password=xxxxxxxxxxxx
+##与发件邮箱一致
+#spring.mail.from=xxxxxxxxxxx

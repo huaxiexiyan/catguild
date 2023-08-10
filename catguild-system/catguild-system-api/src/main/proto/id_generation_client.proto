@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = false;
+option java_package = "cn.catguild.system.api";
+option java_outer_classname = "IdGenerationClientProto";
+
+import "google/protobuf/empty.proto";
+
+// 定义消息结构体
+message IdRequest{
+
+}
+
+message IdResponse{
+  int64 id = 1;
+}
+
+// 定义服务
+service IdGenerationClient{
+  rpc nextId(google.protobuf.Empty) returns (IdResponse){
+
+  }
+}

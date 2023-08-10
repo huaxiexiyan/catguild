@@ -8,6 +8,7 @@ dependencies {
     // 自身依赖
     implementation project(":catguild-common-api")
     implementation project(":catguild-system:catguild-system-api")
+    implementation 'com.google.guava:guava:31.1-jre'
 
     // spring 家族
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -15,6 +16,11 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    // 邮件服务
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    // html模版引擎
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
     //cloud组件
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'

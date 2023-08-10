@@ -1,0 +1,37 @@
+syntax = 'proto3';
+
+// 默认false
+//option java_multiple_files = false;
+option java_package = 'cn.catguild.system.api';
+option java_outer_classname = 'EmailClientProto';
+
+import 'api_common.proto';
+
+/**
+定义结构体请求
+ */
+message HtmlTpRequest{
+  int64 tpId = 1;//模版id
+  map<string, string> tpParam = 2;//模版参数
+  string address = 3;//目标邮件地址，多个逗号分隔
+  string subject = 4;//邮件主题
+}
+
+/**
+定义结构体响应
+ */
+message HtmlTpResponse{
+  ApiResponse apiResponse = 1;
+}
+
+/*
+定义服务
+ */
+service EmailClientService{
+  /**
+  发送html模版类，传模版及参数+目标email
+   */
+  rpc sendHtmlTp(HtmlTpRequest) returns (HtmlTpResponse){
+
+  }
+}

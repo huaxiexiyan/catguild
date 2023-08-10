@@ -4,7 +4,10 @@ import cn.catguild.auth.domain.common.BaseTenant;
 import cn.catguild.common.type.CatTreeNode;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,9 +23,6 @@ import java.util.Collection;
 @Entity
 @Table(name = "`auth_menu`")
 public class Menu extends BaseTenant implements CatTreeNode<Menu,Long> {
-
-    @Id
-    private Long id;
 
     private Long parentId;
 

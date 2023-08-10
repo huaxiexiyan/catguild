@@ -1,8 +1,11 @@
 package cn.catguild.auth.domain;
 
 import cn.catguild.auth.domain.common.BaseTenant;
+import cn.catguild.auth.domain.type.UserAuthorityType;
+import cn.catguild.common.type.ActiveStatus;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,14 +21,15 @@ import org.hibernate.annotations.Comment;
 @Table(name = "`auth_user`")
 public class User extends BaseTenant {
 
-    @Id
-    private Long id;
-
     @Comment("用户名")
     private String name;
 
-    @Comment("账号id")
-    private Long accountId;
+    @Comment("用户角色类型-本身就代表着一种特殊的用户权限")
+    @Enumerated(EnumType.STRING)
+    private UserAuthorityType authorityType;
 
+    @Comment("活跃状态")
+    @Enumerated(EnumType.STRING)
+    private ActiveStatus status;
 
 }
