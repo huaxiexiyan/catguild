@@ -8,6 +8,18 @@ package cn.catguild.system.infrastructure.id;
  */
 public interface IdGenerationService {
 
-    String next();
+    /**
+     * 获取下一个主键id
+     *
+     * @return
+     */
+    Long nextId();
+
+    /**
+     * 获取下一个uid
+     *
+     * @return
+     */
+    Integer nextUID();
 
 }

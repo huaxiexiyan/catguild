@@ -27,8 +27,8 @@ public class IdGenerationResource {
     public ApiResponse<Long> nextId() {
         // 调用分布式ID生成服务的RPC接口，获取唯一ID
         // 假设生成的ID是一个字符串类型
-        String uniqueId = idGenerationService.next();
-        return ApiResponse.ok(Long.parseLong(uniqueId));
+        Long uniqueId = idGenerationService.nextId();
+        return ApiResponse.ok(uniqueId);
     }
 
 }

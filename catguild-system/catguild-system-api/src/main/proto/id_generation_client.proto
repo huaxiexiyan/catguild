@@ -5,14 +5,16 @@ option java_package = "cn.catguild.system.api";
 option java_outer_classname = "IdGenerationClientProto";
 
 import "google/protobuf/empty.proto";
+import 'api_common.proto';
 
 // 定义消息结构体
-message IdRequest{
-
-}
-
 message IdResponse{
   int64 id = 1;
+}
+
+message UIdResponse{
+  ApiResponse apiResponse = 1;
+  int32 uid = 2;
 }
 
 // 定义服务
@@ -20,4 +22,9 @@ service IdGenerationClient{
   rpc nextId(google.protobuf.Empty) returns (IdResponse){
 
   }
+
+  rpc nextUid(google.protobuf.Empty) returns (UIdResponse){
+
+  }
+
 }

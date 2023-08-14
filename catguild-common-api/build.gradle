@@ -9,6 +9,8 @@ dependencies {
     implementation 'com.baomidou:mybatis-plus-annotation:3.5.3.1'
     implementation 'com.baomidou:mybatis-plus-extension:3.5.3.1'
 
+    implementation 'org.hibernate.orm:hibernate-core'
+
     // 工具类
     //compileOnly 'org.projectlombok:lombok:$lombokVersion'
     //annotationProcessor 'org.projectlombok:lombok:$lombokVersion'

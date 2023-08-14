@@ -10,6 +10,7 @@ import cn.catguild.auth.infrastructure.adapter.external.client.EmailClient;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.auth.presentation.model.UserQuery;
 import cn.catguild.common.api.ApiPage;
+import cn.catguild.common.type.ActiveStatus;
 import cn.catguild.common.type.YesNoStatus;
 import cn.catguild.common.utility.RandomPasswordGenerator;
 import lombok.AllArgsConstructor;
@@ -66,19 +67,20 @@ public class UserApplicationService {
         User user = new User();
         user.setId(idGenerationClient.nextId());
         user.setTenantId(tenant.getId());
-        user.setCreatedBy(tenant.getCreatedBy());
-        user.setCreatedTime(tenant.getCreatedTime());
+        user.setCBy(tenant.getCBy());
+        user.setCTime(tenant.getCTime());
 
         user.setName(tenant.getName() + "@超级管理员");
         user.setAuthorityType(UserAuthorityType.SUPER_ADMINISTRATOR);
+        user.setStatus(ActiveStatus.ACTIVE);
         userRepository.saveAndFlush(user);
 
         // 然后再为其创建一个登录账号
         Account account = new Account();
         account.setId(idGenerationClient.nextId());
         account.setTenantId(user.getTenantId());
-        account.setCreatedBy(user.getCreatedBy());
-        account.setCreatedTime(user.getCreatedTime());
+        account.setCBy(user.getCBy());
+        account.setCTime(user.getCTime());
         // 随机生成密码-并由邮件发送出去
         account.setUserId(user.getId());
         account.setUsername(tenant.getEmail());

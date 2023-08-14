@@ -8,7 +8,6 @@ dependencies {
     // 自身依赖
     implementation project(":catguild-common-api")
     implementation project(":catguild-system:catguild-system-api")
-    implementation 'com.google.guava:guava:31.1-jre'
 
     // spring 家族
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -31,9 +30,11 @@ dependencies {
     implementation 'net.devh:grpc-server-spring-boot-starter:2.14.0.RELEASE'
 
     // 持久层依赖
-//    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.1'
-//    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.6.0'
 
+    // 工具包
+    implementation 'com.google.guava:guava:31.1-jre'
 
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

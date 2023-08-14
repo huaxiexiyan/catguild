@@ -8,4 +8,6 @@ public interface IdGenerationClient {
 
     Long nextId();
 
+    Integer nextUid();
+
 }

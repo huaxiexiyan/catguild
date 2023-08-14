@@ -1,7 +1,7 @@
 package cn.catguild.system.infrastructure.id.config;
 
 import cn.catguild.system.infrastructure.id.strategy.IdGenerator;
-import cn.catguild.system.infrastructure.id.strategy.SnowflakeIdGenerator;
+import cn.catguild.system.infrastructure.id.strategy.Snowflake;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +14,7 @@ public class IdGeneratorConfig {
 
     @Bean
     public IdGenerator snowflake(){
-        return new SnowflakeIdGenerator(1,1);
+        return new Snowflake(1,1,true);
     }
 
 }

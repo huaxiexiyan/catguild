@@ -1,4 +1,4 @@
-package cn.catguild.auth.domain.common;
+package cn.catguild.common.entity.jpa;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
@@ -12,7 +12,7 @@ import org.hibernate.annotations.Comment;
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class BaseTenant extends AbstractEntity{
+public abstract class BaseTenant extends AbstractEntity {
 
     @Comment("租户id")
     private Long tenantId;

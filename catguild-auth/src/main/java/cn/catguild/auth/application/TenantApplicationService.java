@@ -47,9 +47,9 @@ public class TenantApplicationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("当前登录用户========================>>>>{}", authentication);
         //tenant.setCreatedBy();
-        tenant.setCreatedTime(LocalDateTime.now());
-        // 生成全局唯一code
-        tenant.setCode("dsadsad");
+        tenant.setCTime(LocalDateTime.now());
+        // 生成全局唯一uid
+        tenant.setUid(idGenerationClient.nextUid());
         tenant.setStatus(ActiveStatus.ACTIVE);
 		tenantRepository.saveAndFlush(tenant);
         userApplicationService.registerTenantAdmin(tenant);

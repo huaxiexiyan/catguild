@@ -1,6 +1,6 @@
 package cn.catguild.auth.domain;
 
-import cn.catguild.auth.domain.common.AbstractEntity;
+import cn.catguild.common.entity.jpa.AbstractEntity;
 import cn.catguild.common.type.ActiveStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,8 +25,8 @@ public class Tenant extends AbstractEntity {
     @Comment("租户名")
     private String name;
 
-    @Comment("唯一code码")
-    private String code;
+    @Comment("唯一UID")
+    private Integer uid;
 
     @Comment("注册邮箱")
     private String email;
