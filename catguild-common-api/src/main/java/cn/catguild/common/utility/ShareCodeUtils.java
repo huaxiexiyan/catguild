@@ -57,6 +57,7 @@ public class ShareCodeUtils {
     //}
 
     public static String encode(int id) {
+        // todo 校验最大交换的id值，防止越界重复
         int[] b = new int[CODE_LENGTH];
         StringBuilder res = new StringBuilder();
 

@@ -11,13 +11,6 @@ dependencies {
 
     implementation 'org.hibernate.orm:hibernate-core'
 
-    // 工具类
-    //compileOnly 'org.projectlombok:lombok:$lombokVersion'
-    //annotationProcessor 'org.projectlombok:lombok:$lombokVersion'
-    //
-    //// 测试框架
-    //testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    //testAnnotationProcessor 'org.projectlombok:lombok:$lombokVersion'
 }
 
 // Since this library is included as a jar in our jib projects, we want the

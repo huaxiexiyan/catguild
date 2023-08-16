@@ -78,7 +78,7 @@ public class PasswordGrantAuthenticationProvider implements AuthenticationProvid
         log.info("账号=【{}】 密码=【{}】", username, password);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())){
+        if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
             log.debug("Failed to authenticate since password does not match stored value");
             OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR,
                     "incorrect username or password", null);
@@ -101,19 +101,23 @@ public class PasswordGrantAuthenticationProvider implements AuthenticationProvid
                     "The token generator failed to generate the access token.", null);
             throw new OAuth2AuthenticationException(error);
         }
+        // todo 授权范围
         OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
                 generatedAccessToken.getTokenValue(), generatedAccessToken.getIssuedAt(),
                 generatedAccessToken.getExpiresAt(), null);
+
 
         // Initialize the OAuth2Authorization
         OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
                 .principalName(clientPrincipal.getName())
                 .authorizationGrantType(customCodeGrantAuthentication.getGrantType());
         if (generatedAccessToken instanceof ClaimAccessor) {
-            authorizationBuilder.token(accessToken, (metadata) ->
-                    metadata.put(
-                            OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
-                            ((ClaimAccessor) generatedAccessToken).getClaims())
+            authorizationBuilder.token(accessToken, (metadata) -> {
+                        metadata.put(
+                                OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
+                                ((ClaimAccessor) generatedAccessToken).getClaims());
+                        metadata.put("cc","ss");
+                    }
             );
         } else {
             authorizationBuilder.accessToken(accessToken);

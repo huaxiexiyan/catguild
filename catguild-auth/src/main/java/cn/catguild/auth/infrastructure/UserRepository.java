@@ -1,6 +1,6 @@
 package cn.catguild.auth.infrastructure;
 
-import cn.catguild.auth.domain.User;
+import cn.catguild.auth.domain.CatUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @date 2023/7/31 15:29
  */
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<CatUser,Long> {
 
 
 

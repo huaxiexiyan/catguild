@@ -3,6 +3,7 @@ package cn.catguild.auth.application;
 import cn.catguild.auth.domain.Tenant;
 import cn.catguild.auth.infrastructure.TenantRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
+import cn.catguild.auth.oauth.util.AuthUtil;
 import cn.catguild.auth.presentation.model.TenantQuery;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.type.ActiveStatus;
@@ -11,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,15 +42,13 @@ public class TenantApplicationService {
      */
     public void createTenant(Tenant tenant) {
         Long id = idGenerationClient.nextId();
-		tenant.setId(id);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info("当前登录用户========================>>>>{}", authentication);
-        //tenant.setCreatedBy();
+        tenant.setId(id);
+        tenant.setCBy(AuthUtil.getLoginId());
         tenant.setCTime(LocalDateTime.now());
         // 生成全局唯一uid
         tenant.setUid(idGenerationClient.nextUid());
         tenant.setStatus(ActiveStatus.ACTIVE);
-		tenantRepository.saveAndFlush(tenant);
+        tenantRepository.saveAndFlush(tenant);
         userApplicationService.registerTenantAdmin(tenant);
     }
 
@@ -60,7 +57,7 @@ public class TenantApplicationService {
     }
 
     public void updateTenant(Tenant account) {
-		tenantRepository.saveAndFlush(account);
+        tenantRepository.saveAndFlush(account);
     }
 
     public ApiPage<Tenant> page(TenantQuery query) {

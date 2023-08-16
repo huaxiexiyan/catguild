@@ -19,7 +19,7 @@ import org.hibernate.annotations.Comment;
 @Data
 @Entity
 @Table(name = "`auth_user`")
-public class User extends BaseTenant {
+public class CatUser extends BaseTenant {
 
     @Comment("用户名")
     private String name;

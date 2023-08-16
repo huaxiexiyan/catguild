@@ -1,6 +1,6 @@
 package cn.catguild.auth.presentation.model;
 
-import cn.catguild.auth.domain.User;
+import cn.catguild.auth.domain.CatUser;
 import cn.catguild.common.api.ApiPage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,5 +11,5 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserQuery extends ApiPage<User> {
+public class UserQuery extends ApiPage<CatUser> {
 }

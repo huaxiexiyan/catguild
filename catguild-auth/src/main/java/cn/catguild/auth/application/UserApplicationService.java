@@ -1,8 +1,8 @@
 package cn.catguild.auth.application;
 
 import cn.catguild.auth.domain.Account;
+import cn.catguild.auth.domain.CatUser;
 import cn.catguild.auth.domain.Tenant;
-import cn.catguild.auth.domain.User;
 import cn.catguild.auth.domain.type.UserAuthorityType;
 import cn.catguild.auth.infrastructure.AccountRepository;
 import cn.catguild.auth.infrastructure.UserRepository;
@@ -44,18 +44,18 @@ public class UserApplicationService {
      *
      * @param user
      */
-    public void addUser(User user) {
+    public void addUser(CatUser user) {
 
     }
 
-    public void updateUser(User user) {
+    public void updateUser(CatUser user) {
     }
 
-    public User findById(Long id) {
+    public CatUser findById(Long id) {
         return null;
     }
 
-    public ApiPage<User> page(UserQuery query) {
+    public ApiPage<CatUser> page(UserQuery query) {
         return null;
     }
 
@@ -64,7 +64,7 @@ public class UserApplicationService {
      */
     public void registerTenantAdmin(Tenant tenant) {
         // 先创建一个超级管理用户
-        User user = new User();
+        CatUser user = new CatUser();
         user.setId(idGenerationClient.nextId());
         user.setTenantId(tenant.getId());
         user.setCBy(tenant.getCBy());
@@ -88,6 +88,7 @@ public class UserApplicationService {
         HashMap<String, String> tpParam = new HashMap<>() {{
             put("domain", "http://localhost:3002");
             put("password", password);
+            put("email", account.getUsername());
         }};
         emailClient.sendHtmlTp(tenant.getEmail(), "猫公会租户注册", 1L, tpParam);
         account.setPassword(passwordEncoder.encode(password));

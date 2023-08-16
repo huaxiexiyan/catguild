@@ -63,7 +63,7 @@ public class PasswordGrantAuthenticationConverter implements AuthenticationConve
         (key, value) -> {
           if (!key.equals(OAuth2ParameterNames.GRANT_TYPE)
               && !key.equals(OAuth2ParameterNames.CLIENT_ID)
-              && !key.equals(OAuth2ParameterNames.CODE)) {
+              && !key.equals(OAuth2ParameterNames.CODE) ) {
             additionalParameters.put(key, value.get(0));
           }
         });
