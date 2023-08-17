@@ -27,6 +27,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.6.0'
 
+    // 通用操作日志组件，美团如何优雅地记录操作日志？的实现 https://mp.weixin.qq.com/s/JC51S_bI02npm4CE5NEEow
+    implementation 'io.github.mouzt:bizlog-sdk:3.0.6'
+
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.springframework.security:spring-security-test"
