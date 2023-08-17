@@ -79,6 +79,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/**").permitAll()
                         .requestMatchers(endpointsMatcher).permitAll()
                         .anyRequest().authenticated())
                 // oauth2ResourceServer 会覆盖掉 authorizeHttpRequests 的配置，并且会默认放开 公开的端点？？
