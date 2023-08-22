@@ -1,6 +1,7 @@
 package cn.catguild.common.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
@@ -28,24 +29,29 @@ public abstract class AbstractEntity {
     private LocalDateTime cTime;
 
     @Comment("记录创建人id")
+    @JsonIgnore
     private Long cBy;
 
     /**
      * 最后修改时间
      **/
     @Comment("记录最后修改时间")
+    @JsonIgnore
     private LocalDateTime lmTime;
 
     @Comment("记录最后修改人id")
+    @JsonIgnore
     private Long lmBy;
 
     /**
      * 删除时间
      */
     @Comment("记录逻辑删除时间")
+    @JsonIgnore
     private LocalDateTime deTime;
 
     @Comment("记录逻辑删除人id")
+    @JsonIgnore
     private Long deBy;
 
 }
