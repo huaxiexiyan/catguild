@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Comment;
 
+import java.util.List;
+
 /**
  * 应用表
  *
@@ -26,5 +28,8 @@ public class App extends AbstractEntity {
     @Comment("活跃状态")
     @Enumerated(EnumType.STRING)
     private ActiveStatus status;
+
+    @Transient
+    private List<AppVersion> versions;
 
 }

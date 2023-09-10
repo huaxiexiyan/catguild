@@ -2,6 +2,9 @@ package cn.catguild.common.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
@@ -19,6 +22,8 @@ public abstract class AbstractEntity {
 
     @Comment("记录主键")
     @Id
+    @JsonDeserialize(as = Long.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**

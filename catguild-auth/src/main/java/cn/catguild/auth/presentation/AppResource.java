@@ -3,8 +3,9 @@ package cn.catguild.auth.presentation;
 import cn.catguild.auth.application.AppApplicationService;
 import cn.catguild.auth.domain.App;
 import cn.catguild.auth.domain.AppVersion;
+import cn.catguild.auth.presentation.model.AppQuery;
+import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.api.ApiResponse;
-import cn.catguild.common.type.ActiveStatus;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,9 @@ public class AppResource {
     private AppApplicationService service;
 
     @GetMapping("")
-    public ApiResponse<List<App>> listApp() {
-        List<App> apps = service.listApp();
-        return ApiResponse.ok(apps);
+    public ApiResponse<ApiPage<App>> pageApp(@ModelAttribute AppQuery query) {
+        ApiPage<App> page = service.listApp(query);
+        return ApiResponse.ok(page);
     }
 
     @GetMapping("/{id}")
@@ -49,14 +50,14 @@ public class AppResource {
 
     @PatchMapping("/{id}/status")
     public ApiResponse<Void> updateAppStatus(@PathVariable("id") Long id,
-                                             ActiveStatus status) {
-        service.updateAppStatus(id, status);
+                                             @RequestBody App app) {
+        service.updateAppStatus(id, app.getStatus());
         return ApiResponse.ok();
     }
 
     @GetMapping("/{id}/versions")
     public ApiResponse<List<AppVersion>> listAppVersion(@PathVariable("id") Long id) {
-        List<AppVersion> appVersions = service.listAppVersion(id);
+        List<AppVersion> appVersions = service.listAppVersionByAppId(id);
         return ApiResponse.ok(appVersions);
     }
 
@@ -78,8 +79,8 @@ public class AppResource {
     @PatchMapping("/{id}/versions/{versionId}/status")
     public ApiResponse<Void> updateAppVersionStatus(@PathVariable("id") Long id,
                                                     @PathVariable("versionId") Long versionId,
-                                                    ActiveStatus status) {
-        service.updateAppVersionStatus(id, versionId, status);
+                                                    @RequestBody AppVersion appVersion) {
+        service.updateAppVersionStatus(id, versionId, appVersion.getStatus());
         return ApiResponse.ok();
     }
 

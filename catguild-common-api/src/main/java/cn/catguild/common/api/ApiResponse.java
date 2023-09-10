@@ -1,6 +1,7 @@
 package cn.catguild.common.api;
 
 import lombok.Data;
+import org.slf4j.MDC;
 
 /**
  * @author xiyan
@@ -47,7 +48,7 @@ public class ApiResponse<T> {
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 		this.showType = showType;
-		this.traceId = traceId;
+		this.traceId = MDC.get("traceId");
 		this.host = host;
 	}
 

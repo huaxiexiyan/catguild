@@ -10,7 +10,7 @@ dependencies {
     implementation 'com.baomidou:mybatis-plus-extension:3.5.3.1'
 
     implementation 'org.hibernate.orm:hibernate-core'
-
+    implementation 'org.slf4j:slf4j-api'
 }
 
 // Since this library is included as a jar in our jib projects, we want the
