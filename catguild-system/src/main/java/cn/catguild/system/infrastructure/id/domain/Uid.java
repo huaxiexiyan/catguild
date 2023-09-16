@@ -15,8 +15,8 @@ import org.hibernate.annotations.Comment;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "`system_user_uid`")
-public class UserUID extends AbstractEntity {
+@Table(name = "`system_uid`")
+public class Uid extends AbstractEntity {
 
     @Comment("uid")
     private Integer uid;

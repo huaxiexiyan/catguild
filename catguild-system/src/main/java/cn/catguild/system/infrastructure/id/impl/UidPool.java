@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author xiyan
  * @date 2023/8/11 10:53
  */
-public class UIDPool {
+public class UidPool {
 
     public static final int MAX = 100;
 

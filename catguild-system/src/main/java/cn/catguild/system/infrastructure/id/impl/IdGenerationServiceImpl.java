@@ -1,10 +1,12 @@
 package cn.catguild.system.infrastructure.id.impl;
 
 import cn.catguild.system.infrastructure.id.IdGenerationService;
-import cn.catguild.system.infrastructure.id.repository.UserUIDRepository;
+import cn.catguild.system.infrastructure.id.repository.UidRepository;
 import cn.catguild.system.infrastructure.id.strategy.IdGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * @author xiyan
@@ -16,7 +18,7 @@ public class IdGenerationServiceImpl implements IdGenerationService {
 
     private IdGenerator idGenerator;
 
-    private final UserUIDRepository userUIDRepository;
+    private final UidRepository UIDRepository;
 
     @Override
     public Long nextId() {
@@ -34,14 +36,17 @@ public class IdGenerationServiceImpl implements IdGenerationService {
         // 生成 1-4位数字，从 1000 - 9999
         // 任意取 100 个放入队列中，然后从队列中取
         // 取完，再取100个放入队列中
-        Integer poll = UIDPool.POOL.poll();
+        Integer poll = UidPool.POOL.poll();
         if (poll == null){
             // 全部取完了，需要重新写入新的
-            userUIDRepository.findNextFixedUid().ifPresent(
-                    us -> us.forEach(u -> UIDPool.POOL.offer(u.getUid())));
-            poll = UIDPool.POOL.poll();
+            UIDRepository.findNextFixedUid().ifPresent(
+                    us -> us.forEach(u -> UidPool.POOL.offer(u.getUid())));
+            poll = UidPool.POOL.poll();
         }
-        userUIDRepository.removeByUid(poll);
+        UIDRepository.findByUid(poll).ifPresent(uid->{
+            uid.setDeTime(LocalDateTime.now());
+            UIDRepository.saveAndFlush(uid);
+        });
         return poll;
     }
 

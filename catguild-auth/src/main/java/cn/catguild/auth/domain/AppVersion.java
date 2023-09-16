@@ -30,8 +30,10 @@ public class AppVersion extends AbstractEntity {
     private String name;
 
     @Comment("版本号")
-    @Column(length = 50)
     private Integer uid;
+
+    @Comment("备注")
+    private String remarks;
 
     @Comment("活跃状态")
     @Enumerated(EnumType.STRING)

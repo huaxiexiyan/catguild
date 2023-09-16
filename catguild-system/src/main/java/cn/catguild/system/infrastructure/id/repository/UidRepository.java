@@ -1,6 +1,6 @@
 package cn.catguild.system.infrastructure.id.repository;
 
-import cn.catguild.system.infrastructure.id.domain.UserUID;
+import cn.catguild.system.infrastructure.id.domain.Uid;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,15 +13,17 @@ import java.util.Optional;
  * @date 2023/8/11 11:53
  */
 @Repository
-public interface UserUIDRepository extends JpaRepository<UserUID,Long> {
+public interface UidRepository extends JpaRepository<Uid,Long> {
 
     Integer countByDeTimeIsNull();
 
-    UserUID findTopByOrderByUidDesc();
+    Uid findTopByOrderByUidDesc();
+
+    Optional<Uid> findByUid(Integer uid);
 
     void removeByUid(Integer uid);
 
-    @Query("select suu from UserUID suu where suu.cTime is null order by suu.cTime limit 100")
-    Optional<List<UserUID>> findNextFixedUid();
+    @Query("select suu from Uid suu where suu.deTime is null order by suu.cTime limit 100")
+    Optional<List<Uid>> findNextFixedUid();
 
 }

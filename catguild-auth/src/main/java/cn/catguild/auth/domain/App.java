@@ -29,6 +29,12 @@ public class App extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private ActiveStatus status;
 
+    @Comment("备注")
+    private String remarks;
+
+    @Comment("版本号")
+    private Integer uid;
+
     @Transient
     private List<AppVersion> versions;
 

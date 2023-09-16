@@ -1,8 +1,8 @@
 package cn.catguild.system.infrastructure.id.impl;
 
 import cn.catguild.system.infrastructure.id.IdGenerationService;
-import cn.catguild.system.infrastructure.id.domain.UserUID;
-import cn.catguild.system.infrastructure.id.repository.UserUIDRepository;
+import cn.catguild.system.infrastructure.id.domain.Uid;
+import cn.catguild.system.infrastructure.id.repository.UidRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -26,7 +26,7 @@ import java.util.List;
 @Component
 public class IdGenerationApplicationRunner implements ApplicationRunner {
 
-    private final UserUIDRepository userUIDRepository;
+    private final UidRepository UIDRepository;
     private final IdGenerationService idGenerationService;
 
     private static List<Integer> generateNumbers(int min, int max) {
@@ -42,11 +42,11 @@ public class IdGenerationApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // 检查数据库中是否有原始存根
-        Integer count = userUIDRepository.countByDeTimeIsNull();
+        Integer count = UIDRepository.countByDeTimeIsNull();
         if (count != null && count > 0) {
             log.info("数据库原始已经初始化过了，现在填充队列");
-            userUIDRepository.findNextFixedUid().ifPresent(
-                    us -> us.forEach(u -> UIDPool.POOL.offer(u.getUid())));
+            UIDRepository.findNextFixedUid().ifPresent(
+                    us -> us.forEach(u -> UidPool.POOL.offer(u.getUid())));
         } else {
             initDBUid();
         }
@@ -54,7 +54,7 @@ public class IdGenerationApplicationRunner implements ApplicationRunner {
 
     private void initDBUid() {
         // 初始化原始数据
-        UserUID topUid = userUIDRepository.findTopByOrderByUidDesc();
+        Uid topUid = UIDRepository.findTopByOrderByUidDesc();
         int min, max = 0;
         if (topUid == null) {
             min = 1000;
@@ -69,11 +69,11 @@ public class IdGenerationApplicationRunner implements ApplicationRunner {
 
         LocalDateTime now = LocalDateTime.now();
         uids.forEach(uid -> {
-            UserUID userUID = new UserUID();
-            userUID.setId(idGenerationService.nextId());
-            userUID.setUid(uid);
-            userUID.setCTime(now);
-            userUIDRepository.saveAndFlush(userUID);
+            Uid userUid = new Uid();
+            userUid.setId(idGenerationService.nextId());
+            userUid.setUid(uid);
+            userUid.setCTime(now);
+            UIDRepository.saveAndFlush(userUid);
         });
     }
 

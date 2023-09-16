@@ -87,7 +87,10 @@ public class AppApplicationService {
 
     public void addApp(App app) {
         app.setId(idClient.nextId());
-        app.setStatus(ActiveStatus.ACTIVE);
+        app.setUid(idClient.nextUid());
+        if (app.getStatus() == null){
+            app.setStatus(ActiveStatus.ACTIVE);
+        }
         app.setCBy(AuthUtil.getLoginId());
         app.setCTime(LocalDateTime.now());
         appRepository.saveAndFlush(app);
