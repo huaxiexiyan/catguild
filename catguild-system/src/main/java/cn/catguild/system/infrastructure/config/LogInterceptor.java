@@ -1,4 +1,4 @@
-package cn.catguild.auth.infrastructure.config;
+package cn.catguild.system.infrastructure.config;
 
 import cn.catguild.common.constant.LogConstant;
 import cn.catguild.common.utility.TraceIdUtil;
