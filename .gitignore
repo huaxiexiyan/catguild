@@ -75,3 +75,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### python ###
+*/Pipfile.lock
+.venv/
