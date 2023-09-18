@@ -1,3 +1,0 @@
-https://www.lfd.uci.edu/~gohlke/pythonlibs/
-
-pipenv install .\whl\pycurl-7.45.1-cp311-cp311-win_amd64.whl
