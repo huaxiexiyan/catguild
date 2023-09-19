@@ -14,3 +14,5 @@ include 'catguild-auth'
 include 'catguild-system'
 include 'catguild-system:catguild-system-api'
 findProject(':catguild-system:catguild-system-api')?.name = 'catguild-system-api'
+include 'catguild-business'
+
