@@ -12,6 +12,7 @@ redis = "*"
 flask-redis = "*"
 flask = {extras = ["async"], version = "*"}
 gunicorn = "*"
+gevent = "*"
 
 [dev-packages]
 

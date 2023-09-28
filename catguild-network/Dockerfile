@@ -10,13 +10,11 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 # 安装依赖
-COPY run.py .
-COPY Pipfile .
-COPY Pipfile.lock .
+COPY . .
 RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
 # 暴露Flask应用程序的端口（通常是5000）
 EXPOSE 5000
 
 # 启动Flask应用程序
-CMD ["gunicorn", "run:app", "-b", "0.0.0.0:5000"]
+CMD ["pipenv", "run", "gunicorn", "-c", "config.py", "run:app"]
