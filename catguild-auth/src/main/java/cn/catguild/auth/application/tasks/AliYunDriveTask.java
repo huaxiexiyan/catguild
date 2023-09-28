@@ -37,7 +37,8 @@ public class AliYunDriveTask {
     @Setter
     private String url;
 
-    @Scheduled(cron="0 0 8 * * ?")
+    //@Scheduled(cron="0 0 8 * * ?")
+    @Scheduled(cron="0 0/2 * * * ?")
     public void dailyCheckIn() throws IOException, InterruptedException {
         MDC.put(LogConstant.TRACE_ID, TraceIdUtil.getTraceId());
         log.info("执行定时任务 {}", url);
