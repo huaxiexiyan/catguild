@@ -1,5 +1,5 @@
 # 使用一个基础镜像，可以根据你的需求选择不同的Python版本
-FROM python:3.11
+FROM python:3.11.3
 
 # 设置工作目录
 WORKDIR /app
