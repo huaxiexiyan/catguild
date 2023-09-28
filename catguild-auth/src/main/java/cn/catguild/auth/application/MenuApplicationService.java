@@ -6,6 +6,7 @@ import cn.catguild.auth.infrastructure.ResourceRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.common.type.CatTreeNode;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @author xiyan
  * @date 2023/8/8 17:21
  */
+@Slf4j
 @Transactional(rollbackFor = Exception.class)
 @AllArgsConstructor
 @Component

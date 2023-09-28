@@ -2,6 +2,7 @@ package cn.catguild.common.utility;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
@@ -14,11 +15,12 @@ import java.util.Map;
  */
 public class JSONUtils {
 
-	private static final ObjectMapper objectMapper = new ObjectMapper();
+	private static final ObjectMapper objectMapper = new ObjectMapper()
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-	public static <T> List<T> parseArray(String content, Class<T> valueTypeRef) {
+	public static <T> List<T> parseArray(String jsonStr, Class<T> valueTypeRef) {
 		try {
-			List<Map<String, Object>> list = objectMapper.readValue(content, new TypeReference<>() {
+			List<Map<String, Object>> list = objectMapper.readValue(jsonStr, new TypeReference<>() {
 			});
 			List<T> result = new ArrayList<>();
 
@@ -32,7 +34,35 @@ public class JSONUtils {
 		}
 	}
 
-	private static <T> T toPojo(Map<String, Object> map, Class<T> valueTypeRef) {
+	public static <T> T parse(String jsonStr,Class<T> valueTypeRef) {
+		try {
+			Map<String, Object> objMap = objectMapper.readValue(jsonStr, new TypeReference<>() {
+			});
+			return toPojo(objMap, valueTypeRef);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static <T> T toPojo(Map<String, Object> map, Class<T> valueTypeRef) {
 		return objectMapper.convertValue(map, valueTypeRef);
 	}
+
+	public static <T> T toPojo(Object obj, Class<T> valueTypeRef) {
+		return objectMapper.convertValue(obj, valueTypeRef);
+	}
+
+	// 序列化对象为JSON字符串
+	public static String toJsonStr(Object obj) {
+		try {
+			return objectMapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+
 }

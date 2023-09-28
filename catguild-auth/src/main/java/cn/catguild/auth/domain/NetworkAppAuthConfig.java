@@ -2,8 +2,7 @@ package cn.catguild.auth.domain;
 
 import cn.catguild.auth.domain.type.NetworkAppType;
 import cn.catguild.common.entity.jpa.BaseTenant;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Comment;
@@ -24,13 +23,18 @@ public class NetworkAppAuthConfig extends BaseTenant {
     private Long userId;
 
     @Comment("网络app类型")
+    @Enumerated(EnumType.STRING)
     private NetworkAppType networkAppType;
 
     @Comment("授权token")
+    @Column(columnDefinition = "TEXT")
     private String accessToken;
 
     @Comment("刷新token")
+    @Column(columnDefinition = "TEXT")
     private String refreshToken;
 
+    @Comment("过期时间")
+    private Integer expiresIn;
 
 }

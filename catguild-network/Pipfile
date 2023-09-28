@@ -4,11 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
 app = "*"
 requests = "*"
 pytz = "*"
 tenacity = "*"
+redis = "*"
+flask-redis = "*"
+flask = {extras = ["async"], version = "*"}
 
 [dev-packages]
 

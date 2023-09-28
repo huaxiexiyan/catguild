@@ -14,6 +14,7 @@ import cn.catguild.common.type.ActiveStatus;
 import cn.catguild.common.type.YesNoStatus;
 import cn.catguild.common.utility.RandomPasswordGenerator;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.HashMap;
  * @author xiyan
  * @date 2023/8/7 11:32
  */
+@Slf4j
 @Transactional(rollbackFor = Exception.class)
 @AllArgsConstructor
 @Component
