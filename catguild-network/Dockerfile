@@ -19,4 +19,4 @@ RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 EXPOSE 5000
 
 # 启动Flask应用程序
-CMD ["pipenv", "run", "gunicorn", "run:app", "-b", "0.0.0.0:5000"]
+CMD ["gunicorn", "run:app", "-b", "0.0.0.0:5000"]
