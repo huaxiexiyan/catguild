@@ -5,7 +5,7 @@ gevent.monkey.patch_all()
 import multiprocessing
 
 loglevel = 'info'
-bind = "0.0.0.0:21001"
+bind = "0.0.0.0:22001"
 # 配置了日志就需要目录存在，否则会启动失败
 # pidfile = "log/gunicorn.pid"
 # accesslog = "log/access.log"
