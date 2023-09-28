@@ -6,7 +6,7 @@ import datetime
 import requests
 from flask import current_app as app
 
-from app.models.aliyun_drive_info import SignInListResponse, CommonResponse, SignInGoodsResponse, AccountTokenBO
+from network.models.aliyun_drive_info import SignInListResponse, CommonResponse, SignInGoodsResponse, AccountTokenBO
 
 
 class AliyunDriveTaskService:

@@ -42,7 +42,7 @@ except OSError:
 # 配置日志
 app.config['LOGGING_LEVEL'] = logging.INFO  # 设置日志级别为INFO
 app.config['LOGGING_FORMAT'] = '%(asctime)s [%(levelname)s] - %(message)s'
-app.config['LOGGING_LOCATION'] = 'app.log'  # 设置日志文件路径
+app.config['LOGGING_LOCATION'] = 'network.log'  # 设置日志文件路径
 
 # 配置Redis连接
 app.config['REDIS_URL'] = os.environ.get('REDIS_URL')
@@ -50,5 +50,5 @@ app.config['REDIS_URL'] = os.environ.get('REDIS_URL')
 redis_client = FlaskRedis(app, decode_responses=True)
 
 # 注册路由
-from app.api import aliyun_drive_task_api
+from network.api import aliyun_drive_task_api
 app.register_blueprint(aliyun_drive_task_api.bp, url_prefix="/api/aliyun-drives")

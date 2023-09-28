@@ -1,6 +1,6 @@
 # 用于启动应用的脚本。
 # run.py
-from app import app
+from network import app
 
 
 def list_routes():

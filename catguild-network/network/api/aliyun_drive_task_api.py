@@ -2,9 +2,9 @@ import json
 
 from flask import jsonify, make_response, Blueprint, current_app
 
-from app.models.network_app_auth_config import NetworkAppAuthConfig
-from app.service.aliyun_drive_task_service import AliyunDriveTaskService
-from app import redis_client
+from network.models.network_app_auth_config import NetworkAppAuthConfig
+from network.service.aliyun_drive_task_service import AliyunDriveTaskService
+from network import redis_client
 
 bp = Blueprint('ali_network_disk', __name__)
 
