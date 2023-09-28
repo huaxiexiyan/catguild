@@ -1,6 +1,7 @@
 package cn.catguild.common.utility;
 
 import com.google.common.io.Files;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.security.spec.X509EncodedKeySpec;
  * @author xiyan
  * @date 2023/8/15 14:00
  */
+@Slf4j
 public class RSAUtils {
 
     private static KeyPair generateRsaKey() {
@@ -43,7 +45,9 @@ public class RSAUtils {
 
     public static PublicKey getPublicKey(String path) {
         try {
-            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Files.toByteArray(new File(path)));
+            File file = new File(path);
+            log.info("加载RSA的公钥文件【{}】",file.getAbsolutePath());
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Files.toByteArray(file));
             return KeyFactory.getInstance("RSA").generatePublic(keySpec);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException | IOException e) {
             throw new RuntimeException(e);
@@ -52,7 +56,9 @@ public class RSAUtils {
 
     public static PrivateKey getPrivateKey(String path) {
         try {
-            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Files.toByteArray(new File(path)));
+            File file = new File(path);
+            log.info("加载RSA的私钥文件【{}】",file.getAbsolutePath());
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Files.toByteArray(file));
             return KeyFactory.getInstance("RSA").generatePrivate(keySpec);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException | IOException e) {
             throw new RuntimeException(e);
