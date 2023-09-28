@@ -77,5 +77,4 @@ bin/
 .DS_Store
 
 ### python ###
-*/Pipfile.lock
 .venv/

@@ -5,6 +5,7 @@ from flask import Flask
 from logging.config import dictConfig
 from flask_redis import FlaskRedis
 
+
 # 日志配置
 dictConfig({
     'version': 1,
@@ -44,7 +45,7 @@ app.config['LOGGING_FORMAT'] = '%(asctime)s [%(levelname)s] - %(message)s'
 app.config['LOGGING_LOCATION'] = 'app.log'  # 设置日志文件路径
 
 # 配置Redis连接
-app.config['REDIS_URL'] = ''
+app.config['REDIS_URL'] = os.environ.get('REDIS_URL')
 # 初始化Flask-Redis
 redis_client = FlaskRedis(app, decode_responses=True)
 

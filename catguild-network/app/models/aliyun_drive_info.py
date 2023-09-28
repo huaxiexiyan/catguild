@@ -142,9 +142,9 @@ class AccountTokenBO:
     def __init__(self, success, name, access_token, refresh_token, expires_in, message):
         self.success = success
         self.name = name
-        self.access_token = access_token
-        self.refresh_token = refresh_token
-        self.expires_in = expires_in
+        self.accessToken = access_token
+        self.refreshToken = refresh_token
+        self.expiresIn = expires_in
         self.message = message
 
     def __str__(self):

@@ -3,7 +3,7 @@ import json
 from flask import jsonify, make_response, Blueprint, current_app
 
 from app.models.network_app_auth_config import NetworkAppAuthConfig
-from app.service.aliyun_drive_task_service import AliyunDriveTaskService, SignInGoodsResponse
+from app.service.aliyun_drive_task_service import AliyunDriveTaskService
 from app import redis_client
 
 bp = Blueprint('ali_network_disk', __name__)
@@ -36,7 +36,7 @@ async def get_run():
                     current_app.logger.info("当前用户【%s】的 refreshToken 失效了，需要手动重新更新，错误消息是【%s】",
                                             network_app_auth_config.id, account_token_bo.message)
                     continue
-                access_token = account_token_bo.access_token
+                access_token = account_token_bo.accessToken
                 redis_client.set(redis_access_key_per + network_app_auth_config.id, json.dumps(account_token_bo.__dict__))
                 sign_in_goods_response = aliyun_drive_task.get_sign_in_goods(access_token)
         # 判断今天是否已经签到过了
