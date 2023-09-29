@@ -62,10 +62,11 @@ public class AliYunDriveTask {
             NetworkAppAuthConfig networkAppAuthConfig = cacheClient.getObject(key,NetworkAppAuthConfig.class);
             Long id = Long.parseLong(key.replace(prefix, ""));
             NetworkAppAuthConfig networkAppAuthConfigUpdate = new NetworkAppAuthConfig();
-            networkAppAuthConfig.setAccessToken(networkAppAuthConfig.getAccessToken());
-            networkAppAuthConfig.setRefreshToken(networkAppAuthConfig.getRefreshToken());
-            networkAppAuthConfig.setExpiresIn(networkAppAuthConfig.getExpiresIn());
+            networkAppAuthConfigUpdate.setAccessToken(networkAppAuthConfig.getAccessToken());
+            networkAppAuthConfigUpdate.setRefreshToken(networkAppAuthConfig.getRefreshToken());
+            networkAppAuthConfigUpdate.setExpiresIn(networkAppAuthConfig.getExpiresIn());
             networkAppAuthApplication.updateAppAuthConfig(id, networkAppAuthConfigUpdate);
+            cacheClient.remove(key);
         });
         log.info("更新授权参数结束");
     }

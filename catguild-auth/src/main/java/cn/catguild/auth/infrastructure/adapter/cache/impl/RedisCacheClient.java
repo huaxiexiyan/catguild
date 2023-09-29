@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -63,6 +64,16 @@ public class RedisCacheClient implements CacheClient {
     public <T> T getObject(String key, Class<T> className) {
         Object obj = redisTemplate.opsForValue().get(key);
         return obj == null ? null : JSONUtils.toPojo(obj, className);
+    }
+
+    @Override
+    public void remove(String key) {
+        redisTemplate.delete(key);
+    }
+
+    @Override
+    public void remove(Collection<String> keys) {
+        redisTemplate.delete(keys);
     }
 
 

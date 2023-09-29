@@ -2,6 +2,7 @@ package cn.catguild.auth.infrastructure.adapter.cache;
 
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,5 +42,9 @@ public interface CacheClient {
     String getString(String key);
 
     <T> T getObject(String key,Class<T> className);
+
+    void remove(String key);
+
+    void remove(Collection<String> keys);
 
 }
