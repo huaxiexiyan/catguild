@@ -40,4 +40,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-jib.to.image = "huaxiexiyan/catguild-system:main"
+jib {
+    to {
+        image = 'huaxiexiyan/catguild-system:main'
+    }
+    container {
+        jvmFlags = ['-Xmx128m', '-Xms128m'] // 添加堆内存参数
+    }
+}

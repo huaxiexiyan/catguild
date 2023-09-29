@@ -16,4 +16,11 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 }
 
-jib.to.image = "huaxiexiyan/catguild-gateway:main"
+jib {
+    to {
+        image = 'huaxiexiyan/catguild-gateway:main'
+    }
+    container {
+        jvmFlags = ['-Xmx128m', '-Xms128m'] // 添加堆内存参数
+    }
+}
