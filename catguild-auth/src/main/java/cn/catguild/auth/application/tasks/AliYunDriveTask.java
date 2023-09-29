@@ -51,8 +51,7 @@ public class AliYunDriveTask {
         log.info("执行定时任务 {}", send);
     }
 
-    //@Scheduled(cron="0 0 10 * * ?")
-    @Scheduled(cron="0 0/2 * * * ?")
+    @Scheduled(cron="0 0 10 * * ?")
     public void refreshAuth(){
         MDC.put(LogConstant.TRACE_ID, TraceIdUtil.getTraceId());
         log.info("更新授权参数开始");
