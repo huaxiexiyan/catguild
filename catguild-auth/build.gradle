@@ -41,7 +41,12 @@ jib {
     to {
         image = 'huaxiexiyan/catguild-auth:main'
     }
+
     container {
         jvmFlags = ['-Xmx128m', '-Xms128m'] // 添加堆内存参数
+        creationTime = project.provider { project.ext.git['git.commit.time'] }
+        environment = [
+            'TZ': 'Asia/Shanghai'
+        ]
     }
 }
