@@ -44,7 +44,7 @@ jib {
 
     container {
         jvmFlags = ['-Xmx128m', '-Xms128m'] // 添加堆内存参数
-        creationTime = project.provider { project.ext.git['git.commit.time'] }
+        creationTime = 'USE_CURRENT_TIMESTAMP'
         environment = [
             'TZ': 'Asia/Shanghai'
         ]
