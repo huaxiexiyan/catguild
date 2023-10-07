@@ -71,4 +71,8 @@ public class TenantApplicationService {
         return apiPage;
     }
 
+    public Tenant getTenantByDomainName(String domainName) {
+        return tenantRepository.findByDomainName(domainName);
+    }
+
 }

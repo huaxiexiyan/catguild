@@ -74,9 +74,10 @@ public class PasswordGrantAuthenticationProvider implements AuthenticationProvid
         // TODO Validate the username \ password parameter
         String username = ((PasswordGrantAuthenticationToken) authentication).getUsername();
         String password = ((PasswordGrantAuthenticationToken) authentication).getPassword();
+        String tenantId = ((PasswordGrantAuthenticationToken) authentication).getTenantId();
+
         // 校验账号密码是否正确
-        log.info("账号=【{}】 密码=【{}】", username, password);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(tenantId + OAuth2Parameter.TENANT_ID_SPLIT + username);
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
             log.debug("Failed to authenticate since password does not match stored value");
@@ -116,7 +117,7 @@ public class PasswordGrantAuthenticationProvider implements AuthenticationProvid
                         metadata.put(
                                 OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
                                 ((ClaimAccessor) generatedAccessToken).getClaims());
-                        metadata.put("cc","ss");
+                        metadata.put("cc", "ss");
                     }
             );
         } else {

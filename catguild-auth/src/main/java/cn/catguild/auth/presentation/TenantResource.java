@@ -6,12 +6,15 @@ import cn.catguild.auth.presentation.model.TenantQuery;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.api.ApiResponse;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xiyan
  * @date 2023/7/31 17:34
  */
+@Slf4j
 @RequestMapping("/tenants")
 @RestController
 public class TenantResource {
@@ -41,6 +44,12 @@ public class TenantResource {
         tenant.setId(id);
         service.updateTenant(tenant);
         return ApiResponse.ok();
+    }
+
+    @GetMapping("/info")
+    public ApiResponse<Tenant> getTenantByDomainName(HttpServletRequest request) {
+        String domainName = request.getHeader("X-Forwarded-Host");
+        return ApiResponse.ok(service.getTenantByDomainName(domainName));
     }
 
 }

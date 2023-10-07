@@ -51,10 +51,13 @@ public class PasswordGrantAuthenticationConverter implements AuthenticationConve
     // username \ password (REQUIRED)
     String username = parameters.getFirst(OAuth2ParameterNames.USERNAME);
     String password = parameters.getFirst(OAuth2ParameterNames.PASSWORD);
+    String tenantId = parameters.getFirst(OAuth2Parameter.TENANT_ID);
     if (!StringUtils.hasText(username)
         || parameters.get(OAuth2ParameterNames.USERNAME).size() != 1
         || !StringUtils.hasText(password)
-        || parameters.get(OAuth2ParameterNames.PASSWORD).size() != 1) {
+        || parameters.get(OAuth2ParameterNames.PASSWORD).size() != 1
+            || !StringUtils.hasText(tenantId)
+            || parameters.get(OAuth2Parameter.TENANT_ID).size() != 1) {
       throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_REQUEST);
     }
 
@@ -69,6 +72,6 @@ public class PasswordGrantAuthenticationConverter implements AuthenticationConve
         });
 
     return new PasswordGrantAuthenticationToken(
-        username, password, grantType, clientPrincipal, additionalParameters);
+        username, password, tenantId, grantType, clientPrincipal, additionalParameters);
   }
 }

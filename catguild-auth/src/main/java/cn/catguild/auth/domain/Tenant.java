@@ -38,4 +38,7 @@ public class Tenant extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private ActiveStatus status;
 
+    @Comment("绑定的域名，多个逗号风格")
+    private String domainName;
+
 }

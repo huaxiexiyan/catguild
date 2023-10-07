@@ -4,6 +4,7 @@ import cn.catguild.auth.domain.Account;
 import cn.catguild.auth.domain.CatUser;
 import cn.catguild.auth.infrastructure.AccountRepository;
 import cn.catguild.auth.infrastructure.UserRepository;
+import cn.catguild.auth.oauth.grant.OAuth2Parameter;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +28,15 @@ public class CatUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByUsername(username);
+        String[] tenantIdUsername = username.split(OAuth2Parameter.TENANT_ID_SPLIT);
+        Account account = accountRepository.findByTenantIdAndUsername(Long.parseLong(tenantIdUsername[0]), tenantIdUsername[1]);
         return User.withUsername(account.getUsername())
-                        .password(account.getPassword())
-						.disabled(account.getDisabled().isCode())
-                        .build();
+                .password(account.getPassword())
+                .disabled(account.getDisabled().isCode())
+                .build();
     }
 
-    public CatUser getByUsername(String username){
+    public CatUser getByUsername(String username) {
         Account account = accountRepository.findByUsername(username);
         Optional<CatUser> catUser = userRepository.findById(account.getUserId());
         return catUser.orElse(null);
