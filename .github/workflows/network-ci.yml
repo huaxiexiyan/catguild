@@ -12,7 +12,7 @@ on:
 
 jobs:
   push_to_registry:
-    name: CI-network
+    name: CI-Network
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
