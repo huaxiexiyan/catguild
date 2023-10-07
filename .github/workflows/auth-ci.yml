@@ -25,14 +25,6 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Check if cache was hit
-        run: echo "cache hit = ${{ steps.npm-cache.outputs.cache-hit }}"
-
-#      - name: Download Gradle packages
-#        run: |
-#          chmod +x ./gradlew
-#          ./gradlew :catguild-auth:build --no-daemon
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
