@@ -30,6 +30,9 @@ public class CatUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String[] tenantIdUsername = username.split(OAuth2Parameter.TENANT_ID_SPLIT);
         Account account = accountRepository.findByTenantIdAndUsername(Long.parseLong(tenantIdUsername[0]), tenantIdUsername[1]);
+        if (account == null) {
+            throw new RuntimeException("用户名或密码错误");
+        }
         return User.withUsername(account.getUsername())
                 .password(account.getPassword())
                 .disabled(account.getDisabled().isCode())

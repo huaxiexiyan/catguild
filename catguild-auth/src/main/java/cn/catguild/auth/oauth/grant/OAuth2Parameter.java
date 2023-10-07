@@ -7,6 +7,6 @@ package cn.catguild.auth.oauth.grant;
 public class OAuth2Parameter {
 
     public static final String TENANT_ID = "tenantId";
-    public static final String TENANT_ID_SPLIT = "@";
+    public static final String TENANT_ID_SPLIT = "#";
 
 }
