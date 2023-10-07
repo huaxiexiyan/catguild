@@ -6,7 +6,6 @@ import cn.catguild.auth.presentation.model.TenantQuery;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.api.ApiResponse;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,11 +46,7 @@ public class TenantResource {
     }
 
     @GetMapping("/info")
-    public ApiResponse<Tenant> getTenantByDomainName(HttpServletRequest request) {
-        String domainName = request.getHeader("X-Forwarded-Host");
-        String serverName = request.getServerName();
-        log.info("serverName: {}",serverName);
-        log.info("Header: {}", domainName);
+    public ApiResponse<Tenant> getTenantByDomainName(String domainName) {
         return ApiResponse.ok(service.getTenantByDomainName(domainName));
     }
 

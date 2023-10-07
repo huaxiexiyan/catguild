@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -35,6 +36,7 @@ public class MenuApplicationService {
                     // 添加菜单
                     Long id = idClient.nextId();
                     menu.setId(id);
+                    menu.setCTime(LocalDateTime.now());
                     menuRepository.saveAndFlush(menu);
 
                     resource.setRefId(id);

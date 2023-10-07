@@ -2,6 +2,8 @@ package cn.catguild.auth.infrastructure;
 
 import cn.catguild.auth.domain.Tenant;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,6 +13,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TenantRepository extends JpaRepository<Tenant,Long> {
 
-    Tenant findByDomainName(String domainName);
+    @Query("select t from Tenant  t " +
+            "where t.domainName = :domainName " +
+            "or t.domainName like CONCAT(:domainName, ',%')" +
+            "or t.domainName like CONCAT('%,',:domainName, ',%')" +
+            "or t.domainName like CONCAT('%,', :domainName)")
+    Tenant findByDomainName(@Param("domainName") String domainName);
 
 }

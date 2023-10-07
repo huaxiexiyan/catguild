@@ -39,10 +39,8 @@ public class ResourceResource {
     @PostMapping
     public ApiResponse<Map<String, String>> addResource(@RequestBody Resource resource) {
         Long id = service.addResource(resource);
-        log.info("存后{}",id);
         Map<String, String> newData = new HashMap<>(1);
         newData.put("id", id.toString());
-        log.info("存后{}",newData);
         return ApiResponse.ok(newData);
     }
 
