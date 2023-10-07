@@ -6,6 +6,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
+import java.util.Collections;
+
 /**
  * @author xiyan
  * @date 2023/8/8 15:48
@@ -16,12 +18,12 @@ public class CorsConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOriginPattern("http://localhost:3002"); // 设置允许的源
-        corsConfig.addAllowedMethod("*"); // 设置允许的HTTP方法
-        corsConfig.addAllowedHeader("*"); // 设置允许的头部
+        //1,允许任何来源
+        corsConfig.setAllowedOriginPatterns(Collections.singletonList("*"));
+        //corsConfig.addAllowedOriginPattern("http://localhost:3002"); // 设置允许特定来源
+        corsConfig.addAllowedMethod(CorsConfiguration.ALL); // 设置允许的HTTP方法
+        corsConfig.addAllowedHeader(CorsConfiguration.ALL); // 设置允许的头部
         corsConfig.setAllowCredentials(true);
-
-        // {"http://localhost:3002", "http://example.com"}
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
