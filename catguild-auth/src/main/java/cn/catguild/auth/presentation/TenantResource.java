@@ -49,6 +49,9 @@ public class TenantResource {
     @GetMapping("/info")
     public ApiResponse<Tenant> getTenantByDomainName(HttpServletRequest request) {
         String domainName = request.getHeader("X-Forwarded-Host");
+        String serverName = request.getServerName();
+        log.info("serverName: {}",serverName);
+        log.info("Header: {}", domainName);
         return ApiResponse.ok(service.getTenantByDomainName(domainName));
     }
 
