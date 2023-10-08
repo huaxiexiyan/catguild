@@ -29,7 +29,7 @@ public class MenuResource {
 
     @GetMapping("/info")
     public ApiResponse<List<Menu>> info() {
-        List<Menu> tree = menuApplicationService.tree();
+        List<Menu> tree = menuApplicationService.authTree();
         return ApiResponse.ok(tree);
     }
 

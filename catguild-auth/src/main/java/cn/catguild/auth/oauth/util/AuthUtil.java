@@ -19,7 +19,7 @@ public class AuthUtil {
         }
         return null;
     }
-    public static Long getTenantIdId(){
+    public static Long getTenantId(){
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         if (authentication instanceof JwtAuthenticationToken token){
