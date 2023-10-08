@@ -1,6 +1,7 @@
 package cn.catguild.auth.oauth;
 
 import cn.catguild.auth.domain.CatUser;
+import cn.catguild.auth.oauth.constant.TokenConstant;
 import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationConverter;
 import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationProvider;
 import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationToken;
@@ -153,8 +154,10 @@ public class SecurityConfig {
                 // 添加租户、用户id、不可添加复杂内容
                 String username = authenticationToken.getUsername();
                 CatUser user = userDetailsService.getByUsername(username);
-                claims.claim("userId",IdUtil.obfuscate(user.getId()));
-                claims.claim("tenantId",IdUtil.obfuscate(user.getTenantId()));
+                // 添加登录用户信息
+                claims.claim(TokenConstant.USER_ID,IdUtil.obfuscate(user.getId()));
+                claims.claim(TokenConstant.TENANT_ID,IdUtil.obfuscate(user.getTenantId()));
+                claims.claim(TokenConstant.AUTHORITY_TYPE,user.getAuthorityType());
             }
         };
     }

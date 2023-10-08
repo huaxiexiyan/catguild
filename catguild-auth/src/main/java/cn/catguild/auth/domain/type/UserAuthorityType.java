@@ -12,16 +12,15 @@ public enum UserAuthorityType {
     /**
      * 超级管理员:
      * 只有一个并且本身是不可被修改
-     * 不受权限系统管制（在租户层面上）
+     * 不受权限系统管制
      */
     SUPER_ADMINISTRATOR,
 
     /**
-     * 普通管理员
-     * 可以有多个，其绑定的相关信息经过严格的验证才能就进行编辑操作
-     * 并且其权限将可以被权限系统管制
+     * APP里的超级管理员，只有一个并且本身是不可被修改
+     * 不受权限系统管制（在租户范围内，单个app内）
      */
-    ORDINARY_ADMINISTRATOR,
+    APP_ADMINISTRATOR,
 
     /**
      * 普通用户

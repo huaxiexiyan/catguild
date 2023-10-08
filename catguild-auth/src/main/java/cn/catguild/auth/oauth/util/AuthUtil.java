@@ -1,9 +1,14 @@
 package cn.catguild.auth.oauth.util;
 
+import cn.catguild.auth.domain.type.UserAuthorityType;
+import cn.catguild.auth.oauth.constant.TokenConstant;
+import cn.catguild.auth.oauth.domain.TokenUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+
+import java.util.Map;
 
 /**
  * @author xiyan
@@ -11,22 +16,25 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
  */
 public class AuthUtil {
 
-    public static Long getLoginId(){
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        if (authentication instanceof JwtAuthenticationToken token){
-            return Long.parseLong(token.getTokenAttributes().get("userId").toString());
-        }
-        return null;
-    }
-    public static Long getTenantId(){
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        if (authentication instanceof JwtAuthenticationToken token){
-            return Long.parseLong(token.getTokenAttributes().get("tenantId").toString());
-        }
-        return null;
+    public static Long getLoginId() {
+        return getTokenUser().getUserId();
     }
 
+    public static Long getTenantId() {
+        return getTokenUser().getTenantId();
+    }
+
+    public static TokenUser getTokenUser() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        if (authentication instanceof JwtAuthenticationToken token) {
+            Map<String, Object> tokenAttributes = token.getTokenAttributes();
+            Long userId = Long.parseLong(tokenAttributes.get(TokenConstant.USER_ID).toString());
+            Long tenantId = Long.parseLong(tokenAttributes.get(TokenConstant.TENANT_ID).toString());
+            UserAuthorityType userAuthorityType = UserAuthorityType.valueOf(tokenAttributes.get(TokenConstant.AUTHORITY_TYPE).toString());
+            return new TokenUser(tenantId, userId, userAuthorityType);
+        }
+        return new TokenUser();
+    }
 
 }

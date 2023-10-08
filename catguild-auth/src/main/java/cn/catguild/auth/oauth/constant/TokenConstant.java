@@ -6,6 +6,8 @@ package cn.catguild.auth.oauth.constant;
  */
 public interface TokenConstant {
 
+   String USER_ID = "userId";
    String TENANT_ID = "tenantId";
+   String AUTHORITY_TYPE = "authorityType";
 
 }
