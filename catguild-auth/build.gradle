@@ -42,7 +42,7 @@ jib {
         image = 'huaxiexiyan/catguild-auth:main'
     }
     container {
-        jvmFlags = ['-Xmx128m', '-Xms128m'] // 添加堆内存参数
+        jvmFlags = ['-Xmx64m', '-Xms64m'] // 添加堆内存参数
         creationTime = 'USE_CURRENT_TIMESTAMP'
         environment = [
             'TZ': 'Asia/Shanghai'
