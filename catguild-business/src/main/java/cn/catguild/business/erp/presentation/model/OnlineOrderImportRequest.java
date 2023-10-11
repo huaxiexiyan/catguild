@@ -1,8 +1,13 @@
 package cn.catguild.business.erp.presentation.model;
 
+import cn.catguild.business.erp.infrastructure.domain.type.AfterSalesStatus;
+import cn.catguild.business.erp.infrastructure.domain.type.DeliveryStatus;
+import cn.catguild.business.erp.infrastructure.domain.type.OrderStatus;
+import cn.catguild.business.erp.infrastructure.domain.type.PaymentMethod;
+import cn.catguild.business.erp.presentation.converter.*;
+import cn.catguild.common.type.YesNoStatus;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,20 +19,17 @@ import java.time.LocalDateTime;
  * @date 2023/10/8 22:06
  */
 @Data
-@EqualsAndHashCode
-public class OrderImportRequest {
+public class OnlineOrderImportRequest {
 
     // 订单基本信息
     @ExcelProperty("订单号")
     private String orderNum;
 
-    //@ExcelProperty("订单状态")
-    //@Enumerated(EnumType.STRING)
-    //private OrderStatus orderStatus;
+    @ExcelProperty(value = "订单状态", converter = OrderStatusConverter.class)
+    private OrderStatus orderStatus;
 
-    //@ExcelProperty("售后状态")
-    //@Enumerated(EnumType.STRING)
-    //private AfterSalesStatus afterSalesStatus;
+    @ExcelProperty(value = "售后状态", converter = AfterSalesStatusConverter.class)
+    private AfterSalesStatus afterSalesStatus;
 
     @ExcelProperty("下单时间")
     private LocalDateTime orderPlacedTime;
@@ -47,48 +49,38 @@ public class OrderImportRequest {
     @ExcelProperty("预约配送时间")
     private LocalDateTime scheduledDeliveryTime;
 
-    //@ExcelProperty("是否审核中")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isUnderReview;
+    @ExcelProperty(value = "是否审核中", converter = YesNoStatusConverter.class)
+    private YesNoStatus isUnderReview;
 
-    //@ExcelProperty("是否抽奖或0元试用")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isLuckyDrawOrZeroCostTrial;
+    @ExcelProperty(value = "是否抽奖或0元试用", converter = YesNoStatusConverter.class)
+    private YesNoStatus isLuckyDrawOrZeroCostTrial;
 
-    //@ExcelProperty("是否顺丰加价")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isSFExpressSurcharge;
+    @ExcelProperty(value = "是否顺丰加价", converter = YesNoStatusConverter.class)
+    private YesNoStatus isSFExpressSurcharge;
 
-    //@ExcelProperty("是否门店自提")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isInStorePickup;
+    @ExcelProperty(value = "是否门店自提", converter = YesNoStatusConverter.class)
+    private YesNoStatus isInStorePickup;
 
-    //@ExcelProperty("是否节能补贴")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isEnergyEfficiencySubsidy;
+    @ExcelProperty(value = "是否节能补贴", converter = YesNoStatusConverter.class)
+    private YesNoStatus isEnergyEfficiencySubsidy;
 
-    //@ExcelProperty("是否分期")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isInstallment;
+    @ExcelProperty(value = "是否分期", converter = YesNoStatusConverter.class)
+    private YesNoStatus isInstallment;
 
-    //@ExcelProperty("分期期数")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus installmentPeriods;
+    @ExcelProperty(value = "分期期数", converter = YesNoStatusConverter.class)
+    private YesNoStatus installmentPeriods;
 
-    //@ExcelProperty("手续费承担方")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus feeBearer;
+    @ExcelProperty(value = "手续费承担方", converter = YesNoStatusConverter.class)
+    private YesNoStatus feeBearer;
 
-    //@ExcelProperty("是否无痕发货")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isDiscreetShipping;
+    @ExcelProperty(value = "是否无痕发货", converter = YesNoStatusConverter.class)
+    private YesNoStatus isDiscreetShipping;
 
     @ExcelProperty("订单来源")
     private String orderSource;
 
-    //@ExcelProperty("是否社区团购")
-    //@Enumerated(EnumType.STRING)
-    //private YesNoStatus isCommunityGroupPurchase;
+    @ExcelProperty(value = "是否社区团购", converter = YesNoStatusConverter.class)
+    private YesNoStatus isCommunityGroupPurchase;
 
     @ExcelProperty("小区送达情况")
     private String communityDeliveryStatus;
@@ -100,12 +92,16 @@ public class OrderImportRequest {
     private String crossBorderOrderNumber;
 
     // 订单商品明细
-    @ExcelProperty("商品ID")
-    private Long productId;
-    @ExcelProperty("商品规格ID")
-    private String skuId;
+    @ExcelProperty("商品id")
+    private Long spuId;
+    @ExcelProperty("商品")
+    private String spuName;
+    @ExcelProperty("样式ID")
+    private Long skuId;
     @ExcelProperty("商品规格")
-    private String sku;
+    private String skuName;
+    @ExcelProperty("商品数量(件)")
+    private BigDecimal skuQuantity;
     @ExcelProperty("商品一级类目")
     private String productCategoryLevel1;
     @ExcelProperty("商品二级类目")
@@ -135,40 +131,39 @@ public class OrderImportRequest {
     private String buyerMessage;
 
     // 价格信息
-    @ExcelProperty("商品总价")
+    @ExcelProperty("商品总价(元)")
     private BigDecimal totalPrice;
 
-    @ExcelProperty("邮费")
+    @ExcelProperty("邮费(元)")
     private BigDecimal shippingFee;
 
-    @ExcelProperty("店铺优惠折扣")
+    @ExcelProperty("店铺优惠折扣(元)")
     private BigDecimal storeDiscount;
 
-    @ExcelProperty("平台优惠折扣")
+    @ExcelProperty("平台优惠折扣(元)")
     private BigDecimal platformDiscount;
 
-    @ExcelProperty("多多支付立减金额")
+    @ExcelProperty("多多支付立减金额(元)")
     private BigDecimal pddPaymentDiscount;
 
-    @ExcelProperty("上门安装费")
+    @ExcelProperty("上门安装费(元)")
     private BigDecimal installationFee;
 
-    @ExcelProperty("送货入户费")
+    @ExcelProperty("送货入户费(元)")
     private BigDecimal homeDeliveryFee;
 
-    @ExcelProperty("送货入户并安装费")
+    @ExcelProperty("送货入户并安装费(元)")
     private BigDecimal homeDeliveryAndInstallationFee;
 
     // 支付信息
-    @ExcelProperty("顾客实付金额")
+    @ExcelProperty("用户实付金额(元)")
     private BigDecimal buyerPaidPayment;
 
-    @ExcelProperty("商家实收金额")
+    @ExcelProperty("商家实收金额(元)")
     private BigDecimal actualMerchantRevenue;
 
-    //@ExcelProperty("支付方式")
-    //@Enumerated(EnumType.STRING)
-    //private PaymentMethod paymentMethod;
+    @ExcelProperty(value = "支付方式", converter = PaymentMethodConverter.class)
+    private PaymentMethod paymentMethod;
 
     // 配送信息
     @ExcelProperty("快递单号")
@@ -192,17 +187,17 @@ public class OrderImportRequest {
     @ExcelProperty("配送员手机号")
     private String courierPhoneNumber;
 
-    //@ExcelProperty("是否已开始配送")
-    //private YesNoStatus isDeliveryStarted;
-    //
-    //@ExcelProperty("配送员是否已送达")
-    //private YesNoStatus isCourierDelivered;
-    //
-    //@ExcelProperty("配送状态")
-    //private DeliveryStatus deliveryStatus;
-    //
-    //@ExcelProperty("同城是否普通快递")
-    //private YesNoStatus localExpressOrRegularExpress;
+    @ExcelProperty(value = "是否已开始配送", converter = YesNoStatusConverter.class)
+    private YesNoStatus isDeliveryStarted;
+
+    @ExcelProperty(value = "配送员是否已送达", converter = YesNoStatusConverter.class)
+    private YesNoStatus isCourierDelivered;
+
+    @ExcelProperty(value = "配送状态", converter = DeliveryStatusConverter.class)
+    private DeliveryStatus deliveryStatus;
+
+    @ExcelProperty(value = "同城是否普通快递", converter = YesNoStatusConverter.class)
+    private YesNoStatus localExpressOrRegularExpress;
 
 
     //商品,订单号,订单状态,商品数量(件),

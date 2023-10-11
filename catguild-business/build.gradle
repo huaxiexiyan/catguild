@@ -15,9 +15,12 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     //cloud组件
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    // 远程调用组件
+    implementation 'net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE'
 
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

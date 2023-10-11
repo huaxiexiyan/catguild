@@ -1,7 +1,9 @@
 package cn.catguild.business.erp.infrastructure.domain;
 
 import cn.catguild.business.erp.infrastructure.domain.type.AfterSalesStatus;
+import cn.catguild.business.erp.infrastructure.domain.type.OrderPlatform;
 import cn.catguild.business.erp.infrastructure.domain.type.OrderStatus;
+import cn.catguild.business.erp.infrastructure.domain.type.PaymentMethod;
 import cn.catguild.common.entity.jpa.BaseTenant;
 import cn.catguild.common.type.YesNoStatus;
 import jakarta.persistence.*;
@@ -9,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Comment;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,11 +22,19 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "`business_erp_online_order`")
+@Table(name = "`business_erp_online_order`",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"orderPlatform", "orderNum"}))
+@Comment("在线订单")
 public class OnlineOrderDO extends BaseTenant {
+
+    @Comment("订单平台")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OrderPlatform orderPlatform;
 
     // 订单基本信息
     @Comment("订单号")
+    @Column(nullable = false)
     private String orderNum;
 
     @Comment("订单状态")
@@ -98,7 +109,7 @@ public class OnlineOrderDO extends BaseTenant {
     @Comment("小区送达情况")
     private String communityDeliveryStatus;
 
-    @Comment(" 用户购买手机号")
+    @Comment("用户购买手机号")
     private String userPhoneNumber;
 
     @Comment("海淘清关订单号")
@@ -109,12 +120,40 @@ public class OnlineOrderDO extends BaseTenant {
     private List<OnlineOrderItemDO> orderItems;
 
     // 价格信息
-    @Transient
-    private OnlineOrderPricesDO pricesInfo;
+    @Comment("商品总价(元)")
+    private BigDecimal totalPrice;
+
+    @Comment("邮费(元)")
+    private BigDecimal shippingFee;
+
+    @Comment("店铺优惠折扣(元)")
+    private BigDecimal storeDiscount;
+
+    @Comment("平台优惠折扣(元)")
+    private BigDecimal platformDiscount;
+
+    @Comment("多多支付立减金额(元)")
+    private BigDecimal pddPaymentDiscount;
+
+    @Comment("上门安装费(元)")
+    private BigDecimal installationFee;
+
+    @Comment("送货入户费(元)")
+    private BigDecimal homeDeliveryFee;
+
+    @Comment("送货入户并安装费(元)")
+    private BigDecimal homeDeliveryAndInstallationFee;
 
     // 支付信息
-    @Transient
-    private OnlineOrderPayment paymentInfo;
+    @Comment("顾客实付金额(元)")
+    private BigDecimal buyerPaidPayment;
+
+    @Comment("商家实收金额(元)")
+    private BigDecimal actualMerchantRevenue;
+
+    @Comment("支付方式")
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
     // 配送信息
     @Transient

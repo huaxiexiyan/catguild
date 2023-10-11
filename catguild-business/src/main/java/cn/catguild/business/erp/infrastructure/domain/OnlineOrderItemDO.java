@@ -2,10 +2,7 @@ package cn.catguild.business.erp.infrastructure.domain;
 
 import cn.catguild.business.erp.infrastructure.domain.type.AfterSalesStatus;
 import cn.catguild.common.entity.jpa.BaseTenantSub;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Comment;
@@ -20,18 +17,29 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Table(name = "`business_erp_online_order_item`")
+@Comment("在线订单行")
 public class OnlineOrderItemDO extends BaseTenantSub {
 
     @Comment("订单id")
+    @Column(nullable = false)
     private Long orderId;
+    @Comment("订单号")
+    @Column(nullable = false)
+    private String orderNum;
 
     // 商品信息
     @Comment("商品ID")
-    private Long productId;
+    private Long spuId;
+    @Comment("商品名称")
+    private String spuName;
     @Comment("商品规格ID")
-    private String skuId;
-    @Comment("商品规格")
-    private String sku;
+    private Long skuId;
+    @Comment("商品sku名字")
+    private String skuName;
+    @Comment("商品sku价格")
+    private BigDecimal skuPrice;
+    @Comment("商品购买的数量")
+    private BigDecimal skuQuantity;
     @Comment("商品一级类目")
     private String productCategoryLevel1;
     @Comment("商品二级类目")

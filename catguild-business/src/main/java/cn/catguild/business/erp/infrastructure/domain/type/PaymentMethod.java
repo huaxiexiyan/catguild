@@ -2,6 +2,7 @@ package cn.catguild.business.erp.infrastructure.domain.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.util.StringUtils;
 
 /**
  * @author xiyan
@@ -10,9 +11,21 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PaymentMethod {
-    YES(true),
+    YES(true,""),
 
-    NO(false);
+    NO(false,"");
 
     private final boolean code;
+
+    private final String chineseChar;
+
+    public static PaymentMethod parseChineseChar(String chineseChar) {
+        for (PaymentMethod status : PaymentMethod.values()) {
+            if (StringUtils.pathEquals(status.getChineseChar(), chineseChar)) {
+                return status;
+            }
+        }
+        return null;
+    }
+
 }
