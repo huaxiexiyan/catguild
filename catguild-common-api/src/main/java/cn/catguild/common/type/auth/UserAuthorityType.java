@@ -1,4 +1,4 @@
-package cn.catguild.auth.domain.type;
+package cn.catguild.common.type.auth;
 
 import lombok.Getter;
 

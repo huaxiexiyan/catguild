@@ -8,6 +8,7 @@ import cn.catguild.business.erp.infrastructure.domain.OnlineOrderLogisticsDO;
 import cn.catguild.business.erp.infrastructure.repository.jpa.OnlineOrderDORepository;
 import cn.catguild.business.erp.infrastructure.repository.jpa.OnlineOrderItemDORepository;
 import cn.catguild.business.erp.infrastructure.repository.jpa.OnlineOrderLogisticsDORepository;
+import cn.catguild.business.util.AuthUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -44,7 +45,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
             onlineOrder.setTenantId(tenantId);
 
             onlineOrder.setCTime(LocalDateTime.now());
-            onlineOrder.setCBy(1L);
+            onlineOrder.setCBy(AuthUtil.getLoginId());
         } else {
             onlineOrder.setId(onlineOrderDB.getId());
             onlineOrder.setTenantId(onlineOrderDB.getTenantId());
@@ -52,7 +53,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
             onlineOrder.setCBy(onlineOrderDB.getCBy());
             onlineOrder.setCTime(onlineOrderDB.getCTime());
             onlineOrder.setLmTime(LocalDateTime.now());
-            onlineOrder.setLmBy(1L);
+            onlineOrder.setLmBy(AuthUtil.getLoginId());
         }
         onlineOrderRepository.saveAndFlush(onlineOrder);
         // 保存附属项
@@ -78,7 +79,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
                 item.setOrderNum(orderItemDO.getOrderNum());
 
                 item.setLmTime(LocalDateTime.now());
-                item.setLmBy(1L);
+                item.setLmBy(AuthUtil.getLoginId());
             }else {
                 // 新增
                 item.setId(idClient.nextId());
@@ -102,7 +103,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
             logisticsInfo.setOrderId(orderId);
 
             logisticsInfo.setCTime(LocalDateTime.now());
-            logisticsInfo.setCBy(1L);
+            logisticsInfo.setCBy(AuthUtil.getLoginId());
         } else {
             logisticsInfo.setId(logisticsDB.getId());
             logisticsInfo.setTenantId(logisticsDB.getTenantId());
@@ -112,7 +113,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
             logisticsInfo.setCBy(logisticsDB.getCBy());
             logisticsInfo.setCTime(logisticsDB.getCTime());
             logisticsInfo.setLmTime(LocalDateTime.now());
-            logisticsInfo.setLmBy(1L);
+            logisticsInfo.setLmBy(AuthUtil.getLoginId());
         }
         onlineOrderLogisticsRepository.saveAndFlush(logisticsInfo);
     }

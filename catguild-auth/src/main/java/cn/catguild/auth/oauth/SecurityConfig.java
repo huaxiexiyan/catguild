@@ -1,11 +1,11 @@
 package cn.catguild.auth.oauth;
 
 import cn.catguild.auth.domain.CatUser;
-import cn.catguild.auth.oauth.constant.TokenConstant;
 import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationConverter;
 import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationProvider;
 import cn.catguild.auth.oauth.grant.PasswordGrantAuthenticationToken;
 import cn.catguild.auth.oauth.service.CatUserDetailsService;
+import cn.catguild.common.constant.TokenConstant;
 import cn.catguild.common.utility.IdUtil;
 import cn.catguild.common.utility.RSAUtils;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -58,7 +59,7 @@ public class SecurityConfig {
     private CatUserDetailsService userDetailsService;
 
     @Bean
-    @Order(1)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     SecurityFilterChain authorizationServerSecurityFilterChain(
             HttpSecurity http,
             OAuth2AuthorizationService authorizationService,
@@ -106,6 +107,7 @@ public class SecurityConfig {
     //    return http.build();
     //}
 
+
     @Bean
     OAuth2TokenGenerator<?> tokenGenerator(JWKSource<SecurityContext> jwkSource) {
         JwtGenerator jwtGenerator = new JwtGenerator(new NimbusJwtEncoder(jwkSource));
@@ -117,11 +119,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JWKSource<SecurityContext> jwkSource(@Value("${custom.catguild-auth.rsa.public-key}") String publicKey,
-                                                @Value("${custom.catguild-auth.rsa.private-key}") String privateKey,
+    public JWKSource<SecurityContext> jwkSource(@Value("${custom.catguild-auth.rsa.public-key}") org.springframework.core.io.Resource publicKey,
+                                                @Value("${custom.catguild-auth.rsa.private-key}") org.springframework.core.io.Resource  privateKey,
                                                 @Value("${custom.catguild-auth.rsa.key-id}") String keyId) {
-        RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) RSAUtils.getPublicKey(publicKey))
-                .privateKey((RSAPrivateKey)RSAUtils.getPrivateKey(privateKey))
+        RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) RSAUtils.getPublicKeyFromResource(publicKey))
+                .privateKey((RSAPrivateKey)RSAUtils.getPrivateKeyFromResource(privateKey))
                 .keyID(keyId)
                 .build();
         JWKSet jwkSet = new JWKSet(rsaKey);
@@ -129,8 +131,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthorizationServerSettings authorizationServerSettings() {
-        return AuthorizationServerSettings.builder().build();
+    public AuthorizationServerSettings authorizationServerSettings(
+            @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")String issuer) {
+        return AuthorizationServerSettings.builder()
+                .issuer(issuer)
+                .build();
     }
 
     @Bean

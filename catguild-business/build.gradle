@@ -21,6 +21,8 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     // 远程调用组件
     implementation 'net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE'
+    // 资源服务器
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
 
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

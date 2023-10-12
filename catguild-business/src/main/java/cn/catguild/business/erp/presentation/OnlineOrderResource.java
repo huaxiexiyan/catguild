@@ -6,17 +6,14 @@ import cn.catguild.business.erp.infrastructure.domain.OnlineOrderItemDO;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderLogisticsDO;
 import cn.catguild.business.erp.infrastructure.domain.type.OrderPlatform;
 import cn.catguild.business.erp.presentation.model.OnlineOrderImportRequest;
-import cn.catguild.common.utility.JSONUtils;
+import cn.catguild.business.util.AuthUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.listener.PageReadListener;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -36,6 +33,12 @@ import java.util.Set;
 public class OnlineOrderResource {
 
     private final OnlineOrderApplication onlineOrderApplication;
+
+    @GetMapping("/test")
+    public void test(){
+        log.info("登录用户id:{}", AuthUtil.getLoginId());
+        log.info("登录用户id:{}", AuthUtil.getTokenUser());
+    }
 
     /**
      * 最简单的读
@@ -69,13 +72,10 @@ public class OnlineOrderResource {
                     log.info("复合订单号:{}",onlineOrderImportRequest.getOrderNum());
                 }
                 orderNums.add(onlineOrderImportRequest.getOrderNum());
-                //log.info("读取到一条数据{}", JSONUtils.toJsonStr(onlineOrderImportRequest));
-                log.info("读取到一条数据{}", JSONUtils.toJsonStr(onlineOrder));
                 onlineOrder.setOrderPlatform(OrderPlatform.PDD);
-                onlineOrderApplication.save(10010L,onlineOrder);
+                onlineOrderApplication.save(AuthUtil.getLoginId(),onlineOrder);
             }
         })).sheet().doRead();
-
     }
 
 }

@@ -1,6 +1,6 @@
-package cn.catguild.auth.oauth.domain;
+package cn.catguild.common.entity.auth;
 
-import cn.catguild.auth.domain.type.UserAuthorityType;
+import cn.catguild.common.type.auth.UserAuthorityType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

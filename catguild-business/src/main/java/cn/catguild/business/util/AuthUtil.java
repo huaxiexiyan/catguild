@@ -1,4 +1,6 @@
-package cn.catguild.auth.oauth.util;
+package cn.catguild.business.util;
+
+
 
 import cn.catguild.common.constant.TokenConstant;
 import cn.catguild.common.entity.auth.TokenUser;

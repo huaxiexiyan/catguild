@@ -1,4 +1,4 @@
-package cn.catguild.auth.oauth.constant;
+package cn.catguild.common.constant;
 
 /**
  * @author xiyan
