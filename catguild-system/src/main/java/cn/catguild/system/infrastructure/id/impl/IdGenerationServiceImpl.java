@@ -3,6 +3,7 @@ package cn.catguild.system.infrastructure.id.impl;
 import cn.catguild.system.infrastructure.id.IdGenerationService;
 import cn.catguild.system.infrastructure.id.repository.UidRepository;
 import cn.catguild.system.infrastructure.id.strategy.IdGenerator;
+import cn.catguild.system.util.AuthUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,7 @@ public class IdGenerationServiceImpl implements IdGenerationService {
             poll = UidPool.POOL.poll();
         }
         UIDRepository.findByUid(poll).ifPresent(uid->{
+            uid.setDeBy(AuthUtil.getLoginId());
             uid.setDeTime(LocalDateTime.now());
             UIDRepository.saveAndFlush(uid);
         });

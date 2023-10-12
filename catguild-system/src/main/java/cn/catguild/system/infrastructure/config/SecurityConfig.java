@@ -1,4 +1,4 @@
-package cn.catguild.business.erp.infrastructure.config;
+package cn.catguild.system.infrastructure.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -71,12 +71,6 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    //@Bean
-    //JwtDecoder jwtDecoder() {
-    //    NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withIssuerLocation(issuer).build();
-    //    return jwtDecoder;
-    //}
-
     @Bean
     RestTemplate rest() {
         RestTemplate rest = new RestTemplate();
@@ -95,6 +89,8 @@ public class SecurityConfig {
             return execution.execute(request, body);
         });
         return rest;
+
+
     }
 
     @Component
