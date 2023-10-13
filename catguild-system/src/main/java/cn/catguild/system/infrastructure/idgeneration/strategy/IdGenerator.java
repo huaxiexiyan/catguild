@@ -1,4 +1,4 @@
-package cn.catguild.system.infrastructure.id.strategy;
+package cn.catguild.system.infrastructure.idgeneration.strategy;
 
 /**
  * @author xiyan

@@ -1,4 +1,4 @@
-package cn.catguild.system.infrastructure.id.strategy;
+package cn.catguild.system.infrastructure.idgeneration.strategy;
 
 import java.sql.Timestamp;
 import java.util.concurrent.Executors;

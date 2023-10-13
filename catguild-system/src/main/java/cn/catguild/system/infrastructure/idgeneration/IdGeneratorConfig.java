@@ -1,7 +1,7 @@
-package cn.catguild.system.infrastructure.id.config;
+package cn.catguild.system.infrastructure.idgeneration;
 
-import cn.catguild.system.infrastructure.id.strategy.IdGenerator;
-import cn.catguild.system.infrastructure.id.strategy.Snowflake;
+import cn.catguild.system.infrastructure.idgeneration.strategy.IdGenerator;
+import cn.catguild.system.infrastructure.idgeneration.strategy.Snowflake;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

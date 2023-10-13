@@ -1,5 +1,6 @@
 package cn.catguild.system.infrastructure.id.strategy;
 
+import cn.catguild.system.infrastructure.idgeneration.strategy.Snowflake;
 import org.junit.jupiter.api.Test;
 
 public class SnowflakeTest {

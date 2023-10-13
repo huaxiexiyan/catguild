@@ -1,4 +1,4 @@
-package cn.catguild.system.infrastructure.id;
+package cn.catguild.system.infrastructure.idgeneration;
 
 /**
  * 全局id生成服务

@@ -1,4 +1,4 @@
-package cn.catguild.system.infrastructure.id.impl;
+package cn.catguild.system.infrastructure.idgeneration.impl;
 
 import com.google.common.collect.Queues;
 

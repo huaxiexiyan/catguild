@@ -1,6 +1,5 @@
-package cn.catguild.system.infrastructure.id.repository;
+package cn.catguild.system.infrastructure.idgeneration.repository;
 
-import cn.catguild.system.infrastructure.id.domain.Uid;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

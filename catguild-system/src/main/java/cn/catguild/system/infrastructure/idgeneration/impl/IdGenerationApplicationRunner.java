@@ -1,8 +1,8 @@
-package cn.catguild.system.infrastructure.id.impl;
+package cn.catguild.system.infrastructure.idgeneration.impl;
 
-import cn.catguild.system.infrastructure.id.IdGenerationService;
-import cn.catguild.system.infrastructure.id.domain.Uid;
-import cn.catguild.system.infrastructure.id.repository.UidRepository;
+import cn.catguild.system.infrastructure.idgeneration.IdGenerationService;
+import cn.catguild.system.infrastructure.idgeneration.repository.Uid;
+import cn.catguild.system.infrastructure.idgeneration.repository.UidRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

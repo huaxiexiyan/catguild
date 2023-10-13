@@ -3,7 +3,7 @@ package cn.catguild.system.presentation.client;
 import cn.catguild.system.api.IdGenerationClientGrpc;
 import cn.catguild.system.api.IdGenerationClientProto;
 import cn.catguild.system.api.common.ApiCommonProto;
-import cn.catguild.system.infrastructure.id.IdGenerationService;
+import cn.catguild.system.infrastructure.idgeneration.IdGenerationService;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.AllArgsConstructor;

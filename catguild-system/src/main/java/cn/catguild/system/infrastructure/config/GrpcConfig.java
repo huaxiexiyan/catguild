@@ -1,4 +1,4 @@
-package cn.catguild.system.infrastructure.grpc.config;
+package cn.catguild.system.infrastructure.config;
 
 import cn.catguild.common.utility.transplant.StringPool;
 import com.alibaba.cloud.nacos.registry.NacosRegistration;

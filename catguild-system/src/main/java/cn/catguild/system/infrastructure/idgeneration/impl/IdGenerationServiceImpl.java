@@ -1,8 +1,8 @@
-package cn.catguild.system.infrastructure.id.impl;
+package cn.catguild.system.infrastructure.idgeneration.impl;
 
-import cn.catguild.system.infrastructure.id.IdGenerationService;
-import cn.catguild.system.infrastructure.id.repository.UidRepository;
-import cn.catguild.system.infrastructure.id.strategy.IdGenerator;
+import cn.catguild.system.infrastructure.idgeneration.IdGenerationService;
+import cn.catguild.system.infrastructure.idgeneration.repository.UidRepository;
+import cn.catguild.system.infrastructure.idgeneration.strategy.IdGenerator;
 import cn.catguild.system.util.AuthUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

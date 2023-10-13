@@ -1,4 +1,4 @@
-package cn.catguild.system.infrastructure.id.domain;
+package cn.catguild.system.infrastructure.idgeneration.repository;
 
 import cn.catguild.common.entity.jpa.AbstractEntity;
 import jakarta.persistence.Entity;
