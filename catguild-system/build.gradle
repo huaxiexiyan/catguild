@@ -32,9 +32,13 @@ dependencies {
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
 
     // 工具包
     implementation 'com.google.guava:guava:31.1-jre'
+    // 对象转换
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor  'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

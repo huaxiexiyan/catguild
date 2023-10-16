@@ -1,5 +1,8 @@
 package cn.catguild.common.entity.jpa;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -21,6 +24,7 @@ import java.time.LocalDateTime;
 @Data
 public abstract class AbstractEntity {
 
+    @TableId(type = IdType.INPUT)
     @Comment("记录主键")
     @Id
     @JsonDeserialize(as = Long.class)
@@ -56,6 +60,7 @@ public abstract class AbstractEntity {
      */
     @Comment("记录逻辑删除时间")
     @JsonIgnore
+    @TableLogic(value = "null",delval = "now()")
     private LocalDateTime deTime;
 
     @Comment("记录逻辑删除人id")
