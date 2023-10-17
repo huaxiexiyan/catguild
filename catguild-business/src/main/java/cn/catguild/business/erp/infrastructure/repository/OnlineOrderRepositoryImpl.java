@@ -26,9 +26,7 @@ import org.springframework.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -99,7 +97,14 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
 
     @Override
     public List<Kv<LocalDate, OrderStatisticsDTO>> findSalesLineDay(Long tenantId, LocalDateTime startTime, LocalDateTime endTime) {
-        return baseMapper.calculateSalesLineDay(tenantId,startTime,endTime);
+        List<OrderStatisticsDTO> list = baseMapper.calculateSalesLineDay(tenantId, startTime, endTime);
+        if (CollectionUtils.isEmpty(list)){
+            return new ArrayList<>();
+        }
+        return list.stream()
+                .sorted(Comparator.comparing(OrderStatisticsDTO::getTimeDay))
+                .map(l-> new Kv<>(l.getTimeDay(),l))
+                .toList();
     }
 
     private void saveOnlineOrderItems(Long tenantId,

@@ -55,13 +55,23 @@
         id, c_by, c_time, de_by, de_time, lm_by, lm_time, tenant_id, actual_merchant_revenue, after_sales_status, buyer_paid_payment, community_delivery_status, cross_border_order_number, fee_bearer, home_delivery_and_installation_fee, home_delivery_fee, installation_fee, installment_periods, is_community_group_purchase, is_discreet_shipping, is_energy_efficiency_subsidy, is_in_store_pickup, is_installment, is_lucky_draw_or_zero_cost_trial, issfexpress_surcharge, is_under_review, order_completion_time, order_num, order_placed_time, order_platform, order_source, order_status, payment_method, payment_time, pdd_payment_discount, platform_discount, received_time, scheduled_delivery_time, ship_time, shipping_fee, store_discount, total_price, user_phone_number
     </sql>
 
-    <select id="calculateSalesLineDay" resultType="cn.catguild.common.type.Kv">
-        SELECT DATE_TRUNC('DAY', order_completion_time) AS order_date, SUM(buyer_paid_payment) AS daily_total_amount
-        FROM business_erp_online_order
-        WHERE tenant_id = #{tenantId}
-        AND order_completion_time BETWEEN #{startTime} AND #{endTime}
-        GROUP BY DATE_TRUNC('DAY', order_completion_time)
-        ORDER BY order_date;
+    <select id="calculateSalesLineDay" resultType="cn.catguild.business.erp.infrastructure.domain.dto.OrderStatisticsDTO">
+        SELECT
+            DATE_TRUNC( 'DAY', oo.order_completion_time ) AS time_day,
+            SUM( oo.buyer_paid_payment ) AS sales_revenue,
+            count( oo.* ) AS order_quantity,
+            SUM( ooi.sku_quantity ) AS sales_volume
+        FROM
+            business_erp_online_order oo
+            LEFT JOIN business_erp_online_order_item ooi on oo.id=ooi.order_id
+        WHERE oo.tenant_id = #{tenantId}
+          AND oo.order_status IN('PENDING_SHIPMENT','SHIPPED_PENDING_RECEIPT','RECEIVED')
+          AND oo.after_sales_status IN('NO_AFTER_SALES_OR_CANCELLED')
+          AND oo.order_completion_time BETWEEN #{startTime} AND #{endTime}
+        GROUP BY
+            DATE_TRUNC( 'DAY', oo.order_completion_time )
+        ORDER BY
+            time_day
     </select>
 
 </mapper>

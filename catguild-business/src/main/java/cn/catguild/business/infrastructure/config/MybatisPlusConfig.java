@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author xiyan
  * @date 2022/10/14 15:43
  */
-@MapperScan("cn.catguild.system.**.mapper")
+@MapperScan("cn.catguild.business.**.mapper")
 @Configuration
 public class MybatisPlusConfig {
 

@@ -41,7 +41,7 @@ public class StatisticsChart {
     /**
      * 图表侧边：销售量
      */
-    private Long salesVolume;
+    private BigDecimal salesVolume;
 
 
 }

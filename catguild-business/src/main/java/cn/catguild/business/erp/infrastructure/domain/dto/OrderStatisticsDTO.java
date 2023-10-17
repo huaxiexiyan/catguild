@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 public class OrderStatisticsDTO {
 
-    private LocalDate day;
+    private LocalDate timeDay;
 
     /**
      * 图表侧边：销售额
@@ -23,7 +23,7 @@ public class OrderStatisticsDTO {
     /**
      * 图表侧边：订单量
      */
-    private BigDecimal orderQuantity;
+    private Long orderQuantity;
 
     /**
      * 图表侧边：销售量
@@ -32,7 +32,7 @@ public class OrderStatisticsDTO {
 
     public void initZero() {
         this.salesRevenue = BigDecimal.ZERO;
-        this.orderQuantity = BigDecimal.ZERO;
+        this.orderQuantity = 0L;
         this.salesVolume = BigDecimal.ZERO;
     }
 }
