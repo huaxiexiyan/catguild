@@ -1,4 +1,4 @@
-package cn.catguild.auth.infrastructure.adapter.external.config;
+package cn.catguild.auth.infrastructure.config;
 
 import cn.catguild.auth.oauth.util.AuthUtil;
 import cn.catguild.common.utility.transplant.StringPool;
