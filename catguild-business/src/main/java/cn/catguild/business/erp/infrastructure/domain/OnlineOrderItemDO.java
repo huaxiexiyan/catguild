@@ -2,6 +2,7 @@ package cn.catguild.business.erp.infrastructure.domain;
 
 import cn.catguild.business.erp.infrastructure.domain.type.AfterSalesStatus;
 import cn.catguild.common.entity.jpa.BaseTenantSub;
+import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "`business_erp_online_order_item`")
 @Comment("在线订单行")
+@TableName("business_erp_online_order_item")
 public class OnlineOrderItemDO extends BaseTenantSub {
 
     @Comment("订单id")

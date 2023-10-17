@@ -12,4 +12,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class OnlineOrderQuery extends BaseQuery<OnlineOrderDO> {
+
+    private String likeOrderNum;
+
 }

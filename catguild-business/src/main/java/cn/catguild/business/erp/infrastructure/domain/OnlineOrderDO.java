@@ -6,6 +6,9 @@ import cn.catguild.business.erp.infrastructure.domain.type.OrderStatus;
 import cn.catguild.business.erp.infrastructure.domain.type.PaymentMethod;
 import cn.catguild.common.entity.jpa.BaseTenant;
 import cn.catguild.common.type.YesNoStatus;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,6 +28,7 @@ import java.util.List;
 @Table(name = "`business_erp_online_order`",
         uniqueConstraints = @UniqueConstraint(columnNames = {"orderPlatform", "orderNum"}))
 @Comment("在线订单")
+@TableName("business_erp_online_order")
 public class OnlineOrderDO extends BaseTenant {
 
     @Comment("订单平台")
@@ -46,21 +50,27 @@ public class OnlineOrderDO extends BaseTenant {
     private AfterSalesStatus afterSalesStatus;
 
     @Comment("下单时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderPlacedTime;
 
     @Comment("支付时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime paymentTime;
 
     @Comment("发货时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime shipTime;
 
     @Comment("确认收货时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime receivedTime;
 
     @Comment("订单成交时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderCompletionTime;
 
     @Comment("预约配送时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime scheduledDeliveryTime;
 
     @Comment("是否审核中")
@@ -73,6 +83,7 @@ public class OnlineOrderDO extends BaseTenant {
 
     @Comment("是否顺丰加价")
     @Enumerated(EnumType.STRING)
+    @Column(name = "is_s_f_express_surcharge")
     private YesNoStatus isSFExpressSurcharge;
 
     @Comment("是否门店自提")
@@ -117,6 +128,7 @@ public class OnlineOrderDO extends BaseTenant {
 
     // 订单商品明细
     @Transient
+    @TableField(exist = false)
     private List<OnlineOrderItemDO> orderItems;
 
     // 价格信息
@@ -157,6 +169,7 @@ public class OnlineOrderDO extends BaseTenant {
 
     // 配送信息
     @Transient
+    @TableField(exist = false)
     private OnlineOrderLogisticsDO logisticsInfo;
 
 }

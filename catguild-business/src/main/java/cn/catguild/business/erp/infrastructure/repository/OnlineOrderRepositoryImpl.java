@@ -15,13 +15,14 @@ import cn.catguild.business.util.AuthUtil;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.type.Kv;
 import cn.catguild.common.utility.IPageUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -74,9 +75,11 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
 
     @Override
     public ApiPage<OnlineOrderDO> page(Long tenantId, OnlineOrderQuery query) {
-        OnlineOrderDO queryDO = new OnlineOrderDO();
-        BeanUtils.copyProperties(query, queryDO);
-        IPage<OnlineOrderDO> onlineOrderDOIPage = baseMapper.selectPage(query.getIpage(), Wrappers.query(queryDO));
+        LambdaQueryWrapper<OnlineOrderDO> queryWrapper = Wrappers.<OnlineOrderDO>lambdaQuery();
+        if (StringUtils.hasText(query.getLikeOrderNum())){
+            queryWrapper.like(OnlineOrderDO::getOrderNum,query.getLikeOrderNum());
+        }
+        IPage<OnlineOrderDO> onlineOrderDOIPage = baseMapper.selectPage(query.getIpage(), queryWrapper);
         return IPageUtils.toApiPage(onlineOrderDOIPage, (iPage) -> (Collection<OnlineOrderDO>) iPage.getRecords());
     }
 

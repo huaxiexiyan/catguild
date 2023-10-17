@@ -58,7 +58,7 @@
     <select id="calculateSalesLineDay" resultType="cn.catguild.business.erp.infrastructure.domain.dto.OrderStatisticsDTO">
         SELECT
             DATE_TRUNC( 'DAY', oo.order_completion_time ) AS time_day,
-            SUM( oo.buyer_paid_payment ) AS sales_revenue,
+            SUM( oo.actual_merchant_revenue ) AS sales_revenue,
             count( oo.* ) AS order_quantity,
             SUM( ooi.sku_quantity ) AS sales_volume
         FROM

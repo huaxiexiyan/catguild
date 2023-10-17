@@ -75,7 +75,7 @@ public class OnlineOrderResource {
                 })).sheet().doRead();
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ApiResponse<ApiPage<OnlineOrderDO>> page(@ModelAttribute OnlineOrderQuery query) {
         return ApiResponse.ok(onlineOrderApplication.page(AuthUtil.getTenantId(), query));
     }

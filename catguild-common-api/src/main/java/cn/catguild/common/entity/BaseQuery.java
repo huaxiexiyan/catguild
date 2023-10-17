@@ -14,15 +14,15 @@ public class BaseQuery<T> {
 	/**
 	 * 总数
 	 */
-	private Long total;
+	private Long total = 0L;
 	/**
 	 * 每页显示条数，默认 10
 	 */
-	private Long size;
+	private Long size = 10L;
 	/**
 	 * 当前页
 	 */
-	private Long current;
+	private Long current = 1L;
 	/**
 	 * 当前分页总页数
 	 */

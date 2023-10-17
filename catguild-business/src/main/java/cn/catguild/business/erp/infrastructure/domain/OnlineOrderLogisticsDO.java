@@ -3,6 +3,7 @@ package cn.catguild.business.erp.infrastructure.domain;
 import cn.catguild.business.erp.infrastructure.domain.type.DeliveryStatus;
 import cn.catguild.common.entity.jpa.BaseTenant;
 import cn.catguild.common.type.YesNoStatus;
+import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.Comment;
 @Entity
 @Table(name = "`business_erp_online_order_logistics`")
 @Comment("在线订单物流信息")
+@TableName("business_erp_online_order_logistics")
 public class OnlineOrderLogisticsDO extends BaseTenant {
 
     @Comment("线上订单id")
