@@ -27,16 +27,32 @@ public class AuthUtil {
     }
 
     public static TokenUser getTokenUser() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        if (authentication instanceof JwtAuthenticationToken token) {
-            Map<String, Object> tokenAttributes = token.getTokenAttributes();
+        JwtAuthenticationToken jwtAuthenticationToken = getJwtAuthenticationToken();
+        if (jwtAuthenticationToken != null){
+            Map<String, Object> tokenAttributes = jwtAuthenticationToken.getTokenAttributes();
             Long userId = Long.parseLong(tokenAttributes.get(TokenConstant.USER_ID).toString());
             Long tenantId = Long.parseLong(tokenAttributes.get(TokenConstant.TENANT_ID).toString());
             UserAuthorityType userAuthorityType = UserAuthorityType.valueOf(tokenAttributes.get(TokenConstant.AUTHORITY_TYPE).toString());
             return new TokenUser(tenantId, userId, userAuthorityType);
         }
         return new TokenUser();
+    }
+
+    public static JwtAuthenticationToken getJwtAuthenticationToken(){
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        if (authentication instanceof JwtAuthenticationToken token) {
+            return token;
+        }
+        return null;
+    }
+
+    public static String getTokenValue() {
+        JwtAuthenticationToken jwtAuthenticationToken = getJwtAuthenticationToken();
+        if (jwtAuthenticationToken != null){
+            return jwtAuthenticationToken.getToken().getTokenValue();
+        }
+        return "";
     }
 
 }

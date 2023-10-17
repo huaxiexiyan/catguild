@@ -1,4 +1,4 @@
-package cn.catguild.business.erp.infrastructure.adapter.cache.config;
+package cn.catguild.business.infrastructure.adapter.cache.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

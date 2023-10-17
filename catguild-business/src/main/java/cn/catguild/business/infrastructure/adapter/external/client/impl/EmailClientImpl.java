@@ -1,6 +1,6 @@
-package cn.catguild.business.erp.infrastructure.adapter.external.client.impl;
+package cn.catguild.business.infrastructure.adapter.external.client.impl;
 
-import cn.catguild.business.erp.infrastructure.adapter.external.client.EmailClient;
+import cn.catguild.business.infrastructure.adapter.external.client.EmailClient;
 import cn.catguild.system.api.EmailClientProto;
 import cn.catguild.system.api.EmailClientServiceGrpc;
 import cn.catguild.system.api.common.ApiCommonProto;

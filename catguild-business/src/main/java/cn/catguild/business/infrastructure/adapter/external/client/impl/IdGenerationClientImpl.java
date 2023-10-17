@@ -1,6 +1,6 @@
-package cn.catguild.business.erp.infrastructure.adapter.external.client.impl;
+package cn.catguild.business.infrastructure.adapter.external.client.impl;
 
-import cn.catguild.business.erp.infrastructure.adapter.external.client.IdGenerationClient;
+import cn.catguild.business.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.system.api.IdGenerationClientGrpc;
 import cn.catguild.system.api.IdGenerationClientProto;
 import cn.catguild.system.api.common.ApiCommonProto;

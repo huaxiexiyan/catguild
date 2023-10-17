@@ -1,4 +1,4 @@
-package cn.catguild.business.erp.infrastructure.config;
+package cn.catguild.business.infrastructure.config;
 
 import cn.catguild.common.constant.LogConstant;
 import cn.catguild.common.utility.TraceIdUtil;

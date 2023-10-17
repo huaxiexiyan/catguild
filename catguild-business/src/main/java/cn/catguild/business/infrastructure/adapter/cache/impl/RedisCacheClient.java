@@ -1,6 +1,6 @@
-package cn.catguild.business.erp.infrastructure.adapter.cache.impl;
+package cn.catguild.business.infrastructure.adapter.cache.impl;
 
-import cn.catguild.business.erp.infrastructure.adapter.cache.CacheClient;
+import cn.catguild.business.infrastructure.adapter.cache.CacheClient;
 import cn.catguild.common.utility.JSONUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

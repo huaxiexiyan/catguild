@@ -1,4 +1,4 @@
-package cn.catguild.business.erp.infrastructure.adapter.cache;
+package cn.catguild.business.infrastructure.adapter.cache;
 
 import org.springframework.data.redis.core.RedisTemplate;
 

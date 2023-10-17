@@ -1,4 +1,4 @@
-package cn.catguild.business.erp.infrastructure.config;
+package cn.catguild.business.infrastructure.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;

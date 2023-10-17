@@ -1,4 +1,4 @@
-package cn.catguild.business.erp.infrastructure.adapter.external.client;
+package cn.catguild.business.infrastructure.adapter.external.client;
 
 import java.util.Map;
 
