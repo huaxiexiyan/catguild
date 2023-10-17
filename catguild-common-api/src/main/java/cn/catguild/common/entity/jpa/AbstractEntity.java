@@ -1,10 +1,14 @@
 package cn.catguild.common.entity.jpa;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
@@ -20,6 +24,7 @@ import java.time.LocalDateTime;
 @Data
 public abstract class AbstractEntity {
 
+    @TableId(type = IdType.INPUT)
     @Comment("记录主键")
     @Id
     @JsonDeserialize(as = Long.class)
@@ -31,10 +36,12 @@ public abstract class AbstractEntity {
      **/
     @Comment("记录创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(nullable = false)
     private LocalDateTime cTime;
 
     @Comment("记录创建人id")
     @JsonIgnore
+    @Column(nullable = false)
     private Long cBy;
 
     /**
@@ -53,6 +60,7 @@ public abstract class AbstractEntity {
      */
     @Comment("记录逻辑删除时间")
     @JsonIgnore
+    @TableLogic(value = "null",delval = "now()")
     private LocalDateTime deTime;
 
     @Comment("记录逻辑删除人id")

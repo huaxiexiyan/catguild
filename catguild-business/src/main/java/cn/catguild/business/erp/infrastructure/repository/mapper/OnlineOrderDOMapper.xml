@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.business.erp.infrastructure.repository.mapper.OnlineOrderDOMapper">
+
+    <resultMap id="baseResult" type="cn.catguild.business.erp.infrastructure.domain.OnlineOrderDO">
+        <id column="id" property="id" />
+        <result column="tenant_id" property="tenantId" />
+
+        <result column="actual_merchant_revenue" property="actualMerchantRevenue" />
+        <result column="after_sales_status" property="afterSalesStatus" />
+        <result column="buyer_paid_payment" property="buyerPaidPayment" />
+        <result column="community_delivery_status" property="communityDeliveryStatus" />
+        <result column="cross_border_order_number" property="crossBorderOrderNumber" />
+        <result column="fee_bearer" property="feeBearer" />
+        <result column="home_delivery_and_installation_fee" property="homeDeliveryAndInstallationFee" />
+        <result column="home_delivery_fee" property="homeDeliveryFee" />
+        <result column="installation_fee" property="installationFee" />
+        <result column="installment_periods" property="installmentPeriods" />
+        <result column="is_community_group_purchase" property="isCommunityGroupPurchase" />
+        <result column="is_discreet_shipping" property="isDiscreetShipping" />
+        <result column="is_energy_efficiency_subsidy" property="isEnergyEfficiencySubsidy" />
+        <result column="is_in_store_pickup" property="isInStorePickup" />
+        <result column="is_installment" property="isInstallment" />
+        <result column="is_lucky_draw_or_zero_cost_trial" property="isLuckyDrawOrZeroCostTrial" />
+        <result column="issfexpress_surcharge" property="issfexpressSurcharge" />
+        <result column="is_under_review" property="isUnderReview" />
+        <result column="order_completion_time" property="orderCompletionTime" />
+        <result column="order_num" property="orderNum" />
+        <result column="order_placed_time" property="orderPlacedTime" />
+        <result column="order_platform" property="orderPlatform" />
+        <result column="order_source" property="orderSource" />
+        <result column="order_status" property="orderStatus" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="payment_time" property="paymentTime" />
+        <result column="pdd_payment_discount" property="pddPaymentDiscount" />
+        <result column="platform_discount" property="platformDiscount" />
+        <result column="received_time" property="receivedTime" />
+        <result column="scheduled_delivery_time" property="scheduledDeliveryTime" />
+        <result column="ship_time" property="shipTime" />
+        <result column="shipping_fee" property="shippingFee" />
+        <result column="store_discount" property="storeDiscount" />
+        <result column="total_price" property="totalPrice" />
+        <result column="user_phone_number" property="userPhoneNumber" />
+
+        <result column="c_by" property="cBy" />
+        <result column="c_time" property="cTime" />
+        <result column="de_by" property="deBy" />
+        <result column="de_time" property="deTime" />
+        <result column="lm_by" property="lmBy" />
+        <result column="lm_time" property="lmTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, c_by, c_time, de_by, de_time, lm_by, lm_time, tenant_id, actual_merchant_revenue, after_sales_status, buyer_paid_payment, community_delivery_status, cross_border_order_number, fee_bearer, home_delivery_and_installation_fee, home_delivery_fee, installation_fee, installment_periods, is_community_group_purchase, is_discreet_shipping, is_energy_efficiency_subsidy, is_in_store_pickup, is_installment, is_lucky_draw_or_zero_cost_trial, issfexpress_surcharge, is_under_review, order_completion_time, order_num, order_placed_time, order_platform, order_source, order_status, payment_method, payment_time, pdd_payment_discount, platform_discount, received_time, scheduled_delivery_time, ship_time, shipping_fee, store_discount, total_price, user_phone_number
+    </sql>
+
+    <select id="calculateSalesLineDay" resultType="cn.catguild.business.erp.infrastructure.domain.dto.OrderStatisticsDTO">
+        SELECT
+            DATE_TRUNC( 'DAY', oo.order_completion_time ) AS time_day,
+            SUM( oo.actual_merchant_revenue ) AS sales_revenue,
+            count( oo.* ) AS order_quantity,
+            SUM( ooi.sku_quantity ) AS sales_volume
+        FROM
+            business_erp_online_order oo
+            LEFT JOIN business_erp_online_order_item ooi on oo.id=ooi.order_id
+        WHERE oo.tenant_id = #{tenantId}
+          AND oo.order_status IN('PENDING_SHIPMENT','SHIPPED_PENDING_RECEIPT','RECEIVED')
+          AND oo.after_sales_status IN('NO_AFTER_SALES_OR_CANCELLED')
+          AND oo.order_completion_time BETWEEN #{startTime} AND #{endTime}
+        GROUP BY
+            DATE_TRUNC( 'DAY', oo.order_completion_time )
+        ORDER BY
+            time_day
+    </select>
+
+</mapper>

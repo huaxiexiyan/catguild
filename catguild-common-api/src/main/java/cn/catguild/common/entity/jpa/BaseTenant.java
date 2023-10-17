@@ -1,5 +1,9 @@
 package cn.catguild.common.entity.jpa;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,6 +19,9 @@ import org.hibernate.annotations.Comment;
 public abstract class BaseTenant extends AbstractEntity {
 
     @Comment("租户id")
+    @Column(nullable = false)
+    @JsonDeserialize(as = Long.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
 
 }

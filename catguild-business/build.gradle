@@ -7,6 +7,7 @@ plugins {
 dependencies {
     // 自身依赖
     implementation project(":catguild-common-api")
+    implementation project(":catguild-system:catguild-system-api")
 
     // spring 家族
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -14,17 +15,41 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     //cloud组件
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    // 远程调用组件
+    implementation 'net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE'
+    // 资源服务器
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
 
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
+
+    // 对象转换
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor  'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    // 文件导入
+    implementation 'com.alibaba:easyexcel:3.3.2'
 
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }
 
-jib.to.image = "huaxiexiyan/catguild-business:main"
+jib {
+    to {
+        image = 'huaxiexiyan/catguild-business:main'
+    }
+    container {
+        jvmFlags = ['-Xmx128m', '-Xms128m'] // 添加堆内存参数
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        environment = [
+                'TZ': 'Asia/Shanghai'
+        ]
+    }
+}

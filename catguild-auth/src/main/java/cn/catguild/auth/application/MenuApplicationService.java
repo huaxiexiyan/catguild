@@ -9,16 +9,12 @@ import cn.catguild.auth.infrastructure.MenuRepository;
 import cn.catguild.auth.infrastructure.ResourceRepository;
 import cn.catguild.auth.infrastructure.RoleRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
-import cn.catguild.auth.oauth.constant.TokenConstant;
 import cn.catguild.auth.oauth.util.AuthUtil;
+import cn.catguild.common.entity.auth.TokenUser;
 import cn.catguild.common.type.CatTreeNode;
+import cn.catguild.common.type.auth.UserAuthorityType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -26,7 +22,6 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author xiyan
@@ -73,18 +68,24 @@ public class MenuApplicationService {
      * @return
      */
     public List<Menu> tree() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        Jwt token = ((JwtAuthenticationToken) authentication).getToken();
-        Map<String, Object> claims = token.getClaims();
-        Object o = claims.get(TokenConstant.TENANT_ID);
         List<Menu> all = menuRepository.findAll();
         return CatTreeNode.merge(all);
     }
 
+    /**
+     * 获取当前app的，当前用户的菜单树
+     *
+     * @return
+     */
     public List<Menu> authTree() {
-        Long loginId = AuthUtil.getLoginId();
-        Long tenantId = AuthUtil.getTenantId();
+        TokenUser tokenUser = AuthUtil.getTokenUser();
+        if (tokenUser.getAuthorityType() == UserAuthorityType.SUPER_ADMINISTRATOR){
+            // 直接返回所有权限树
+            return tree();
+        }
+        // 如果不是超管
+        Long loginId = tokenUser.getUserId();
+        Long tenantId = tokenUser.getTenantId();
         // 根据用户id，查询出菜单
         List<CatRole> roles = roleRepository.findByUserId(tenantId, loginId);
         List<Long> roleIds = roles.stream().map(CatRole::getId).toList();

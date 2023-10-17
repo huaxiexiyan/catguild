@@ -11,6 +11,10 @@ dependencies {
 
     implementation 'org.hibernate.orm:hibernate-core'
     implementation 'org.slf4j:slf4j-api'
+
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310' // 使用与您的 Jackson 版本匹配的版本
+    // 对象比较工具
+    implementation 'de.danielbechler:java-object-diff:0.95'
 }
 
 // Since this library is included as a jar in our jib projects, we want the

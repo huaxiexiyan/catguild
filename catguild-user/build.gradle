@@ -23,7 +23,7 @@ dependencies {
     // 持久层依赖
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.2'
     implementation 'com.alibaba:druid-spring-boot-starter:1.2.11'
-    implementation 'mysql:mysql-connector-java'
+//    implementation 'mysql:mysql-connector-java'
 
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test:'

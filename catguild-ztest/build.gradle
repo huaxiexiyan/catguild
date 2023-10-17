@@ -11,8 +11,14 @@ dependencies {
     }
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
     //安全框架
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    //
+    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.alibaba:easyexcel:3.3.2'
+
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test:'
 

@@ -1,8 +1,8 @@
 package cn.catguild.auth.domain;
 
-import cn.catguild.auth.domain.type.UserAuthorityType;
 import cn.catguild.common.entity.jpa.BaseTenant;
 import cn.catguild.common.type.ActiveStatus;
+import cn.catguild.common.type.auth.UserAuthorityType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

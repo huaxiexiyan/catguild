@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.system.infrastructure.repository.mapper.MenuDOMapper">
+
+    <resultMap id="baseResult" type="cn.catguild.system.infrastructure.domain.MenuDO">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="parent_path" property="parentPath"/>
+        <result column="type" property="type"/>
+        <result column="level" property="level"/>
+        <result column="path" property="path"/>
+        <result column="name" property="name"/>
+        <result column="component" property="component"/>
+        <result column="redirect" property="redirect"/>
+        <result column="title" property="title"/>
+        <result column="icon" property="icon"/>
+        <result column="expanded" property="expanded"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="hidden" property="hidden"/>
+        <result column="hidden_breadcrumb" property="hiddenBreadcrumb"/>
+        <result column="single" property="single"/>
+        <result column="frame_src" property="frameSrc"/>
+        <result column="frame_blank" property="frameBlank"/>
+        <result column="keep_alive" property="keepAlive"/>
+        <result column="active_status" property="activeStatus"/>
+
+        <result column="c_time" property="cTime"/>
+        <result column="c_by" property="cBy"/>
+        <result column="lm_time" property="lmTime"/>
+        <result column="lm_by" property="lmBy"/>
+        <result column="de_time" property="deTime"/>
+        <result column="de_by" property="deBy"/>
+    </resultMap>
+
+</mapper>

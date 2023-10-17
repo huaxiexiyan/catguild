@@ -24,17 +24,21 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     // 授权服务器
-//    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
 
     // 远程调用组件
-    implementation 'net.devh:grpc-server-spring-boot-starter:2.14.0.RELEASE'
+    implementation 'net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE'
 
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
 
     // 工具包
     implementation 'com.google.guava:guava:31.1-jre'
+    // 对象转换
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor  'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -45,7 +49,7 @@ jib {
         image = 'huaxiexiyan/catguild-system:main'
     }
     container {
-        jvmFlags = ['-Xmx128m', '-Xms128m'] // 添加堆内存参数
+        jvmFlags = ['-Xmx64m', '-Xms64m'] // 添加堆内存参数
         creationTime = 'USE_CURRENT_TIMESTAMP'
         environment = [
                 'TZ': 'Asia/Shanghai'

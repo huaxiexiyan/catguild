@@ -1,7 +1,7 @@
 package cn.catguild.system.presentation;
 
 import cn.catguild.common.api.ApiResponse;
-import cn.catguild.system.infrastructure.id.IdGenerationService;
+import cn.catguild.system.infrastructure.idgeneration.IdGenerationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
