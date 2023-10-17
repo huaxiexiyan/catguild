@@ -27,6 +27,11 @@ dependencies {
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
+
+    // 对象转换
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor  'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
     // 文件导入
     implementation 'com.alibaba:easyexcel:3.3.2'

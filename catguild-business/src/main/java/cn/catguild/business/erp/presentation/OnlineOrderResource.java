@@ -4,9 +4,12 @@ import cn.catguild.business.erp.application.OnlineOrderApplication;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderDO;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderItemDO;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderLogisticsDO;
+import cn.catguild.business.erp.infrastructure.domain.query.OnlineOrderQuery;
 import cn.catguild.business.erp.infrastructure.domain.type.OrderPlatform;
 import cn.catguild.business.erp.presentation.model.OnlineOrderImportRequest;
 import cn.catguild.business.util.AuthUtil;
+import cn.catguild.common.api.ApiPage;
+import cn.catguild.common.api.ApiResponse;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.listener.PageReadListener;
 import lombok.AllArgsConstructor;
@@ -34,12 +37,6 @@ public class OnlineOrderResource {
 
     private final OnlineOrderApplication onlineOrderApplication;
 
-    @GetMapping("/test")
-    public void test(){
-        log.info("登录用户id:{}", AuthUtil.getLoginId());
-        log.info("登录用户id:{}", AuthUtil.getTokenUser());
-    }
-
     /**
      * 最简单的读
      * 3. 直接读即可
@@ -54,28 +51,33 @@ public class OnlineOrderResource {
         Set<String> orderNums = new HashSet<>();
         EasyExcel.read(file.getInputStream(), OnlineOrderImportRequest.class,
                 new PageReadListener<OnlineOrderImportRequest>(dataList -> {
-            for (OnlineOrderImportRequest onlineOrderImportRequest : dataList) {
-                OnlineOrderDO onlineOrder = new OnlineOrderDO();
-                BeanUtils.copyProperties(onlineOrderImportRequest,onlineOrder);
+                    for (OnlineOrderImportRequest onlineOrderImportRequest : dataList) {
+                        OnlineOrderDO onlineOrder = new OnlineOrderDO();
+                        BeanUtils.copyProperties(onlineOrderImportRequest, onlineOrder);
 
-                OnlineOrderLogisticsDO orderLogisticsDO = new OnlineOrderLogisticsDO();
-                BeanUtils.copyProperties(onlineOrderImportRequest,orderLogisticsDO);
-                onlineOrder.setLogisticsInfo(orderLogisticsDO);
+                        OnlineOrderLogisticsDO orderLogisticsDO = new OnlineOrderLogisticsDO();
+                        BeanUtils.copyProperties(onlineOrderImportRequest, orderLogisticsDO);
+                        onlineOrder.setLogisticsInfo(orderLogisticsDO);
 
-                OnlineOrderItemDO orderItemDO = new OnlineOrderItemDO();
-                BeanUtils.copyProperties(onlineOrderImportRequest,orderItemDO);
-                List<OnlineOrderItemDO> itemDOS = new ArrayList<>();
-                itemDOS.add(orderItemDO);
-                onlineOrder.setOrderItems(itemDOS);
+                        OnlineOrderItemDO orderItemDO = new OnlineOrderItemDO();
+                        BeanUtils.copyProperties(onlineOrderImportRequest, orderItemDO);
+                        List<OnlineOrderItemDO> itemDOS = new ArrayList<>();
+                        itemDOS.add(orderItemDO);
+                        onlineOrder.setOrderItems(itemDOS);
 
-                if (orderNums.contains(onlineOrderImportRequest.getOrderNum())){
-                    log.info("复合订单号:{}",onlineOrderImportRequest.getOrderNum());
-                }
-                orderNums.add(onlineOrderImportRequest.getOrderNum());
-                onlineOrder.setOrderPlatform(OrderPlatform.PDD);
-                onlineOrderApplication.save(AuthUtil.getLoginId(),onlineOrder);
-            }
-        })).sheet().doRead();
+                        if (orderNums.contains(onlineOrderImportRequest.getOrderNum())) {
+                            log.info("复合订单号:{}", onlineOrderImportRequest.getOrderNum());
+                        }
+                        orderNums.add(onlineOrderImportRequest.getOrderNum());
+                        onlineOrder.setOrderPlatform(OrderPlatform.PDD);
+                        onlineOrderApplication.save(AuthUtil.getLoginId(), onlineOrder);
+                    }
+                })).sheet().doRead();
+    }
+
+    @GetMapping("/")
+    public ApiResponse<ApiPage<OnlineOrderDO>> page(@ModelAttribute OnlineOrderQuery query) {
+        return ApiResponse.ok(onlineOrderApplication.page(AuthUtil.getTenantId(), query));
     }
 
 }

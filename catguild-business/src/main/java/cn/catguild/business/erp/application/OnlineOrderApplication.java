@@ -2,6 +2,8 @@ package cn.catguild.business.erp.application;
 
 import cn.catguild.business.erp.domain.OnlineOrderRepository;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderDO;
+import cn.catguild.business.erp.infrastructure.domain.query.OnlineOrderQuery;
+import cn.catguild.common.api.ApiPage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,11 @@ public class OnlineOrderApplication {
 
     public void save(Long tenantId,OnlineOrderDO onlineOrder) {
         onlineOrderRepository.save(tenantId, onlineOrder);
+    }
+
+    public ApiPage<OnlineOrderDO>  page(Long tenantId, OnlineOrderQuery query){
+        ApiPage<OnlineOrderDO> page = onlineOrderRepository.page(tenantId,query);
+        return page;
     }
 
 }

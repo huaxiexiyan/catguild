@@ -1,20 +1,32 @@
 package cn.catguild.business.erp.infrastructure.repository;
 
 import cn.catguild.business.erp.domain.OnlineOrderRepository;
-import cn.catguild.business.erp.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderDO;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderItemDO;
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderLogisticsDO;
+import cn.catguild.business.erp.infrastructure.domain.dto.OrderStatisticsDTO;
+import cn.catguild.business.erp.infrastructure.domain.query.OnlineOrderQuery;
 import cn.catguild.business.erp.infrastructure.repository.jpa.OnlineOrderDORepository;
 import cn.catguild.business.erp.infrastructure.repository.jpa.OnlineOrderItemDORepository;
 import cn.catguild.business.erp.infrastructure.repository.jpa.OnlineOrderLogisticsDORepository;
+import cn.catguild.business.erp.infrastructure.repository.mapper.OnlineOrderDOMapper;
+import cn.catguild.business.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.business.util.AuthUtil;
+import cn.catguild.common.api.ApiPage;
+import cn.catguild.common.type.Kv;
+import cn.catguild.common.utility.IPageUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -30,6 +42,7 @@ import java.util.stream.Collectors;
 public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
 
     private final IdGenerationClient idClient;
+    private final OnlineOrderDOMapper baseMapper;
 
     private OnlineOrderItemDORepository onlineOrderItemRepository;
     private OnlineOrderLogisticsDORepository onlineOrderLogisticsRepository;
@@ -58,7 +71,35 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
         onlineOrderRepository.saveAndFlush(onlineOrder);
         // 保存附属项
         saveOnlineOrderItems(tenantId, onlineOrder.getId(), onlineOrder.getOrderNum(), onlineOrder.getOrderItems());
-        saveOnlineOrderLogistics(tenantId, onlineOrder.getId(), onlineOrder.getOrderNum(),onlineOrder.getLogisticsInfo());
+        saveOnlineOrderLogistics(tenantId, onlineOrder.getId(), onlineOrder.getOrderNum(), onlineOrder.getLogisticsInfo());
+    }
+
+    @Override
+    public ApiPage<OnlineOrderDO> page(Long tenantId, OnlineOrderQuery query) {
+        OnlineOrderDO queryDO = new OnlineOrderDO();
+        BeanUtils.copyProperties(query, queryDO);
+        IPage<OnlineOrderDO> onlineOrderDOIPage = baseMapper.selectPage(query.getIpage(), Wrappers.query(queryDO));
+        return IPageUtils.toApiPage(onlineOrderDOIPage, (iPage) -> (Collection<OnlineOrderDO>) iPage.getRecords());
+    }
+
+    @Override
+    public List<Kv<LocalDate, BigDecimal>> findSalesLineDaySalesRevenue(Long tenantId, LocalDateTime startTime, LocalDateTime endTime) {
+        return null;
+    }
+
+    @Override
+    public List<Kv<LocalDate, BigDecimal>> findSalesLineDayOrderQuantity(Long tenantId, LocalDateTime startTime, LocalDateTime endTime) {
+        return null;
+    }
+
+    @Override
+    public List<Kv<LocalDate, BigDecimal>> findSalesLineDaySalesVolume(Long tenantId, LocalDateTime startTime, LocalDateTime endTime) {
+        return null;
+    }
+
+    @Override
+    public List<Kv<LocalDate, OrderStatisticsDTO>> findSalesLineDay(Long tenantId, LocalDateTime startTime, LocalDateTime endTime) {
+        return baseMapper.calculateSalesLineDay(tenantId,startTime,endTime);
     }
 
     private void saveOnlineOrderItems(Long tenantId,
@@ -70,7 +111,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
         orderItems.forEach(item -> {
 
             // 线上订单导入，只要存在了，就不会删除,则只需修改存在，新增没有的
-            if (!CollectionUtils.isEmpty(itemMap) && itemMap.containsKey(item.getSkuId())){
+            if (!CollectionUtils.isEmpty(itemMap) && itemMap.containsKey(item.getSkuId())) {
                 // 更新
                 OnlineOrderItemDO orderItemDO = itemMap.get(item.getSkuId());
                 item.setId(orderItemDO.getId());
@@ -80,7 +121,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
 
                 item.setLmTime(LocalDateTime.now());
                 item.setLmBy(AuthUtil.getLoginId());
-            }else {
+            } else {
                 // 新增
                 item.setId(idClient.nextId());
                 item.setTenantId(tenantId);

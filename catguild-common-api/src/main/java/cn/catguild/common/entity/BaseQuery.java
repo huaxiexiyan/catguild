@@ -1,5 +1,7 @@
 package cn.catguild.common.entity;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 
 /**
@@ -7,7 +9,7 @@ import lombok.Data;
  * @date 2022/10/5 13:35
  */
 @Data
-public class BaseQuery {
+public class BaseQuery<T> {
 
 	/**
 	 * 总数
@@ -25,5 +27,9 @@ public class BaseQuery {
 	 * 当前分页总页数
 	 */
 	private Long pages;
+
+	public IPage<T> getIpage(){
+		return new Page<T>(current,size,total);
+	}
 
 }
