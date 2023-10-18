@@ -15,7 +15,6 @@ import com.alibaba.excel.read.listener.PageReadListener;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,8 +39,17 @@ public class OnlineOrderResource {
     /**
      * 最简单的读
      * 3. 直接读即可
+     * @Configuration
+     * public class ApplicationConfiguration extends AsyncConfigurerSupport {
+     *
+     *   @Override
+     *   public Executor getAsyncExecutor() {
+     *     return new DelegatingSecurityContextExecutorService(Executors.newFixedThreadPool(5));
+     *   }
+     *
+     * }
      */
-    @Async
+    //@Async
     @PostMapping("/import")
     public void importOnlineOrder(@RequestParam("file") MultipartFile file) throws IOException {
         // 写法1：JDK8+ ,不用额外写一个DemoDataListener
