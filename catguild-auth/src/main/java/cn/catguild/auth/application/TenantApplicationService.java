@@ -41,12 +41,13 @@ public class TenantApplicationService {
      * @param tenant
      */
     public void createTenant(Tenant tenant) {
-        Long id = idGenerationClient.nextId();
+        Integer uid = idGenerationClient.nextUid();
+        Long id =  Long.valueOf(uid);
         tenant.setId(id);
         tenant.setCBy(AuthUtil.getLoginId());
         tenant.setCTime(LocalDateTime.now());
         // 生成全局唯一uid
-        tenant.setUid(idGenerationClient.nextUid());
+        tenant.setUid(uid);
         tenant.setStatus(ActiveStatus.ACTIVE);
         tenantRepository.saveAndFlush(tenant);
         userApplicationService.registerTenantAdmin(tenant);
