@@ -7,6 +7,7 @@ on:
       - 'main'
     paths:
       - 'catguild-business/**'
+      - 'catguild-common-api/**'
   #pull_request:
   #  branches: [ main ]
 
