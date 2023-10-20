@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.business.automatic.infrastructure.repository.mapper.AppAuthConfigDOMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.catguild.business.automatic.infrastructure.domain.entity.AppAuthConfigDO">
+        <id column="id" property="id" />
+        <result column="tenant_id" property="tenantId" />
+        <result column="app_auth_type_id" property="appAuthTypeId" />
+        <result column="access_token" property="accessToken" />
+        <result column="refresh_token" property="refreshToken" />
+        <result column="expires_in" property="expiresIn" />
+        <result column="last_update_access_token_time" property="lastUpdateAccessTokenTime" />
+        <result column="last_update_refresh_token_time" property="lastUpdateRefreshTokenTime" />
+        <result column="status" property="status" />
+        <result column="active_status" property="activeStatus" />
+        <result column="c_by" property="cBy" />
+        <result column="c_time" property="cTime" />
+        <result column="lm_by" property="lmBy" />
+        <result column="lm_time" property="lmTime" />
+        <result column="de_by" property="deBy" />
+        <result column="de_time" property="deTime" />
+    </resultMap>
+
+    <resultMap id="CustomResultMap" type="cn.catguild.business.automatic.infrastructure.domain.custom.AppAuthConfigCustom" extends="BaseResultMap">
+        <result column="app_auth_type_name" property="appAuthTypeName" />
+        <result column="aat_app_auth_type_id" property="appAuthTypeId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, tenant_id, app_auth_type_id, access_token, refresh_token, expires_in, last_update_access_token_time, last_update_refresh_token_time, status, active_status, c_by, c_time, lm_by, lm_time, de_by, de_time
+    </sql>
+    <select id="selectCustomPage" resultMap="CustomResultMap">
+        SELECT aat.name as app_auth_type_name,aat.id AS aat_app_auth_type_id, aac.*
+        FROM business_automatic_app_auth_type aat
+        LEFT JOIN business_automatic_app_auth_config aac ON aat.id = aac.app_auth_type_id
+        WHERE aat.tenant_id = #{tenantId}
+        AND aat.active_status = 'ACTIVE'
+        <if test="query != null">
+            <if test="query.name != null and query.name != ''">
+                AND aat.name like CONCAT('%', #{query.name}, '%')
+            </if>
+            <if test="query.name != null and query.name != ''">
+                AND aac.active_status = #{query.activeStatus}
+            </if>
+            <if test="query.name != null and query.name != ''">
+                AND aac.status = #{query.status}
+            </if>
+        </if>
+    </select>
+
+</mapper>
