@@ -23,6 +23,7 @@ public interface AppAuthConfigDataConverter {
     @Mapping(source = "appAuthTypeName",target = "appAuthType.name")
     AppAuthConfig fromData(AppAuthConfigCustom appAuthConfigCustom);
 
+    @Mapping(source = "appAuthType.id",target = "appAuthTypeId")
     AppAuthConfigDO toData(AppAuthConfig appAuthConfig);
 
 

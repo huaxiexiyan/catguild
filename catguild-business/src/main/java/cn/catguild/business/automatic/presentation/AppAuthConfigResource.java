@@ -8,10 +8,7 @@ import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.api.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xiyan
@@ -28,6 +25,12 @@ public class AppAuthConfigResource {
     @GetMapping("")
     public ApiResponse<ApiPage<AppAuthConfig>> page(@ModelAttribute AppAuthConfigQuery query) {
         return ApiResponse.ok(baseApplication.page(AuthUtil.getTenantId(), query));
+    }
+
+    @PostMapping("")
+    public ApiResponse<Void> add(@RequestBody AppAuthConfig appAuthConfig) {
+        baseApplication.add(AuthUtil.getTenantId(), appAuthConfig);
+        return ApiResponse.ok();
     }
 
 }

@@ -12,4 +12,7 @@ public interface AppAuthConfigRepository {
 
     ApiPage<AppAuthConfig> page(Long tenantId, AppAuthConfigQuery query);
 
+    void save(Long tenantId, AppAuthConfig appAuthConfig);
+
+
 }

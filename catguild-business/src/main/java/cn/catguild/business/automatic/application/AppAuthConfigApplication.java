@@ -26,4 +26,8 @@ public class AppAuthConfigApplication {
         return baseRepository.page(tenantId,query);
     }
 
+    public void add(Long tenantId, AppAuthConfig appAuthConfig) {
+        baseRepository.save(tenantId, appAuthConfig);
+    }
+
 }
