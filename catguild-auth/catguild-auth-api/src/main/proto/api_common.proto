@@ -1,0 +1,16 @@
+syntax = 'proto3';
+
+// 默认false
+//option java_multiple_files = false;
+option java_package = 'cn.catguild.auth.api.common';
+option java_outer_classname = 'ApiCommonProto';
+
+// 通用响应
+message ApiResponse{
+  bool success = 1;//如果请求 0:成功,1:失败
+  string errorCode = 2;//错误类型代码
+  string errorMessage = 3;//向用户显示消息
+  int32 showType = 4;//错误显示类型： 0 无声； 1条消息。警告； 2 message.error; 4 通知； 9 页
+  string traceId = 5;//方便后端排查：唯一的请求ID
+  string host = 6;//方便后端排查：当前接入服务器的主机
+}

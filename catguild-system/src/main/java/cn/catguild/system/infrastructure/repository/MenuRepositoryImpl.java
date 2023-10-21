@@ -4,17 +4,17 @@ import cn.catguild.system.domain.Menu;
 import cn.catguild.system.domain.repositroy.MenuRepository;
 import cn.catguild.system.infrastructure.converter.MenuDataConverter;
 import cn.catguild.system.infrastructure.domain.MenuDO;
+import cn.catguild.system.infrastructure.domain.type.MenuType;
 import cn.catguild.system.infrastructure.idgeneration.IdGenerationService;
-import cn.catguild.system.infrastructure.repository.jpa.MenuDORepository;
 import cn.catguild.system.infrastructure.repository.mapper.MenuDOMapper;
 import cn.catguild.system.util.AuthUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Component
 public class MenuRepositoryImpl implements MenuRepository {
-
-    private final MenuDORepository menuDORepository;
 
     private final MenuDOMapper baseMapper;
 
@@ -54,19 +52,19 @@ public class MenuRepositoryImpl implements MenuRepository {
                 menuDO.setParentId(0L);
                 menuDO.setLevel(0);
             } else {
-                menuDORepository.findById(menuDO.getParentId())
-                        .ifPresent(parentMenu -> {
-                            menuDO.setLevel(parentMenu.getLevel() + 1);
-                        });
+                MenuDO parentMenu = baseMapper.selectById(menuDO.getParentId());
+                if (parentMenu != null) {
+                    menuDO.setLevel(parentMenu.getLevel() + 1);
+                }
             }
-            menuDORepository.saveAndFlush(menuDO);
+            baseMapper.insert(menuDO);
             menu.setId(dataConverter.fromData(menuDO).getId());
         }
     }
 
     @Override
     public List<Menu> findAll() {
-        List<MenuDO> all = menuDORepository.findAll();
+        List<MenuDO> all = baseMapper.selectList(Wrappers.emptyWrapper());
         return all.stream()
                 .map(dataConverter::fromData)
                 .collect(Collectors.toList());
@@ -74,17 +72,26 @@ public class MenuRepositoryImpl implements MenuRepository {
 
     @Override
     public Menu findById(Long id) {
-        Optional<MenuDO> menuOptional = menuDORepository.findById(id);
-        MenuDO menuDO = menuOptional.orElseGet(null);
-        if (menuDO == null){
+        MenuDO menuDO = baseMapper.selectById(id);
+        if (menuDO == null) {
             return null;
         }
         Menu menu = dataConverter.fromData(menuDO);
-        if (menuDO.getParentId() != null){
-            Optional<MenuDO> parentMenu = menuDORepository.findById(menuDO.getParentId());
-            parentMenu.ifPresent(m-> menu.setParentMenu(dataConverter.fromData(m)));
+        if (menuDO.getParentId() != null) {
+            MenuDO parentMenu = baseMapper.selectById(menuDO.getParentId());
+            menu.setParentMenu(dataConverter.fromData(parentMenu));
         }
         return menu;
+    }
+
+    @Override
+    public List<Menu> findByIds(List<Long> ids, MenuType menuType) {
+        List<MenuDO> menuDOS = baseMapper.selectList(Wrappers.<MenuDO>lambdaQuery()
+                .in(MenuDO::getId, ids)
+                .eq(MenuDO::getType, menuType));
+        return menuDOS.stream()
+                .map(dataConverter::fromData)
+                .collect(Collectors.toList());
     }
 
 }

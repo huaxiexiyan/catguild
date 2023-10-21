@@ -1,0 +1,43 @@
+syntax = 'proto3';
+
+// 默认false
+//option java_multiple_files = false;
+option java_package = 'cn.catguild.auth.api';
+option java_outer_classname = 'PermissionsClientProto';
+
+import 'api_common.proto';
+
+/**
+定义结构体请求
+ */
+message AuthResourceRequest{
+  int64 appId = 1;//应用id
+  string resourceType = 2;//资源类型，区别资源来源
+}
+
+/**
+定义结构体响应
+ */
+message AuthResourceResponse{
+  ApiResponse apiResponse = 1;
+  repeated  AuthResource authResources = 2;//授权资源列表
+}
+
+message AuthResource{
+  int64 authId = 1;//授权id
+  int64 resourceId = 2;//资源id
+  string resourceType = 3;//资源类型
+}
+
+/*
+定义服务
+ */
+service PermissionsClientService{
+  /**
+  发送html模版类，传模版及参数+目标email
+   */
+  rpc getAuthResourceByType(AuthResourceRequest) returns (AuthResourceResponse){
+
+  }
+
+}

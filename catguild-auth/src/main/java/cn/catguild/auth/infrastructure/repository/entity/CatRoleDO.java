@@ -1,16 +1,19 @@
-package cn.catguild.auth.domain;
+package cn.catguild.auth.infrastructure.repository.entity;
 
+import cn.catguild.common.entity.jpa.BaseTenant;
 import cn.catguild.common.type.ActiveStatus;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author xiyan
- * @date 2023/10/8 14:03
+ * @date 2023/10/19 15:53
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class CatRole  {
-
-    private Long id;
+@TableName("auth_role")
+public class CatRoleDO extends BaseTenant {
 
     /**
      * 应用id

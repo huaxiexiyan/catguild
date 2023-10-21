@@ -8,6 +8,7 @@ dependencies {
     // 自身依赖
     implementation project(":catguild-common-api")
     implementation project(":catguild-system:catguild-system-api")
+    implementation project(":catguild-auth:catguild-auth-api")
 
     // spring 家族
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -28,6 +29,7 @@ dependencies {
 
     // 远程调用组件
     implementation 'net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE'
+    implementation 'net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE'
 
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

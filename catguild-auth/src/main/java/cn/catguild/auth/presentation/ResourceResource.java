@@ -53,7 +53,7 @@ public class ResourceResource {
     @PatchMapping("/{id}/status")
     public ApiResponse<Void> updateResourceStatus(@PathVariable("id") Long id,
                                                   @RequestBody Resource resource) {
-        service.updateResourceStatus(id, resource.getStatus());
+        //service.updateResourceStatus(id, resource.getStatus());
         return ApiResponse.ok();
     }
 

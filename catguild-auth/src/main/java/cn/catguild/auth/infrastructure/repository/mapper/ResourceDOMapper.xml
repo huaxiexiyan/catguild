@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.auth.infrastructure.repository.mapper.ResourceDOMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.catguild.auth.infrastructure.repository.entity.ResourceDO">
+        <id column="id" property="id" />
+        <result column="tenant_id" property="tenantId" />
+        <result column="name" property="name" />
+        <result column="app_id" property="appId" />
+        <result column="ref_id" property="refId" />
+        <result column="ref_type" property="refType" />
+        <result column="c_by" property="cBy" />
+        <result column="c_time" property="cTime" />
+        <result column="lm_by" property="lmBy" />
+        <result column="lm_time" property="lmTime" />
+        <result column="de_by" property="deBy" />
+        <result column="de_time" property="deTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, tenant_id, name, app_id, ref_id, ref_type, c_by, c_time, lm_by, lm_time, de_by, de_time
+    </sql>
+    <select id="selectByRoleIdsAndType" resultMap="BaseResultMap">
+        SELECT ar.*
+        FROM auth_resource ar JOIN auth_role_resource arr ON ar.id = arr.resource_id
+        JOIN auth_role ar ON arr.role_id = ar.id
+        WHERE ar.tenant_id = #{tenantId} AND ar.app_id = #{appId}
+        AND ar.ref_type = #{resourceType}
+        AND ar.active_status = #{activeStatus}
+        AND ar.id in
+        <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+
+
+</mapper>

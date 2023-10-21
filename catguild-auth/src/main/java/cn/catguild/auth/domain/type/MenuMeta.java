@@ -1,5 +1,6 @@
 package cn.catguild.auth.domain.type;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
@@ -14,6 +15,7 @@ import org.hibernate.annotations.Comment;
  */
 @Data
 @Embeddable
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MenuMeta {
 
     @Comment("该路由在菜单上展示的标题")

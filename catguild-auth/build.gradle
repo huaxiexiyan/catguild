@@ -8,6 +8,7 @@ dependencies {
     // 自身依赖
     implementation project(":catguild-common-api")
     implementation project(":catguild-system:catguild-system-api")
+    implementation project(":catguild-auth:catguild-auth-api")
 
     // spring 家族
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -22,14 +23,20 @@ dependencies {
     // 授权服务器
     implementation "org.springframework.security:spring-security-oauth2-authorization-server:1.1.1"
     // 远程调用组件
-    implementation 'net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE'
+    implementation 'net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE'
+    implementation 'net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE'
 
     // 持久层依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
 
     // 通用操作日志组件，美团如何优雅地记录操作日志？的实现 https://mp.weixin.qq.com/s/JC51S_bI02npm4CE5NEEow
     implementation 'io.github.mouzt:bizlog-sdk:3.0.6'
+
+    // 对象转换
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor  'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
