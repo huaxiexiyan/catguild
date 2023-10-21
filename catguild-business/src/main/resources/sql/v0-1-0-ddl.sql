@@ -34,19 +34,19 @@ COMMENT ON COLUMN "public"."business_automatic_app_auth_type"."de_time" IS 'åˆ é
 DROP TABLE IF EXISTS "public"."business_automatic_app_auth_config";
 CREATE TABLE "public"."business_automatic_app_auth_config"
 (
-    "id"                             int8         NOT NULL,
-    "tenant_id"                      int8         NOT NULL,
-    "app_auth_type_id"               int8         NOT NULL,
-    "access_token"                   varchar(500) NOT NULL,
-    "refresh_token"                  varchar(500) NOT NULL,
+    "id"                             int8        NOT NULL,
+    "tenant_id"                      int8        NOT NULL,
+    "app_auth_type_id"               int8        NOT NULL,
+    "access_token"                   varchar(500),
+    "refresh_token"                  varchar(500),
     "expires_in"                     int4,
     "last_update_access_token_time"  timestamp,
     "last_update_refresh_token_time" timestamp,
     "status"                         varchar(30),
-    "active_status"                  varchar(10)  NOT NULL DEFAULT 'ACTIVE',
+    "active_status"                  varchar(10) NOT NULL DEFAULT 'ACTIVE',
 
-    "c_by"                           int8         NOT NULL,
-    "c_time"                         timestamp             DEFAULT CURRENT_TIMESTAMP,
+    "c_by"                           int8        NOT NULL,
+    "c_time"                         timestamp            DEFAULT CURRENT_TIMESTAMP,
     "lm_by"                          int8,
     "lm_time"                        timestamp,
     "de_by"                          int8,

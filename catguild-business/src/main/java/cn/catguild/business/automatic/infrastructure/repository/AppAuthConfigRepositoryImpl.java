@@ -83,4 +83,16 @@ public class AppAuthConfigRepositoryImpl implements AppAuthConfigRepository {
         }
     }
 
+    @Override
+    public void remove(Long tenantId, List<Long> ids) {
+        ids.forEach(id -> remove(tenantId, id));
+    }
+
+    @Override
+    public void remove(Long tenantId, Long id) {
+        baseMapper.delete(Wrappers.<AppAuthConfigDO>lambdaQuery()
+                .eq(AppAuthConfigDO::getTenantId, tenantId)
+                .eq(AppAuthConfigDO::getId, id));
+    }
+
 }

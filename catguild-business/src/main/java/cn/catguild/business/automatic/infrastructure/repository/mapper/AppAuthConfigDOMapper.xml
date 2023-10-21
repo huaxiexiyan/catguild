@@ -34,8 +34,9 @@
     <select id="selectCustomPage" resultMap="CustomResultMap">
         SELECT aat.name as app_auth_type_name,aat.id AS aat_app_auth_type_id, aac.*
         FROM business_automatic_app_auth_type aat
-        LEFT JOIN business_automatic_app_auth_config aac ON aat.id = aac.app_auth_type_id
-        WHERE aat.tenant_id = #{tenantId}
+        LEFT JOIN business_automatic_app_auth_config aac ON aat.id = aac.app_auth_type_id  AND aac.de_time is null
+        WHERE  aat.tenant_id = #{tenantId}
+        AND aat.de_time is null
         AND aat.active_status = 'ACTIVE'
         <if test="query != null">
             <if test="query.name != null and query.name != ''">

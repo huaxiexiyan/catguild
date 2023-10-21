@@ -3,6 +3,8 @@ package cn.catguild.business.automatic.infrastructure.domain.entity;
 import cn.catguild.business.automatic.infrastructure.domain.type.AppAuthConfigStatus;
 import cn.catguild.common.entity.jpa.BaseTenant;
 import cn.catguild.common.type.ActiveStatus;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +25,7 @@ public class AppAuthConfigDO extends BaseTenant {
     /**
      * 授权类型
      */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private Long appAuthTypeId;
 
     /**

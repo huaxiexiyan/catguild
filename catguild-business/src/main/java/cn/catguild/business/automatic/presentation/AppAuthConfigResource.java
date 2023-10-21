@@ -33,4 +33,22 @@ public class AppAuthConfigResource {
         return ApiResponse.ok();
     }
 
+    @PatchMapping("/{id}")
+    public ApiResponse<Void> update(@PathVariable("id") Long id, @RequestBody AppAuthConfig appAuthConfig) {
+        baseApplication.update(AuthUtil.getTenantId(), id, appAuthConfig);
+        return ApiResponse.ok();
+    }
+
+    @PatchMapping("/{id}/active-status")
+    public ApiResponse<Void> updateActiveStatus(@PathVariable("id") Long id, @RequestBody AppAuthConfig appAuthConfig) {
+        baseApplication.updateActiveStatus(AuthUtil.getTenantId(), id, appAuthConfig.getActiveStatus());
+        return ApiResponse.ok();
+    }
+
+    @PatchMapping("/clear-token")
+    public ApiResponse<Void> clear(@RequestBody AppAuthConfig appAuthConfig) {
+        baseApplication.clearToken(AuthUtil.getTenantId(), appAuthConfig.getIds());
+        return ApiResponse.ok();
+    }
+
 }
