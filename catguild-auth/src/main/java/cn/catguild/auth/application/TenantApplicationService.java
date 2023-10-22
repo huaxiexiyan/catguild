@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author xiyan
@@ -72,7 +73,7 @@ public class TenantApplicationService {
         return apiPage;
     }
 
-    public Tenant getTenantByDomainName(String domainName) {
+    public List<Tenant> getTenantByDomainName(String domainName) {
         return tenantRepository.findByDomainName(domainName);
     }
 

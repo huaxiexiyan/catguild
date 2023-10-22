@@ -9,6 +9,8 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author xiyan
  * @date 2023/7/31 17:34
@@ -46,7 +48,7 @@ public class TenantResource {
     }
 
     @GetMapping("/info")
-    public ApiResponse<Tenant> getTenantByDomainName(String domainName) {
+    public ApiResponse<List<Tenant>> getTenantByDomainName(String domainName) {
         return ApiResponse.ok(service.getTenantByDomainName(domainName));
     }
 
