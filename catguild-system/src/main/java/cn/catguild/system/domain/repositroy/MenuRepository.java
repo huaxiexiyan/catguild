@@ -18,4 +18,6 @@ public interface MenuRepository {
 
     List<Menu> findByIds(List<Long> resourceIds, MenuType menuType);
 
+    List<Menu> findByIds(List<Long> ids);
+
 }

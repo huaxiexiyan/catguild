@@ -6,12 +6,16 @@ import cn.catguild.common.utility.CollectionUtils;
 import cn.catguild.common.utility.IPageUtils;
 import cn.catguild.common.utility.StringUtils;
 import cn.catguild.system.domain.App;
+import cn.catguild.system.domain.Menu;
 import cn.catguild.system.domain.repositroy.AppRepository;
+import cn.catguild.system.domain.repositroy.MenuRepository;
 import cn.catguild.system.infrastructure.converter.AppDataConverter;
 import cn.catguild.system.infrastructure.domain.AppDO;
 import cn.catguild.system.infrastructure.domain.query.AppQuery;
+import cn.catguild.system.infrastructure.domain.relation.AppMenuDO;
 import cn.catguild.system.infrastructure.idgeneration.IdGenerationService;
 import cn.catguild.system.infrastructure.repository.mapper.AppDOMapper;
+import cn.catguild.system.infrastructure.repository.mapper.AppMenuDOMapper;
 import cn.catguild.system.util.AuthUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -22,9 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +40,9 @@ import java.util.stream.Collectors;
 public class AppRepositoryImpl implements AppRepository {
 
     private final AppDOMapper baseMapper;
+    private final AppMenuDOMapper appMenuDOMapper;
+
+    private final MenuRepository menuRepository;
 
     private final AppDataConverter baseDataConverter;
 
@@ -64,12 +70,14 @@ public class AppRepositoryImpl implements AppRepository {
             if (appDO.getParentId() != 0L) {
                 AppDO parentApp = baseMapper.selectById(appDO.getParentId());
                 appDO.setPath(String.join(",", parentApp.getPath(), appDO.getId().toString()));
-            }else {
+            } else {
                 appDO.setPath(appDO.getId().toString());
             }
             baseMapper.insert(appDO);
             app.setId(appDO.getId());
         }
+        // todo 此处的持久化需要再进行优化一下
+        //saveMenu(app);
     }
 
     @Override
@@ -92,6 +100,7 @@ public class AppRepositoryImpl implements AppRepository {
             AppDO parentApp = baseMapper.selectById(appDO.getParentId());
             app.setParentApp(baseDataConverter.fromData(parentApp));
         }
+        compileMenu(Collections.singleton(app));
         return app;
     }
 
@@ -102,7 +111,7 @@ public class AppRepositoryImpl implements AppRepository {
         if (StringUtils.hasText(query.getName())) {
             queryWrapper.like(AppDO::getName, query.getName());
         }
-        if (query.getActiveStatus() != null){
+        if (query.getActiveStatus() != null) {
             queryWrapper.eq(AppDO::getActiveStatus, query.getActiveStatus());
         }
         IPage<AppDO> page = baseMapper.selectPage(query.getIpage(), queryWrapper);
@@ -113,12 +122,13 @@ public class AppRepositoryImpl implements AppRepository {
                 Splitter splitter = Splitter.on(",").omitEmptyStrings().trimResults();
                 return splitter.splitToList(app.getPath()).stream().map(Long::parseLong).toList();
             }).flatMap(Collection::stream).toList();
-            if (CollectionUtils.isEmpty(ids)){
+            if (CollectionUtils.isEmpty(ids)) {
                 return new ArrayList<>();
             }
             List<AppDO> result = baseMapper.selectBatchIds(ids);
             List<App> apps = result.stream()
                     .map(baseDataConverter::fromData)
+                    .sorted(Comparator.comparing(App::getCTime))
                     .toList();
             return CatTreeNode.merge(apps);
         });
@@ -132,6 +142,86 @@ public class AppRepositoryImpl implements AppRepository {
         return all.stream()
                 .map(baseDataConverter::fromData)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void onlyUpdateAppMenu(App app) {
+        saveMenu(app);
+    }
+
+    private void compileMenu(Collection<App> apps) {
+        if (CollectionUtils.isEmpty(apps)) {
+            return;
+        }
+        List<Long> ids = apps.stream().map(App::getId).toList();
+        List<AppMenuDO> appMenus = appMenuDOMapper.selectList(Wrappers.<AppMenuDO>lambdaQuery().
+                in(AppMenuDO::getAppId, ids));
+        if (CollectionUtils.isEmpty(appMenus)){
+            return;
+        }
+        List<Long> menuIds = appMenus.stream().map(AppMenuDO::getMenuId).toList();
+        List<Menu> menus = menuRepository.findByIds(menuIds);
+        if (CollectionUtils.isEmpty(menus)){
+            return;
+        }
+        Map<Long, List<AppMenuDO>> appMenuMap = appMenus.stream()
+                .collect(Collectors.groupingBy(AppMenuDO::getAppId));
+        Map<Long, Menu> menuMap = menus.stream()
+                .collect(Collectors.toMap(Menu::getId, Function.identity()));
+        apps.forEach(app -> {
+            List<AppMenuDO> appMenuList = appMenuMap.get(app.getId());
+            if (CollectionUtils.isNotEmpty(appMenuList)) {
+                List<Menu> menuList = appMenuList.stream()
+                        .map(m -> menuMap.get(m.getMenuId())).toList();
+                app.setMenus(CatTreeNode.merge(menuList));
+            }
+        });
+    }
+
+    private void saveMenu(App app) {
+        List<Menu> menus = app.getMenus();
+        if (CollectionUtils.isEmpty(menus)) {
+            // 表示删掉掉所有的
+            appMenuDOMapper.delete(Wrappers.<AppMenuDO>lambdaQuery()
+                    .eq(AppMenuDO::getAppId, app.getId()));
+            return;
+        }
+        List<AppMenuDO> appMenus = menus.stream()
+                .map(m -> {
+                    AppMenuDO appMenuDO = new AppMenuDO();
+                    appMenuDO.setAppId(app.getId());
+                    appMenuDO.setMenuId(m.getId());
+                    return appMenuDO;
+                }).toList();
+        // 保留添加，痕迹，所以逻辑删除的，不去恢复它
+        List<AppMenuDO> appMenuDOS = appMenuDOMapper.selectList(Wrappers.<AppMenuDO>lambdaQuery()
+                .eq(AppMenuDO::getAppId, app.getId()));
+        Set<Long> menuIdSet = new HashSet<>();
+        Set<Long> menuIdSetTemp = appMenuDOS.stream()
+                .map(AppMenuDO::getMenuId)
+                .collect(Collectors.toSet());
+        if (CollectionUtils.isNotEmpty(menuIdSetTemp)) {
+            menuIdSet.addAll(menuIdSetTemp);
+        }
+
+        appMenus.forEach(am -> {
+            Long menuId = am.getMenuId();
+            if (menuIdSet.contains(am.getMenuId())) {
+                // 已经存在这个关系了,保持原样
+                menuIdSet.remove(menuId);
+            } else {
+                // 没有，需要新增
+                am.setId(idService.nextId());
+                am.setCBy(AuthUtil.getLoginId());
+                am.setCTime(LocalDateTime.now());
+                appMenuDOMapper.insert(am);
+            }
+        });
+        // 剩下的 menuIdSet 的是需要删除的
+        if (CollectionUtils.isNotEmpty(menuIdSet)) {
+            appMenuDOMapper.delete(Wrappers.<AppMenuDO>lambdaQuery()
+                    .in(AppMenuDO::getMenuId, menuIdSet));
+        }
     }
 
 }

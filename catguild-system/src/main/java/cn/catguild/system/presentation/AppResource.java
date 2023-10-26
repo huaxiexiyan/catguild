@@ -33,9 +33,9 @@ public class AppResource {
         return ApiResponse.ok(baseApplication.tree());
     }
 
-    @GetMapping("/main-app")
-    public ApiResponse<List<App>> getMainApp() {
-        return ApiResponse.ok(baseApplication.getMainApp());
+    @GetMapping("/main-apps")
+    public ApiResponse<List<App>> listMainApp() {
+        return ApiResponse.ok(baseApplication.listMainApp());
     }
 
     @PostMapping("")
@@ -50,11 +50,21 @@ public class AppResource {
         return ApiResponse.ok();
     }
 
+    @PutMapping("/{id}/menu")
+    public ApiResponse<Void> updateAppMenu(@PathVariable("id") Long id, @RequestBody App app) {
+        baseApplication.onlyUpdateAppMenu(app);
+        return ApiResponse.ok();
+    }
+
     @PatchMapping("/{id}/active-status")
     public ApiResponse<Void> updateAppActiveStatus(@PathVariable("id") Long id) {
         baseApplication.updateAppActiveStatus(id);
         return ApiResponse.ok();
     }
 
+    @GetMapping("/{id}")
+    public ApiResponse<App> details(@PathVariable("id") Long id) {
+        return ApiResponse.ok(baseApplication.findById(id));
+    }
 
 }

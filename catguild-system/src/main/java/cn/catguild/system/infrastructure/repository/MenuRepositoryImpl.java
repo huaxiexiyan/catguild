@@ -77,8 +77,8 @@ public class MenuRepositoryImpl implements MenuRepository {
             return null;
         }
         Menu menu = dataConverter.fromData(menuDO);
-        if (menuDO.getParentId() != null) {
-            MenuDO parentMenu = baseMapper.selectById(menuDO.getParentId());
+        if (menu.hasParentMenu()) {
+            MenuDO parentMenu = baseMapper.selectById(menu.getParentId());
             menu.setParentMenu(dataConverter.fromData(parentMenu));
         }
         return menu;
@@ -89,6 +89,15 @@ public class MenuRepositoryImpl implements MenuRepository {
         List<MenuDO> menuDOS = baseMapper.selectList(Wrappers.<MenuDO>lambdaQuery()
                 .in(MenuDO::getId, ids)
                 .eq(MenuDO::getType, menuType));
+        return menuDOS.stream()
+                .map(dataConverter::fromData)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Menu> findByIds(List<Long> ids) {
+        List<MenuDO> menuDOS = baseMapper.selectList(Wrappers.<MenuDO>lambdaQuery()
+                .in(MenuDO::getId, ids));
         return menuDOS.stream()
                 .map(dataConverter::fromData)
                 .collect(Collectors.toList());

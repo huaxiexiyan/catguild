@@ -3,6 +3,7 @@ package cn.catguild.system.application;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.system.domain.App;
 import cn.catguild.system.domain.repositroy.AppRepository;
+import cn.catguild.system.domain.repositroy.MenuRepository;
 import cn.catguild.system.infrastructure.domain.query.AppQuery;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.List;
 public class AppApplication {
 
     private final AppRepository baseRepository;
+    private final MenuRepository menuRepository;
 
     public void addApp(App app) {
         baseRepository.save(app);
@@ -46,8 +48,16 @@ public class AppApplication {
         return baseRepository.findAll();
     }
 
-    public List<App> getMainApp() {
+    public List<App> listMainApp() {
         return baseRepository.findByParentId(0L);
+    }
+
+    public App findById(Long id) {
+        return baseRepository.findById(id);
+    }
+
+    public void onlyUpdateAppMenu(App app) {
+        baseRepository.onlyUpdateAppMenu(app);
     }
 
 }

@@ -18,9 +18,10 @@ public interface AppRepository {
 
     App findById(Long id);
 
-
     ApiPage<App> page(AppQuery query);
 
     List<App> findByParentId(Long parentId);
+
+    void onlyUpdateAppMenu(App app);
 
 }

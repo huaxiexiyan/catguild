@@ -37,8 +37,8 @@ DROP TABLE IF EXISTS "public"."system_app_menu";
 CREATE TABLE "public"."system_app_menu"
 (
     "id"      int8 NOT NULL,
-    "appId"   int8 NOT NULL,
-    "menuId"  int8 NOT NULL,
+    "app_id"   int8 NOT NULL,
+    "menu_id"  int8 NOT NULL,
 
     "c_by"    int8 NOT NULL,
     "c_time"  timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -50,8 +50,8 @@ CREATE TABLE "public"."system_app_menu"
 );
 COMMENT ON TABLE "public"."system_app_menu" IS 'app菜单关系表';
 COMMENT ON COLUMN "public"."system_app_menu"."id" IS '主键';
-COMMENT ON COLUMN "public"."system_app_menu"."appId" IS 'app的id';
-COMMENT ON COLUMN "public"."system_app_menu"."menuId" IS '菜单id';
+COMMENT ON COLUMN "public"."system_app_menu"."app_id" IS 'app的id';
+COMMENT ON COLUMN "public"."system_app_menu"."menu_id" IS '菜单id';
 
 COMMENT ON COLUMN "public"."system_app_menu"."c_by" IS '创建人';
 COMMENT ON COLUMN "public"."system_app_menu"."c_time" IS '创建时间';
