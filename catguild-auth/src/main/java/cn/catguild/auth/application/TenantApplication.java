@@ -58,4 +58,10 @@ public class TenantApplication {
         tenantRepository.saveTenantApp(tenant);
     }
 
+    public void switchActiveStatus(Long id) {
+        Tenant tenant = tenantRepository.findById(id);
+        tenant.switchActiveStatus();
+        tenantRepository.save(tenant);
+    }
+
 }

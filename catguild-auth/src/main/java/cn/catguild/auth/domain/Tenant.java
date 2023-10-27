@@ -2,9 +2,11 @@ package cn.catguild.auth.domain;
 
 import cn.catguild.common.domain.BaseBO;
 import cn.catguild.common.type.ActiveStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -47,6 +49,19 @@ public class Tenant extends BaseBO {
      */
     private ActiveStatus activeStatus;
 
+    private Long cBy;
+
+    private LocalDateTime cTime;
+
     private List<Long> appIds;
+
+    @JsonIgnore
+    public void switchActiveStatus() {
+        if (this.activeStatus == ActiveStatus.ACTIVE){
+            this.activeStatus = ActiveStatus.INACTIVE;
+        }else {
+            this.activeStatus = ActiveStatus.ACTIVE;
+        }
+    }
 
 }

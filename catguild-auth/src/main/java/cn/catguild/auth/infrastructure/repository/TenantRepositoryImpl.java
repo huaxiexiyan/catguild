@@ -65,7 +65,9 @@ public class TenantRepositoryImpl implements TenantRepository {
     @Override
     public Tenant findById(Long id) {
         TenantDO tenantDO = baseMapper.selectById(id);
-        return baseDataConverter.fromData(tenantDO);
+        Tenant tenant = baseDataConverter.fromData(tenantDO);
+        compileApp(tenant);
+        return tenant;
     }
 
     @Override
@@ -109,6 +111,8 @@ public class TenantRepositoryImpl implements TenantRepository {
                 TenantAppDO tenantAppDO = new TenantAppDO();
                 // 没有，需要新增
                 tenantAppDO.setId(idClient.nextId());
+                tenantAppDO.setTenantId(tenant.getId());
+                tenantAppDO.setAppId(id);
                 tenantAppDO.setCBy(AuthUtil.getLoginId());
                 tenantAppDO.setCTime(LocalDateTime.now());
                 tenantAppDO.setActiveStatus(ActiveStatus.ACTIVE);
@@ -127,6 +131,16 @@ public class TenantRepositoryImpl implements TenantRepository {
     public List<Tenant> findByDomainName(String domainName) {
         List<TenantDO> tenants = baseMapper.selectListByLikeDomainName(domainName);
         return baseDataConverter.fromData(tenants);
+    }
+
+    private void compileApp(Tenant tenant) {
+        List<TenantAppDO> tenantApp = tenantAppMapper.selectList(Wrappers.<TenantAppDO>lambdaQuery()
+                .eq(TenantAppDO::getTenantId, tenant.getId()));
+        if (CollectionUtils.isEmpty(tenantApp)){
+            return;
+        }
+        List<Long> appIds = tenantApp.stream().map(TenantAppDO::getAppId).toList();
+        tenant.setAppIds(appIds);
     }
 
 }

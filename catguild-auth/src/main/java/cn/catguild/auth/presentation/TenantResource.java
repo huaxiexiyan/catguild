@@ -58,4 +58,10 @@ public class TenantResource {
         return ApiResponse.ok();
     }
 
+    @PatchMapping("/{id}/switch-active-status")
+    public ApiResponse<List<Tenant>> switchActiveStatus(@PathVariable("id") Long id) {
+        baseApplication.switchActiveStatus(id);
+        return ApiResponse.ok();
+    }
+
 }
