@@ -1,7 +1,7 @@
 package cn.catguild.auth.infrastructure.repository.converter;
 
 import cn.catguild.auth.domain.Resource;
-import cn.catguild.auth.infrastructure.repository.entity.ResourceDO;
+import cn.catguild.auth.infrastructure.repository.domain.entity.ResourceDO;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 

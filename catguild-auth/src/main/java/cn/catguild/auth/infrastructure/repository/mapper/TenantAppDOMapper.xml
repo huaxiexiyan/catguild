@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.catguild.auth.infrastructure.repository.mapper.CatRoleDOMapper">
+<mapper namespace="cn.catguild.auth.infrastructure.repository.mapper.TenantAppDOMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.catguild.auth.infrastructure.repository.domain.entity.CatRoleDO">
+    <resultMap id="BaseResultMap" type="cn.catguild.auth.infrastructure.repository.domain.relation.TenantAppDO">
         <id column="id" property="id" />
         <result column="tenant_id" property="tenantId" />
-        <result column="name" property="name" />
         <result column="app_id" property="appId" />
-        <result column="code" property="code" />
         <result column="active_status" property="activeStatus" />
         <result column="c_by" property="cBy" />
         <result column="c_time" property="cTime" />
@@ -20,17 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, tenant_id, name, app_id, code, activeStatus, c_by, c_time, lm_by, lm_time, de_by, de_time
+        id, tenant_id, app_id, active_status, c_by, c_time, lm_by, lm_time, de_by, de_time
     </sql>
-
-    <select id="selectByAppIdAndUserId" resultMap="BaseResultMap">
-        SELECT ar.*
-        FROM auth_user_role aur
-            JOIN auth_user au  ON au.id = aur.user_id
-            JOIN auth_role ar ON ar.id = aur.role_id
-        WHERE au.id = #{userId}
-          AND au.tenant_id = #{tenantId}
-          AND aur.app_id = #{appId}
-    </select>
 
 </mapper>

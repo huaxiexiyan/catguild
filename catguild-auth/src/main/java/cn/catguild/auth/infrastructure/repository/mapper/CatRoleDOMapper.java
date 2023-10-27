@@ -1,6 +1,6 @@
 package cn.catguild.auth.infrastructure.repository.mapper;
 
-import cn.catguild.auth.infrastructure.repository.entity.CatRoleDO;
+import cn.catguild.auth.infrastructure.repository.domain.entity.CatRoleDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.data.repository.query.Param;
 

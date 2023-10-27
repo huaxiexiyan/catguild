@@ -3,7 +3,7 @@ package cn.catguild.auth.infrastructure.repository;
 import cn.catguild.auth.domain.CatRole;
 import cn.catguild.auth.domain.repository.RoleRepository;
 import cn.catguild.auth.infrastructure.repository.converter.RoleDataConverter;
-import cn.catguild.auth.infrastructure.repository.entity.CatRoleDO;
+import cn.catguild.auth.infrastructure.repository.domain.entity.CatRoleDO;
 import cn.catguild.auth.infrastructure.repository.mapper.CatRoleDOMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

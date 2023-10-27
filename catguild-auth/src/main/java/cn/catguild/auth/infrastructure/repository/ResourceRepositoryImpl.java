@@ -4,7 +4,7 @@ import cn.catguild.auth.domain.Resource;
 import cn.catguild.auth.domain.repository.ResourceRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.auth.infrastructure.repository.converter.ResourceDataConverter;
-import cn.catguild.auth.infrastructure.repository.entity.ResourceDO;
+import cn.catguild.auth.infrastructure.repository.domain.entity.ResourceDO;
 import cn.catguild.auth.infrastructure.repository.mapper.ResourceDOMapper;
 import cn.catguild.auth.oauth.util.AuthUtil;
 import cn.catguild.common.type.ActiveStatus;

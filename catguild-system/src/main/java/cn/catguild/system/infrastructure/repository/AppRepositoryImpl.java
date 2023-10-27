@@ -156,12 +156,12 @@ public class AppRepositoryImpl implements AppRepository {
         List<Long> ids = apps.stream().map(App::getId).toList();
         List<AppMenuDO> appMenus = appMenuDOMapper.selectList(Wrappers.<AppMenuDO>lambdaQuery().
                 in(AppMenuDO::getAppId, ids));
-        if (CollectionUtils.isEmpty(appMenus)){
+        if (CollectionUtils.isEmpty(appMenus)) {
             return;
         }
         List<Long> menuIds = appMenus.stream().map(AppMenuDO::getMenuId).toList();
         List<Menu> menus = menuRepository.findByIds(menuIds);
-        if (CollectionUtils.isEmpty(menus)){
+        if (CollectionUtils.isEmpty(menus)) {
             return;
         }
         Map<Long, List<AppMenuDO>> appMenuMap = appMenus.stream()
@@ -220,6 +220,7 @@ public class AppRepositoryImpl implements AppRepository {
         // 剩下的 menuIdSet 的是需要删除的
         if (CollectionUtils.isNotEmpty(menuIdSet)) {
             appMenuDOMapper.delete(Wrappers.<AppMenuDO>lambdaQuery()
+                    .eq(AppMenuDO::getAppId, app.getId())
                     .in(AppMenuDO::getMenuId, menuIdSet));
         }
     }

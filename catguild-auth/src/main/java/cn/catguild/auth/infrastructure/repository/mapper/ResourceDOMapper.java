@@ -1,6 +1,6 @@
 package cn.catguild.auth.infrastructure.repository.mapper;
 
-import cn.catguild.auth.infrastructure.repository.entity.ResourceDO;
+import cn.catguild.auth.infrastructure.repository.domain.entity.ResourceDO;
 import cn.catguild.common.type.ActiveStatus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;

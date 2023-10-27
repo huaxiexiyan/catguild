@@ -1,7 +1,7 @@
 package cn.catguild.auth.infrastructure.repository.converter;
 
 import cn.catguild.auth.domain.CatRole;
-import cn.catguild.auth.infrastructure.repository.entity.CatRoleDO;
+import cn.catguild.auth.infrastructure.repository.domain.entity.CatRoleDO;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 

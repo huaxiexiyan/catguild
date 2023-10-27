@@ -1,4 +1,4 @@
-package cn.catguild.auth.infrastructure.repository.entity;
+package cn.catguild.auth.infrastructure.repository.domain.entity;
 
 import cn.catguild.common.entity.jpa.BaseTenant;
 import cn.catguild.common.type.ActiveStatus;

@@ -3,7 +3,7 @@
 <mapper namespace="cn.catguild.auth.infrastructure.repository.mapper.ResourceDOMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.catguild.auth.infrastructure.repository.entity.ResourceDO">
+    <resultMap id="BaseResultMap" type="cn.catguild.auth.infrastructure.repository.domain.entity.ResourceDO">
         <id column="id" property="id" />
         <result column="tenant_id" property="tenantId" />
         <result column="name" property="name" />
