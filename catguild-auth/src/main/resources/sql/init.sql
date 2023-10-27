@@ -4,7 +4,6 @@ CREATE TABLE "public"."auth_resource"
 (
     "id"        int8        NOT NULL,
     "tenant_id" int8        NOT NULL,
-    "name"      varchar(50) NOT NULL,
     "app_id"    int8        NOT NULL,
     "ref_id"    int8        NOT NULL,
     "ref_type"  varchar(50) NOT NULL,
@@ -20,7 +19,6 @@ CREATE TABLE "public"."auth_resource"
 COMMENT ON TABLE "public"."auth_resource" IS '资源实体表';
 COMMENT ON COLUMN "public"."auth_resource"."id" IS '主键';
 COMMENT ON COLUMN "public"."auth_resource"."tenant_id" IS '租户id';
-COMMENT ON COLUMN "public"."auth_resource"."name" IS '资源名称';
 COMMENT ON COLUMN "public"."auth_resource"."app_id" IS '来源appId';
 COMMENT ON COLUMN "public"."auth_resource"."ref_id" IS '资源实体id';
 COMMENT ON COLUMN "public"."auth_resource"."ref_type" IS '资源类型';
@@ -40,8 +38,8 @@ CREATE TABLE "public"."auth_role"
     "tenant_id"    int8        NOT NULL,
     "name"         varchar(50) NOT NULL,
     "app_id"       int8        NOT NULL,
-    "code"         varchar(50) NOT NULL,
-    "activeStatus" varchar(10) NOT NULL,
+    "code"         varchar(50),
+    "active_status" varchar(10)  NOT NULL DEFAULT 'ACTIVE',
 
     "c_by"         int8        NOT NULL,
     "c_time"       timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -57,7 +55,7 @@ COMMENT ON COLUMN "public"."auth_role"."tenant_id" IS '租户id';
 COMMENT ON COLUMN "public"."auth_role"."name" IS '角色名称';
 COMMENT ON COLUMN "public"."auth_role"."app_id" IS '来源appId';
 COMMENT ON COLUMN "public"."auth_role"."code" IS '唯一code';
-COMMENT ON COLUMN "public"."auth_role"."activeStatus" IS '活跃状态';
+COMMENT ON COLUMN "public"."auth_role"."active_status" IS '活跃状态';
 
 COMMENT ON COLUMN "public"."auth_role"."c_by" IS '创建人';
 COMMENT ON COLUMN "public"."auth_role"."c_time" IS '创建时间';

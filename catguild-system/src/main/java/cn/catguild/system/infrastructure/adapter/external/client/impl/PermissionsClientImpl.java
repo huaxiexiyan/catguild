@@ -43,16 +43,45 @@ public class PermissionsClientImpl implements PermissionsClient {
         ApiCommonProto.ApiResponse apiResponse = authResourceResponse.getApiResponse();
         if (apiResponse.getSuccess()) {
             List<PermissionsClientProto.AuthResource> authResourcesList = authResourceResponse.getAuthResourcesList();
-            if (CollectionUtils.isEmpty(authResourcesList)){
+            if (CollectionUtils.isEmpty(authResourcesList)) {
                 return new ArrayList<>();
             }
             return authResourcesList.stream()
                     .map(authResourceConverter::fromDTO)
                     .toList();
         } else {
-            log.error("uid获取失败:{}", apiResponse);
+            log.error("权限资源获取失败:{}", apiResponse);
         }
         throw new RuntimeException("授权服务调用异常");
+    }
+
+    @Override
+    public void syncResource(Long appId, String resourceType, List<Long> resourceIds) {
+        PermissionsClientProto.SyncResourceRequest syncResourceRequest = PermissionsClientProto.SyncResourceRequest.newBuilder()
+                .setAppId(appId)
+                .setResourceType(resourceType)
+                .addAllResourceIds(resourceIds)
+                .build();
+        PermissionsClientProto.SyncResourceResponse syncResourceResponse = permissionsClientServiceBlockingStub.syncResource(syncResourceRequest);
+        ApiCommonProto.ApiResponse apiResponse = syncResourceResponse.getApiResponse();
+        if (!apiResponse.getSuccess()) {
+            log.error("资源同步失败:{}", apiResponse);
+            throw new RuntimeException("授权服务调用异常");
+        }
+    }
+
+    @Override
+    public void clearResource(Long appId, String resourceType) {
+        PermissionsClientProto.ClearResourceRequest clearResourceRequest = PermissionsClientProto.ClearResourceRequest.newBuilder()
+                .setAppId(appId)
+                .setResourceType(resourceType)
+                .build();
+        PermissionsClientProto.ClearResourceResponse clearResourceResponse = permissionsClientServiceBlockingStub.clearResource(clearResourceRequest);
+        ApiCommonProto.ApiResponse apiResponse = clearResourceResponse.getApiResponse();
+        if (!apiResponse.getSuccess()) {
+            log.error("资源删除失败:{}", apiResponse);
+            throw new RuntimeException("授权服务调用异常");
+        }
     }
 
 

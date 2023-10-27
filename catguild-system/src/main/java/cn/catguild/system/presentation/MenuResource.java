@@ -49,20 +49,10 @@ public class MenuResource {
         return ApiResponse.ok();
     }
 
-    @PostMapping("/refresh-resource-point")
-    public ApiResponse<Void> generateResourcePoint() {
-        return ApiResponse.ok();
-    }
-
-    @PostMapping("/refresh-resource-point/{id}")
-    public ApiResponse<Void> generateResourcePoint(@PathVariable("id") Long id) {
-        return ApiResponse.ok();
-    }
-
     @GetMapping("/auth-tree/{appId}")
-    public ApiResponse<Void> authMenuTree(@PathVariable("appId") Long appId) {
+    public ApiResponse<List<Menu>> authMenuTree(@PathVariable("appId") Long appId) {
         List<Menu> menus = menuApplication.getAuthMenuTree(appId);
-        return ApiResponse.ok();
+        return ApiResponse.ok(menus);
     }
 
 }

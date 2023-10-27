@@ -39,7 +39,7 @@ public class AppApplication {
         baseRepository.save(app);
     }
 
-    public ApiPage<App> page(AppQuery query){
+    public ApiPage<App> page(AppQuery query) {
         return baseRepository.page(query);
     }
 

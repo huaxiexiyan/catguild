@@ -2,6 +2,7 @@ package cn.catguild.auth.domain.repository;
 
 import cn.catguild.auth.domain.Resource;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -11,5 +12,14 @@ import java.util.List;
 public interface ResourceRepository {
 
     List<Resource> finByRoleIdsAndType(Long tenantId, Long appId, List<Long> roleIds, String resourceType);
+
+    void save(Long tenantId, Resource resource);
+
+    Resource findById(Long tenantId, Long id);
+
+    List<Resource> findByAppIdAndType(Long tenantId, Long appId, String refType);
+
+    void removeByIds(Long tenantId, Collection<Long> removeIds);
+
 
 }

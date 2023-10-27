@@ -7,12 +7,14 @@ import cn.catguild.auth.domain.repository.RoleRepository;
 import cn.catguild.auth.oauth.util.AuthUtil;
 import cn.catguild.common.entity.auth.TokenUser;
 import cn.catguild.common.type.ActiveStatus;
+import cn.catguild.common.utility.CollectionUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author xiyan
@@ -42,8 +44,72 @@ public class PermissionsApplication {
                 .filter(r -> r.getActiveStatus() == ActiveStatus.ACTIVE)
                 .map(CatRole::getId)
                 .toList();
+        if (CollectionUtils.isEmpty(roleIds)) {
+            return new ArrayList<>();
+        }
         // 2、根据角色查询关联资源
         return resourceRepository.finByRoleIdsAndType(tokenUser.getTenantId(), appId, roleIds, resourceType);
+    }
+
+    /**
+     * 同步资源
+     *
+     * @param appId
+     * @param refType
+     * @param resourceIds
+     */
+    public void syncResource(Long tenantId, Long appId, String refType, List<Long> resourceIds) {
+        if (CollectionUtils.isEmpty(resourceIds)) {
+            return;
+        }
+        // 保留添加，痕迹，所以逻辑删除的，不去恢复它
+        List<Resource> resources = resourceRepository.findByAppIdAndType(tenantId, appId, refType);
+        Set<Long> removeIds = new HashSet<>();
+        Map<Long, Long> resourceMap = resources.stream()
+                .collect(Collectors.toMap(Resource::getRefId, Resource::getId));
+        if (CollectionUtils.isNotEmpty(resourceMap)) {
+            removeIds.addAll(resourceMap.values());
+        }
+        // 新增注册
+        resourceIds.forEach(resourceId -> {
+            if (removeIds.contains(resourceId)) {
+                // 已经存在这个关系了,保持原样
+                removeIds.remove(resourceMap.get(resourceId));
+            } else {
+                // 没有，需要新增
+                Resource resource = new Resource();
+                resource.setAppId(appId);
+                resource.setRefId(resourceId);
+                resource.setRefType(refType);
+                registerResource(tenantId, resource);
+            }
+        });
+        // 剩下的 menuIdSet 的是需要删除的
+        if (CollectionUtils.isNotEmpty(removeIds)) {
+            removeResource(tenantId, removeIds);
+        }
+    }
+
+    public void registerResource(Long tenantId, Resource resource) {
+        resource.setTenantId(tenantId);
+        resourceRepository.save(tenantId, resource);
+    }
+
+    public void removeResource(Long tenantId, Long id) {
+        removeResource(tenantId, Collections.singleton(id));
+    }
+
+    public void removeResource(Long tenantId, Collection<Long> ids) {
+        resourceRepository.removeByIds(tenantId, ids);
+    }
+
+    public void clearResource(Long tenantId, Long appId, String refType) {
+        List<Resource> resources = resourceRepository.findByAppIdAndType(tenantId, appId, refType);
+        if (CollectionUtils.isNotEmpty(resources)){
+            List<Long> ids = resources.stream().map(Resource::getId)
+                    .toList();
+            removeResource(tenantId,ids);
+        }
     }
 
 }

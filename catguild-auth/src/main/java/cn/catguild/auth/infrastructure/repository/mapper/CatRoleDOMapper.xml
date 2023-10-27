@@ -24,9 +24,10 @@
     </sql>
 
     <select id="selectByAppIdAndUserId" resultMap="BaseResultMap">
-        SELECT aur.*
+        SELECT ar.*
         FROM auth_user_role aur
             JOIN auth_user au  ON au.id = aur.user_id
+            JOIN auth_role ar ON ar.id = aur.role_id
         WHERE au.id = #{userId}
           AND au.tenant_id = #{tenantId}
           AND aur.app_id = #{appId}

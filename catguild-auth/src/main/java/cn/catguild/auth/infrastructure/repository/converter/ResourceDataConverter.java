@@ -5,6 +5,8 @@ import cn.catguild.auth.infrastructure.repository.entity.ResourceDO;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author xiyan
  * @date 2023/10/13 14:37
@@ -15,6 +17,8 @@ public interface ResourceDataConverter {
     ResourceDataConverter INSTANCE = Mappers.getMapper(ResourceDataConverter.class);
 
     Resource fromData(ResourceDO resourceDO);
+
+    List<Resource> fromData(List<ResourceDO> resourceDO);
 
     ResourceDO toData(Resource resource);
 

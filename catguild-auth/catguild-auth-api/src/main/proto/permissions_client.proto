@@ -29,14 +29,59 @@ message AuthResource{
   string resourceType = 3;//资源类型
 }
 
+/**
+定义结构体请求
+ */
+message SyncResourceRequest{
+  int64 appId = 1;//应用id
+  string resourceType = 2;//资源类型id
+  repeated  int64 resourceIds = 3;//资源id列表
+}
+
+/**
+定义结构体响应
+ */
+message SyncResourceResponse{
+  ApiResponse apiResponse = 1;
+}
+
+/**
+定义结构体请求
+ */
+message ClearResourceRequest{
+  int64 appId = 1;//应用id
+  string resourceType = 2;//资源类型id
+}
+
+/**
+定义结构体响应
+ */
+message ClearResourceResponse{
+  ApiResponse apiResponse = 1;
+}
+
 /*
 定义服务
  */
 service PermissionsClientService{
   /**
-  发送html模版类，传模版及参数+目标email
+  获取已授权的资源id
    */
   rpc getAuthResourceByType(AuthResourceRequest) returns (AuthResourceResponse){
+
+  }
+
+  /**
+  获取已授权的资源id
+   */
+  rpc syncResource(SyncResourceRequest) returns (SyncResourceResponse){
+
+  }
+
+  /**
+  获取已授权的资源id
+   */
+  rpc clearResource(ClearResourceRequest) returns (ClearResourceResponse){
 
   }
 

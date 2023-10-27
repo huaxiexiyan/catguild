@@ -11,6 +11,9 @@ import java.util.List;
 public interface PermissionsClient {
     List<AuthResourceDTO> getAuthResourceByType(Long appId, String resourceType);
 
-    //void sendHtmlTp(String address, String subject, Long tpId, Map<String, String> tpParam);
+    void syncResource(Long appId, String resourceType, List<Long> resourceIds);
+
+
+    void clearResource(Long appId, String resourceType);
 
 }

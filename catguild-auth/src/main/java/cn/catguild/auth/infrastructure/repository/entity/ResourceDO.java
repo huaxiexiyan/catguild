@@ -15,9 +15,9 @@ import lombok.EqualsAndHashCode;
 public class ResourceDO extends BaseTenant {
 
     /**
-     * 资源名
+     * 什么应用产生的
      */
-    private String name;
+    private Long appId;
 
     /**
      * 实体id
@@ -28,10 +28,5 @@ public class ResourceDO extends BaseTenant {
      * 类型
      */
     private String refType;
-
-    /**
-     * 什么应用产生的
-     */
-    private Long appId;
 
 }

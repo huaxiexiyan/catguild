@@ -52,4 +52,9 @@ public class TenantResource {
         return ApiResponse.ok(service.getTenantByDomainName(domainName));
     }
 
+    @PutMapping("/{id}/app")
+    public ApiResponse<List<Tenant>> update(Tenant tenant) {
+        return ApiResponse.ok();
+    }
+
 }

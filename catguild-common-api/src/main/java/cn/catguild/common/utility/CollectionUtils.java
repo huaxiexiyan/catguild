@@ -3,6 +3,7 @@ package cn.catguild.common.utility;
 import org.springframework.lang.Nullable;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author xiyan
@@ -11,6 +12,10 @@ import java.util.Collection;
 public class CollectionUtils extends org.springframework.util.CollectionUtils {
     public static boolean isNotEmpty(@Nullable Collection<?> collection) {
         return !isEmpty(collection);
+    }
+
+    public static boolean isNotEmpty(@Nullable Map<?, ?> map) {
+        return !isEmpty(map);
     }
 
 }

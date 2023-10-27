@@ -23,11 +23,11 @@
         id, tenant_id, name, app_id, ref_id, ref_type, c_by, c_time, lm_by, lm_time, de_by, de_time
     </sql>
     <select id="selectByRoleIdsAndType" resultMap="BaseResultMap">
-        SELECT ar.*
-        FROM auth_resource ar JOIN auth_role_resource arr ON ar.id = arr.resource_id
+        SELECT are.*
+        FROM auth_resource are JOIN auth_role_resource arr ON are.id = arr.resource_id
         JOIN auth_role ar ON arr.role_id = ar.id
-        WHERE ar.tenant_id = #{tenantId} AND ar.app_id = #{appId}
-        AND ar.ref_type = #{resourceType}
+        WHERE are.tenant_id = #{tenantId} AND are.app_id = #{appId}
+        AND are.ref_type = #{resourceType}
         AND ar.active_status = #{activeStatus}
         AND ar.id in
         <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
