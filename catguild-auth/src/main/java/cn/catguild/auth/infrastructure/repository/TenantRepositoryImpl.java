@@ -1,15 +1,16 @@
 package cn.catguild.auth.infrastructure.repository;
 
+import cn.catguild.auth.domain.Resource;
 import cn.catguild.auth.domain.Tenant;
+import cn.catguild.auth.domain.repository.ResourceRepository;
 import cn.catguild.auth.domain.repository.TenantRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.auth.infrastructure.repository.converter.TenantDataConverter;
 import cn.catguild.auth.infrastructure.repository.domain.entity.TenantDO;
 import cn.catguild.auth.infrastructure.repository.domain.query.TenantQuery;
-import cn.catguild.auth.infrastructure.repository.domain.relation.TenantAppDO;
-import cn.catguild.auth.infrastructure.repository.mapper.TenantAppDOMapper;
 import cn.catguild.auth.infrastructure.repository.mapper.TenantDOMapper;
 import cn.catguild.auth.oauth.util.AuthUtil;
+import cn.catguild.auth.presentation.model.ResourceQuery;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.type.ActiveStatus;
 import cn.catguild.common.utility.CollectionUtils;
@@ -20,10 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author xiyan
@@ -35,11 +33,11 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     private final TenantDOMapper baseMapper;
 
-    private final TenantAppDOMapper tenantAppMapper;
-
     private final TenantDataConverter baseDataConverter;
 
     private final IdGenerationClient idClient;
+
+    private final ResourceRepository resourceRepository;
 
     @Override
     public void save(Tenant tenant) {
@@ -83,63 +81,19 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public void saveTenantApp(Tenant tenant) {
-        List<Long> ids = tenant.getAppIds();
-        if (CollectionUtils.isEmpty(ids)) {
-            // 表示删掉掉所有的
-            tenantAppMapper.delete(Wrappers.<TenantAppDO>lambdaQuery()
-                    .eq(TenantAppDO::getTenantId, tenant.getId()));
-            return;
-        }
-
-        // 保留添加，痕迹，所以逻辑删除的，不去恢复它
-        List<TenantAppDO> appMenuDOS = tenantAppMapper.selectList(Wrappers.<TenantAppDO>lambdaQuery()
-                .eq(TenantAppDO::getTenantId, tenant.getId()));
-        Set<Long> removeIds = new HashSet<>();
-        Set<Long> allSetTemp = appMenuDOS.stream()
-                .map(TenantAppDO::getAppId)
-                .collect(Collectors.toSet());
-        if (CollectionUtils.isNotEmpty(allSetTemp)) {
-            removeIds.addAll(allSetTemp);
-        }
-
-        ids.forEach(id -> {
-            if (removeIds.contains(id)) {
-                // 已经存在这个关系了,保持原样
-                removeIds.remove(id);
-            } else {
-                TenantAppDO tenantAppDO = new TenantAppDO();
-                // 没有，需要新增
-                tenantAppDO.setId(idClient.nextId());
-                tenantAppDO.setTenantId(tenant.getId());
-                tenantAppDO.setAppId(id);
-                tenantAppDO.setCBy(AuthUtil.getLoginId());
-                tenantAppDO.setCTime(LocalDateTime.now());
-                tenantAppDO.setActiveStatus(ActiveStatus.ACTIVE);
-                tenantAppMapper.insert(tenantAppDO);
-            }
-        });
-        // 剩下的 menuIdSet 的是需要删除的
-        if (CollectionUtils.isNotEmpty(removeIds)) {
-            tenantAppMapper.delete(Wrappers.<TenantAppDO>lambdaQuery()
-                    .eq(TenantAppDO::getAppId, tenant.getId())
-                    .in(TenantAppDO::getAppId, removeIds));
-        }
-    }
-
-    @Override
     public List<Tenant> findByDomainName(String domainName) {
         List<TenantDO> tenants = baseMapper.selectListByLikeDomainName(domainName);
         return baseDataConverter.fromData(tenants);
     }
 
     private void compileApp(Tenant tenant) {
-        List<TenantAppDO> tenantApp = tenantAppMapper.selectList(Wrappers.<TenantAppDO>lambdaQuery()
-                .eq(TenantAppDO::getTenantId, tenant.getId()));
-        if (CollectionUtils.isEmpty(tenantApp)){
+        ResourceQuery query = new ResourceQuery();
+        query.setRefType("App");
+        List<Resource> resources = resourceRepository.listResource(tenant.getId(), query);
+        if (CollectionUtils.isEmpty(resources)){
             return;
         }
-        List<Long> appIds = tenantApp.stream().map(TenantAppDO::getAppId).toList();
+        List<Long> appIds = resources.stream().map(Resource::getRefId).toList();
         tenant.setAppIds(appIds);
     }
 

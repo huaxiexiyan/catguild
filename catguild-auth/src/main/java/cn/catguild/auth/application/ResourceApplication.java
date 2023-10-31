@@ -1,17 +1,16 @@
 package cn.catguild.auth.application;
 
 import cn.catguild.auth.domain.Resource;
+import cn.catguild.auth.domain.repository.ResourceRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.auth.presentation.model.ResourceQuery;
 import cn.catguild.common.api.ApiPage;
-import cn.catguild.common.type.ActiveStatus;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author xiyan
@@ -21,11 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 @AllArgsConstructor
 @Component
-public class ResourceApplicationService {
+public class ResourceApplication {
 
     private final IdGenerationClient idClient;
 
-    //private final ResourceRepository resourceRepository;
+    private final ResourceRepository resourceRepository;
 
 
     /**
@@ -33,9 +32,9 @@ public class ResourceApplicationService {
      *
      * @return
      */
-    public ApiPage<Resource> listResource(ResourceQuery query) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Pageable pageable = PageRequest.of((int) query.getCurrent() - 1, (int) query.getSize(), sort);
+    public ApiPage<Resource> pageResource(ResourceQuery query) {
+        //Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        //Pageable pageable = PageRequest.of((int) query.getCurrent() - 1, (int) query.getSize(), sort);
         //Page<Resource> appPage = resourceRepository.findAll(pageable);
         //List<Resource> records = appPage.getContent();
         // 填充版本列表
@@ -49,20 +48,14 @@ public class ResourceApplicationService {
     }
 
 
-
     public Resource getResource(Long id) {
         //Resource Resource = resourceRepository.findById(id).orElse(null);
         return null;
     }
 
-    public Long addResource(Resource Resource) {
-        Long id = idClient.nextId();
-        Resource.setId(id);
-        //Resource.setStatus(ActiveStatus.ACTIVE);
-        //Resource.setCBy(AuthUtil.getLoginId());
-        //Resource.setCTime(LocalDateTime.now());
-        //resourceRepository.saveAndFlush(Resource);
-        return id;
+    public Long addResource(Long tenantId, Resource resource) {
+        resourceRepository.save(tenantId, resource);
+        return resource.getId();
     }
 
     public void updateResource(Long id, Resource Resource) {
@@ -72,13 +65,26 @@ public class ResourceApplicationService {
         //resourceRepository.saveAndFlush(Resource);
     }
 
-    public void updateResourceStatus(Long id, ActiveStatus status) {
-        //resourceRepository.findById(id).ifPresent(Resource -> {
-        //    //Resource.setStatus(status);
-        //    //Resource.setLmBy(AuthUtil.getLoginId());
-        //    //Resource.setLmTime(LocalDateTime.now());
-        //    //resourceRepository.saveAndFlush(Resource);
-        //});
+    public void switchActiveStatus(Long tenantId, Long id) {
+        Resource resource = resourceRepository.findById(tenantId, id);
+        resource.switchActiveStatus();
+        resourceRepository.save(tenantId, resource);
+    }
+
+    public void switchActiveStatusActive(Long tenantId, Long id) {
+        Resource resource = resourceRepository.findById(tenantId, id);
+        resource.switchActiveStatusActive();
+        resourceRepository.save(tenantId, resource);
+    }
+
+    public void switchActiveStatusInactive(Long tenantId, Long id) {
+        Resource resource = resourceRepository.findById(tenantId, id);
+        resource.switchActiveStatusInactive();
+        resourceRepository.save(tenantId, resource);
+    }
+
+    public List<Resource> listResource(Long tenantId, ResourceQuery resourceQuery) {
+        return resourceRepository.listResource(tenantId, resourceQuery);
     }
 
 }

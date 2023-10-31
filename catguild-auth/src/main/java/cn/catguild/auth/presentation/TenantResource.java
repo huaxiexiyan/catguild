@@ -52,9 +52,9 @@ public class TenantResource {
         return ApiResponse.ok(baseApplication.getTenantByDomainName(domainName));
     }
 
-    @PutMapping("/{id}/app")
-    public ApiResponse<List<Tenant>> updateTenantApp(@PathVariable("id") Long id, @RequestBody Tenant tenant) {
-        baseApplication.onlyUpdateTenantApp(id, tenant);
+    @PostMapping("/{id}/sync-app-resource")
+    public ApiResponse<List<Tenant>> syncAppResource(@PathVariable("id") Long id, @RequestBody Tenant tenant) {
+        baseApplication.syncAppResource(id, tenant);
         return ApiResponse.ok();
     }
 

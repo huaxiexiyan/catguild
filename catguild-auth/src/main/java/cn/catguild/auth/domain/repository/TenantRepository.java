@@ -20,6 +20,4 @@ public interface TenantRepository  {
 
     ApiPage<Tenant> page(TenantQuery query);
 
-    void saveTenantApp(Tenant tenant);
-
 }

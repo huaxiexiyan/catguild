@@ -7,6 +7,7 @@ import cn.catguild.auth.infrastructure.repository.converter.ResourceDataConverte
 import cn.catguild.auth.infrastructure.repository.domain.entity.ResourceDO;
 import cn.catguild.auth.infrastructure.repository.mapper.ResourceDOMapper;
 import cn.catguild.auth.oauth.util.AuthUtil;
+import cn.catguild.auth.presentation.model.ResourceQuery;
 import cn.catguild.common.type.ActiveStatus;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -81,6 +82,25 @@ public class ResourceRepositoryImpl implements ResourceRepository {
     @Override
     public void removeByIds(Long tenantId, Collection<Long> ids) {
         baseMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    public List<Resource> find(Long tenantId, Resource resource) {
+        ResourceDO queryDO = baseDataConverter.toData(resource);
+        return listResource(tenantId, queryDO);
+    }
+
+    @Override
+    public List<Resource> listResource(Long tenantId, ResourceQuery resourceQuery) {
+        ResourceDO queryDO = baseDataConverter.toData(resourceQuery);
+        return listResource(tenantId, queryDO);
+    }
+
+    private List<Resource> listResource(Long tenantId, ResourceDO queryDO){
+        queryDO.setTenantId(tenantId);
+        List<ResourceDO> resourceDOS = baseMapper.selectList(Wrappers.<ResourceDO>lambdaQuery()
+                .setEntity(queryDO));
+        return baseDataConverter.fromData(resourceDOS);
     }
 
 }

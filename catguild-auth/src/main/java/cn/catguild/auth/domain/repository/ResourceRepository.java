@@ -1,6 +1,7 @@
 package cn.catguild.auth.domain.repository;
 
 import cn.catguild.auth.domain.Resource;
+import cn.catguild.auth.presentation.model.ResourceQuery;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,5 +22,8 @@ public interface ResourceRepository {
 
     void removeByIds(Long tenantId, Collection<Long> removeIds);
 
+    List<Resource> find(Long tenantId, Resource resource);
+
+    List<Resource> listResource(Long tenantId, ResourceQuery resourceQuery);
 
 }

@@ -7,6 +7,7 @@ CREATE TABLE "public"."auth_resource"
     "app_id"    int8        NOT NULL,
     "ref_id"    int8        NOT NULL,
     "ref_type"  varchar(50) NOT NULL,
+    "active_status" varchar(10) NOT NULL DEFAULT 'ACTIVE',
 
     "c_by"      int8        NOT NULL,
     "c_time"    timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -22,6 +23,7 @@ COMMENT ON COLUMN "public"."auth_resource"."tenant_id" IS '租户id';
 COMMENT ON COLUMN "public"."auth_resource"."app_id" IS '来源appId';
 COMMENT ON COLUMN "public"."auth_resource"."ref_id" IS '资源实体id';
 COMMENT ON COLUMN "public"."auth_resource"."ref_type" IS '资源类型';
+COMMENT ON COLUMN "public"."auth_resource"."active_status" IS '活跃状态';
 
 COMMENT ON COLUMN "public"."auth_resource"."c_by" IS '创建人';
 COMMENT ON COLUMN "public"."auth_resource"."c_time" IS '创建时间';

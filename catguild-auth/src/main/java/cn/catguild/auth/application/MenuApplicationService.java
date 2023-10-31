@@ -1,7 +1,6 @@
 package cn.catguild.auth.application;
 
 import cn.catguild.auth.domain.Menu;
-import cn.catguild.auth.infrastructure.AppRepository;
 import cn.catguild.auth.infrastructure.MenuRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.auth.oauth.util.AuthUtil;
@@ -30,8 +29,6 @@ public class MenuApplicationService {
     private MenuRepository menuRepository;
 
     //private ResourceRepository resourceRepository;
-
-    private AppRepository appRepository;
 
     public void addMenu(Menu menu) {
         // 注册资源

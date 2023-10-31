@@ -1,6 +1,6 @@
 package cn.catguild.auth.domain;
 
-import cn.catguild.common.domain.BaseTenantBO;
+import cn.catguild.common.domain.BaseTenantActiveStatusBO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Resource extends BaseTenantBO {
+public class Resource extends BaseTenantActiveStatusBO {
 
     /**
      * 实体id

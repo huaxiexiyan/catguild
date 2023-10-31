@@ -1,6 +1,7 @@
 package cn.catguild.auth.infrastructure.repository.domain.entity;
 
 import cn.catguild.common.entity.jpa.BaseTenant;
+import cn.catguild.common.type.ActiveStatus;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,5 +29,7 @@ public class ResourceDO extends BaseTenant {
      * 类型
      */
     private String refType;
+
+    private ActiveStatus activeStatus;
 
 }

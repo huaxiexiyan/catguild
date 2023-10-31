@@ -112,4 +112,15 @@ public class PermissionsApplication {
         }
     }
 
+    public void clearResource(Long tenantId, String refType) {
+        Resource resource = new Resource();
+        resource.setRefType(refType);
+        List<Resource> resources = resourceRepository.find(tenantId, resource);
+        if (CollectionUtils.isNotEmpty(resources)){
+            List<Long> ids = resources.stream().map(Resource::getId)
+                    .toList();
+            removeResource(tenantId,ids);
+        }
+    }
+
 }
