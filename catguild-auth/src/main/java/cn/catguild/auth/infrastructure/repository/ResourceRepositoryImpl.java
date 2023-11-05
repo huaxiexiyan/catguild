@@ -81,7 +81,7 @@ public class ResourceRepositoryImpl implements ResourceRepository {
 
     @Override
     public void removeByIds(Long tenantId, Collection<Long> ids) {
-        baseMapper.deleteBatchIds(ids);
+        ids.forEach(id -> removeById(tenantId, id));
     }
 
     @Override
@@ -96,7 +96,12 @@ public class ResourceRepositoryImpl implements ResourceRepository {
         return listResource(tenantId, queryDO);
     }
 
-    private List<Resource> listResource(Long tenantId, ResourceDO queryDO){
+    @Override
+    public void removeById(Long tenantId, Long id) {
+        baseMapper.deleteById(id);
+    }
+
+    private List<Resource> listResource(Long tenantId, ResourceDO queryDO) {
         queryDO.setTenantId(tenantId);
         List<ResourceDO> resourceDOS = baseMapper.selectList(Wrappers.<ResourceDO>lambdaQuery()
                 .setEntity(queryDO));

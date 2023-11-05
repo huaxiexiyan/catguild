@@ -5,12 +5,17 @@ import cn.catguild.auth.domain.repository.ResourceRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
 import cn.catguild.auth.presentation.model.ResourceQuery;
 import cn.catguild.common.api.ApiPage;
+import cn.catguild.common.type.ActiveStatus;
+import cn.catguild.common.utility.CollectionUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author xiyan
@@ -85,6 +90,70 @@ public class ResourceApplication {
 
     public List<Resource> listResource(Long tenantId, ResourceQuery resourceQuery) {
         return resourceRepository.listResource(tenantId, resourceQuery);
+    }
+
+    public void remove(Long tenantId, Long id) {
+        resourceRepository.removeById(tenantId, id);
+    }
+
+    /**
+     * 同步资源
+     *
+     * @param appId
+     * @param refType
+     * @param refIds
+     */
+    public void syncResource(Long tenantId, Long appId, String refType, List<Long> refIds) {
+        ResourceQuery query = new ResourceQuery();
+        query.setAppId(appId);
+        query.setRefType(refType);
+        List<Resource> resources = resourceRepository.listResource(tenantId, query);
+        if (CollectionUtils.isEmpty(refIds)){
+            // 将app资源，置为非活跃状态（方便恢复）
+            resources.forEach(r-> this.switchActiveStatusInactive(tenantId, r.getId()));
+        }else {
+            Map<Long, Resource> dbResourceMap = resources.stream().collect(Collectors.toMap(Resource::getRefId, Function.identity()));
+            // 去重
+            refIds = refIds.stream().distinct().toList();
+            refIds.forEach(refId->{
+                if (dbResourceMap.containsKey(refId)){
+                    // 有，移除
+                    Resource resource = dbResourceMap.get(refId);
+                    if (resource.getActiveStatus() == ActiveStatus.INACTIVE){
+                        this.switchActiveStatusActive(tenantId, resource.getId());
+                    }
+                    dbResourceMap.remove(refId);
+                }else {
+                    // 没有，新增
+                    Resource resource = new Resource();
+                    resource.setTenantId(tenantId);
+                    resource.setAppId(appId);
+                    resource.setRefId(refId);
+                    resource.setRefType(refType);
+                    resource.switchActiveStatusActive();
+                    this.addResource(tenantId,resource);
+                }
+            });
+            // 同步剩下的，然后删除掉多余
+            List<Long> resourceIds = dbResourceMap.values().stream().map(Resource::getId).toList();
+            if (CollectionUtils.isNotEmpty(resourceIds)){
+                resourceIds.forEach(resourceId-> this.switchActiveStatusInactive(tenantId, resourceId));
+            }
+        }
+    }
+
+    public void inactiveResourceByAppIdAndType(Long tenantId, Long appId, String refType) {
+        ResourceQuery query = new ResourceQuery();
+        query.setAppId(appId);
+        query.setRefType(refType);
+        List<Resource> resources = resourceRepository.listResource(tenantId, query);
+        if (CollectionUtils.isEmpty(resources)){
+            return;
+        }
+        resources.forEach(resource -> {
+            resource.switchActiveStatusInactive();
+            resourceRepository.save(resource.getTenantId(), resource);
+        });
     }
 
 }

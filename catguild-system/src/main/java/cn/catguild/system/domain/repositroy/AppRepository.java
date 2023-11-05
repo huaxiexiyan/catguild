@@ -24,4 +24,8 @@ public interface AppRepository {
 
     void onlyUpdateAppMenu(App app);
 
+    List<App> listApp(Long tenantId, AppQuery query);
+
+    List<App> listAppByIds(Long tenantId, List<Long> ids);
+
 }

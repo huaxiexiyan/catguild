@@ -28,8 +28,8 @@
         FROM auth_tenant
         WHERE de_time IS NULL
           AND (domain_name like CONCAT(#{domainName}, ',%')
-            OR domainName like CONCAT('%,', #{domainName}, ',%')
-            OR domainName like CONCAT('%,', #{domainName}))
+            OR domain_name like CONCAT('%,', #{domainName}, ',%')
+            OR domain_name like CONCAT('%,', #{domainName}))
     </select>
 
 </mapper>

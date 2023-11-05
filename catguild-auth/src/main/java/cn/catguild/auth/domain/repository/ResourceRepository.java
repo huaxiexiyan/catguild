@@ -26,4 +26,6 @@ public interface ResourceRepository {
 
     List<Resource> listResource(Long tenantId, ResourceQuery resourceQuery);
 
+    void removeById(Long tenantId, Long id);
+
 }

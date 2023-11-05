@@ -60,4 +60,12 @@ public class AppApplication {
         baseRepository.onlyUpdateAppMenu(app);
     }
 
+    public List<App> listApp(Long tenantId, AppQuery query) {
+        return baseRepository.listApp(tenantId, query);
+    }
+
+    public List<App> listAppByIds(Long tenantId, List<Long> ids) {
+        return baseRepository.listAppByIds(tenantId, ids);
+    }
+
 }

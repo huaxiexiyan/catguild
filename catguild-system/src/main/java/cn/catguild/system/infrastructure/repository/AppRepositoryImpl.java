@@ -149,6 +149,22 @@ public class AppRepositoryImpl implements AppRepository {
         saveMenu(app);
     }
 
+    @Override
+    public List<App> listApp(Long tenantId, AppQuery query) {
+        AppDO queryDO = baseDataConverter.toData(query);
+        List<AppDO> appDOS = baseMapper.selectList(Wrappers.<AppDO>lambdaQuery()
+                .setEntity(queryDO));
+        return baseDataConverter.fromData(appDOS);
+    }
+
+    @Override
+    public List<App> listAppByIds(Long tenantId, List<Long> ids) {
+        List<AppDO> appDOS = baseMapper.selectBatchIds(ids);
+        List<App> apps = baseDataConverter.fromData(appDOS);
+        compileMenu(apps);
+        return apps;
+    }
+
     private void compileMenu(Collection<App> apps) {
         if (CollectionUtils.isEmpty(apps)) {
             return;

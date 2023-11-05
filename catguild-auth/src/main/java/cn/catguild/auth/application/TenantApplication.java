@@ -3,18 +3,24 @@ package cn.catguild.auth.application;
 import cn.catguild.auth.domain.Resource;
 import cn.catguild.auth.domain.Tenant;
 import cn.catguild.auth.domain.repository.TenantRepository;
+import cn.catguild.auth.infrastructure.adapter.external.client.AppClient;
+import cn.catguild.auth.infrastructure.adapter.external.client.MenuClient;
 import cn.catguild.auth.infrastructure.repository.domain.query.TenantQuery;
 import cn.catguild.auth.presentation.model.ResourceQuery;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.type.ActiveStatus;
 import cn.catguild.common.utility.CollectionUtils;
+import cn.catguild.system.api.dto.AppDTO;
+import cn.catguild.system.api.dto.MenuDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,13 +34,17 @@ import java.util.stream.Collectors;
 @Component
 public class TenantApplication {
 
-    private TenantRepository tenantRepository;
+    private final TenantRepository tenantRepository;
 
-    private UserApplicationService userApplicationService;
+    private final UserApplicationService userApplicationService;
 
-    private PermissionsApplication permissionsApplication;
+    private final PermissionsApplication permissionsApplication;
 
-    private ResourceApplication resourceApplication;
+    private final ResourceApplication resourceApplication;
+
+    private final AppClient appClient;
+
+    private final MenuClient menuClient;
 
     /**
      * 新增租户
@@ -96,12 +106,47 @@ public class TenantApplication {
                     resourceApplication.addResource(id, resource);
                 }
             });
-            // 同步剩下的，然后删除掉多余
+
+            // 下线附属资源
+            Set<Long> removedAppIds = dbResourceMap.keySet();
+            if (CollectionUtils.isNotEmpty(removedAppIds)){
+                removedAppIds.forEach(removedAppId->{
+                    resourceApplication.inactiveResourceByAppIdAndType(id, removedAppId, "Menu");
+                });
+            }
+
             List<Long> resourceIds = dbResourceMap.values().stream().map(Resource::getId).toList();
             if (CollectionUtils.isNotEmpty(resourceIds)){
                 resourceIds.forEach(resourceId-> resourceApplication.switchActiveStatusInactive(id, resourceId));
             }
         }
+
+        syncAppMenuResource(id);
+    }
+
+    private void syncAppMenuResource(Long id) {
+        //
+        Tenant tenant = tenantRepository.findById(id);
+        List<Long> appIds = tenant.getAppIds();
+        // 查询出所有菜单
+        List<AppDTO> apps = appClient.listApp(appIds);
+        if (CollectionUtils.isEmpty(apps)){
+            return;
+        }
+        List<MenuDTO> menus = apps.stream()
+                .map(AppDTO::getMenus)
+                .flatMap(Collection::stream)
+                .toList();
+        menus.forEach(m->{
+            System.out.println(m.getMenuId());
+        });
+        // 同步资源
+        Map<Long, List<MenuDTO>> menuMap = menus.stream()
+                .collect(Collectors.groupingBy(MenuDTO::getAppId));
+        menuMap.forEach((appId,menuList)->{
+            List<Long> menuIds = menuList.stream().map(MenuDTO::getMenuId).toList();
+            resourceApplication.syncResource(id, appId,"Menu", menuIds);
+        });
     }
 
     public void switchActiveStatus(Long id) {
