@@ -82,13 +82,14 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login/password").permitAll()
                         .requestMatchers(endpointsMatcher).permitAll()
                         .anyRequest().authenticated())
                 // oauth2ResourceServer 会覆盖掉 authorizeHttpRequests 的配置，并且会默认放开 公开的端点？？
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
                         .jwt(Customizer.withDefaults()))
-                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
-                .apply(authorizationServerConfigurer);
+                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher).disable())
+                .apply(authorizationServerConfigurer);;
 
         return http.build();
     }
@@ -120,10 +121,10 @@ public class SecurityConfig {
 
     @Bean
     public JWKSource<SecurityContext> jwkSource(@Value("${custom.catguild-auth.rsa.public-key}") org.springframework.core.io.Resource publicKey,
-                                                @Value("${custom.catguild-auth.rsa.private-key}") org.springframework.core.io.Resource  privateKey,
+                                                @Value("${custom.catguild-auth.rsa.private-key}") org.springframework.core.io.Resource privateKey,
                                                 @Value("${custom.catguild-auth.rsa.key-id}") String keyId) {
         RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) RSAUtils.getPublicKeyFromResource(publicKey))
-                .privateKey((RSAPrivateKey)RSAUtils.getPrivateKeyFromResource(privateKey))
+                .privateKey((RSAPrivateKey) RSAUtils.getPrivateKeyFromResource(privateKey))
                 .keyID(keyId)
                 .build();
         JWKSet jwkSet = new JWKSet(rsaKey);
@@ -132,7 +133,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthorizationServerSettings authorizationServerSettings(
-            @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")String issuer) {
+            @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuer) {
         return AuthorizationServerSettings.builder()
                 .issuer(issuer)
                 .build();
@@ -155,14 +156,14 @@ public class SecurityConfig {
             OAuth2ClientAuthenticationToken principal = context.getPrincipal();
             principal.getName();
             Authentication authorizationGrant = context.getAuthorizationGrant();
-            if (authorizationGrant instanceof  PasswordGrantAuthenticationToken authenticationToken){
+            if (authorizationGrant instanceof PasswordGrantAuthenticationToken authenticationToken) {
                 // 添加租户、用户id、不可添加复杂内容
                 String username = authenticationToken.getUsername();
                 CatUser user = userDetailsService.getByUsername(username);
                 // 添加登录用户信息
-                claims.claim(TokenConstant.USER_ID,IdUtil.obfuscate(user.getId()));
-                claims.claim(TokenConstant.TENANT_ID,IdUtil.obfuscate(user.getTenantId()));
-                claims.claim(TokenConstant.AUTHORITY_TYPE,user.getAuthorityType());
+                claims.claim(TokenConstant.USER_ID, IdUtil.obfuscate(user.getId()));
+                claims.claim(TokenConstant.TENANT_ID, IdUtil.obfuscate(user.getTenantId()));
+                claims.claim(TokenConstant.AUTHORITY_TYPE, user.getAuthorityType());
             }
         };
     }

@@ -58,7 +58,7 @@ public class UserApplicationService {
     }
 
     public ApiPage<CatUser> page(UserQuery query) {
-        return null;
+        return userRepository.page(query);
     }
 
     /**
@@ -75,7 +75,7 @@ public class UserApplicationService {
         user.setName(tenant.getName() + "@超级管理员");
         user.setAuthorityType(UserAuthorityType.SUPER_ADMINISTRATOR);
         user.setStatus(ActiveStatus.ACTIVE);
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
 
         // 然后再为其创建一个登录账号
         Account account = new Account();
