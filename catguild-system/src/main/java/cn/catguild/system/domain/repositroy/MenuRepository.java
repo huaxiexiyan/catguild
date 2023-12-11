@@ -1,6 +1,7 @@
 package cn.catguild.system.domain.repositroy;
 
 import cn.catguild.system.domain.Menu;
+import cn.catguild.system.infrastructure.domain.type.MenuType;
 
 import java.util.List;
 
@@ -14,5 +15,9 @@ public interface MenuRepository {
     List<Menu> findAll();
 
     Menu findById(Long id);
+
+    List<Menu> findByIds(List<Long> resourceIds, MenuType menuType);
+
+    List<Menu> findByIds(List<Long> ids);
 
 }

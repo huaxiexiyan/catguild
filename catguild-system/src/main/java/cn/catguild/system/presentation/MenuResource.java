@@ -33,30 +33,26 @@ public class MenuResource {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<Menu> menuDetail(@PathVariable("id")Long id) {
+    public ApiResponse<Menu> menuDetail(@PathVariable("id") Long id) {
         return ApiResponse.ok(menuApplication.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<Void> updateMenu(@PathVariable("id")Long id,@RequestBody Menu menu) {
-        menuApplication.updateMenu(id,menu);
+    public ApiResponse<Void> updateMenu(@PathVariable("id") Long id, @RequestBody Menu menu) {
+        menuApplication.updateMenu(id, menu);
         return ApiResponse.ok();
     }
 
     @PatchMapping("/active-status/{id}")
-    public ApiResponse<Void> patchStatus(@PathVariable("id")Long id,@RequestBody Menu menu) {
-        menuApplication.patchStatus(id,menu);
+    public ApiResponse<Void> patchStatus(@PathVariable("id") Long id, @RequestBody Menu menu) {
+        menuApplication.patchStatus(id, menu);
         return ApiResponse.ok();
     }
 
-    @PostMapping("/refresh-resource-point")
-    public ApiResponse<Void> generateResourcePoint() {
-        return ApiResponse.ok();
-    }
-
-    @PostMapping("/refresh-resource-point/{id}")
-    public ApiResponse<Void> generateResourcePoint(@PathVariable("id")Long id) {
-        return ApiResponse.ok();
+    @GetMapping("/auth-tree/{appId}")
+    public ApiResponse<List<Menu>> authMenuTree(@PathVariable("appId") Long appId) {
+        List<Menu> menus = menuApplication.getAuthMenuTree(appId);
+        return ApiResponse.ok(menus);
     }
 
 }

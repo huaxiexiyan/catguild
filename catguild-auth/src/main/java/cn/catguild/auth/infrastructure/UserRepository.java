@@ -1,7 +1,8 @@
 package cn.catguild.auth.infrastructure;
 
 import cn.catguild.auth.domain.CatUser;
-import org.springframework.data.jpa.repository.JpaRepository;
+import cn.catguild.auth.presentation.model.UserQuery;
+import cn.catguild.common.api.ApiPage;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,8 +10,13 @@ import org.springframework.stereotype.Repository;
  * @date 2023/7/31 15:29
  */
 @Repository
-public interface UserRepository extends JpaRepository<CatUser,Long> {
+public interface UserRepository {
 
 
+    ApiPage<CatUser> page(UserQuery query);
+
+    void save(CatUser user);
+
+    CatUser findById(Long userId);
 
 }

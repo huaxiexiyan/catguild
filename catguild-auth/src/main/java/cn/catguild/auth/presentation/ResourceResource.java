@@ -1,7 +1,8 @@
 package cn.catguild.auth.presentation;
 
-import cn.catguild.auth.application.ResourceApplicationService;
+import cn.catguild.auth.application.ResourceApplication;
 import cn.catguild.auth.domain.Resource;
+import cn.catguild.auth.oauth.util.AuthUtil;
 import cn.catguild.auth.presentation.model.ResourceQuery;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.api.ApiResponse;
@@ -22,11 +23,11 @@ import java.util.Map;
 @RestController
 public class ResourceResource {
 
-    private ResourceApplicationService service;
+    private ResourceApplication service;
 
     @GetMapping("")
     public ApiResponse<ApiPage<Resource>> pageResource(@ModelAttribute ResourceQuery query) {
-        ApiPage<Resource> page = service.listResource(query);
+        ApiPage<Resource> page = service.pageResource(query);
         return ApiResponse.ok(page);
     }
 
@@ -38,7 +39,7 @@ public class ResourceResource {
 
     @PostMapping
     public ApiResponse<Map<String, String>> addResource(@RequestBody Resource resource) {
-        Long id = service.addResource(resource);
+        Long id = service.addResource(AuthUtil.getTenantId(),resource);
         Map<String, String> newData = new HashMap<>(1);
         newData.put("id", id.toString());
         return ApiResponse.ok(newData);
@@ -53,7 +54,7 @@ public class ResourceResource {
     @PatchMapping("/{id}/status")
     public ApiResponse<Void> updateResourceStatus(@PathVariable("id") Long id,
                                                   @RequestBody Resource resource) {
-        service.updateResourceStatus(id, resource.getStatus());
+        //service.updateResourceStatus(id, resource.getStatus());
         return ApiResponse.ok();
     }
 

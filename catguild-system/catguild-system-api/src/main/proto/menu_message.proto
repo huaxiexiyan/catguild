@@ -1,0 +1,15 @@
+syntax = 'proto3';
+
+// 默认false
+//option java_multiple_files = false;
+option java_package = 'cn.catguild.system.api.common';
+option java_outer_classname = 'MenuMessageProto';
+
+// 通用响应
+message MenuDTO{
+
+  int64 menuId = 1;
+
+  int64 appId = 2;
+
+}

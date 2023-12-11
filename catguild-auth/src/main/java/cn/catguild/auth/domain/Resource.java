@@ -1,12 +1,8 @@
 package cn.catguild.auth.domain;
 
-import cn.catguild.auth.domain.type.ResourceType;
-import cn.catguild.common.entity.jpa.AbstractEntity;
-import cn.catguild.common.type.ActiveStatus;
-import jakarta.persistence.*;
+import cn.catguild.common.domain.BaseTenantActiveStatusBO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Comment;
 
 /**
  * @author xiyan
@@ -14,22 +10,21 @@ import org.hibernate.annotations.Comment;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
-@Table(name = "`auth_resource`")
-public class Resource extends AbstractEntity {
+public class Resource extends BaseTenantActiveStatusBO {
 
-    @Comment("资源名")
-    @Column(length = 255)
-    private String name;
-
-    @Comment("指向关联的id")
+    /**
+     * 实体id
+     */
     private Long refId;
 
-    @Comment("资源类型:菜单、按钮")
-    @Enumerated(EnumType.STRING)
-    private ResourceType type;
+    /**
+     * 类型
+     */
+    private String refType;
 
-    @Enumerated(EnumType.STRING)
-    private ActiveStatus status;
+    /**
+     * 什么应用产生的
+     */
+    private Long appId;
 
 }

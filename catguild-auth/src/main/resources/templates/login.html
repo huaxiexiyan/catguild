@@ -1,0 +1,119 @@
+<!-- src/main/resources/templates/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px; /* Adjusted margin */
+            margin-top: 10px; /* Adjusted margin */
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            vertical-align: center;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        table{
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<form action="/login/password" id="loginForm" method="post">
+    <h2>欢迎登录猫公会</h2>
+    <table>
+        <tr>
+            <td>
+                <label for="username">账号:</label>
+            </td>
+            <td>
+                <input id="username" name="username" required type="text" value="user">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="password">密码:</label>
+            </td>
+            <td>
+                <input id="password" name="password" required type="password" value="password">
+            </td>
+        </tr>
+    </table>
+
+    <button type="submit">登录</button>
+
+    <!-- 隐藏的 input 元素 -->
+    <input hidden="hidden" id="clientId" name="clientId" required type="text" />
+    <input hidden="hidden" id="redirectUri" name="redirectUri" required type="text" />
+    <input hidden="hidden" id="originalDomain" name="originalDomain" required type="text" />
+</form>
+<script>
+    // 获取URL参数
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // 将获取到的值赋给对应的 input 元素
+    document.getElementById('clientId').value = getParameterByName('client_id');
+    document.getElementById('redirectUri').value = getParameterByName('redirect_uri');
+    document.getElementById('originalDomain').value = getParameterByName('original_domain');
+</script>
+</body>
+</html>

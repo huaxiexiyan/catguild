@@ -33,16 +33,16 @@ public class AuthUtil {
             UserAuthorityType userAuthorityType = UserAuthorityType.valueOf(tokenAttributes.get(TokenConstant.AUTHORITY_TYPE).toString());
             return new TokenUser(tenantId, userId, userAuthorityType);
         }
-        return new TokenUser();
+        throw new RuntimeException("TokenUser 缺失");
     }
 
-    public static JwtAuthenticationToken getJwtAuthenticationToken(){
+    private static JwtAuthenticationToken getJwtAuthenticationToken(){
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         if (authentication instanceof JwtAuthenticationToken token) {
             return token;
         }
-        return null;
+        throw new RuntimeException("JwtAuthenticationToken 缺失");
     }
 
     public static String getTokenValue() {
@@ -50,7 +50,7 @@ public class AuthUtil {
         if (jwtAuthenticationToken != null){
             return jwtAuthenticationToken.getToken().getTokenValue();
         }
-        return "";
+        throw new RuntimeException("TokenValue 缺失");
     }
 
 }

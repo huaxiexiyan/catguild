@@ -3,6 +3,7 @@ package cn.catguild.auth.domain;
 import cn.catguild.auth.domain.type.MenuMeta;
 import cn.catguild.common.entity.jpa.AbstractEntity;
 import cn.catguild.common.type.CatTreeNode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import java.util.Collection;
 @Data
 @Entity
 @Table(name = "`auth_menu`")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Menu extends AbstractEntity implements CatTreeNode<Menu,Long> {
 
     @Comment("上级菜单，最多3层")

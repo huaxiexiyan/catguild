@@ -1,5 +1,7 @@
 package cn.catguild.common.entity.jpa;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -22,6 +24,7 @@ public abstract class BaseTenant extends AbstractEntity {
     @Column(nullable = false)
     @JsonDeserialize(as = Long.class)
     @JsonSerialize(using = ToStringSerializer.class)
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private Long tenantId;
 
 }

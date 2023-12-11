@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /**
  * @author xiyan
  * @date 2023/6/6 17:48
@@ -41,8 +39,7 @@ public class CatUserDetailsService implements UserDetailsService {
 
     public CatUser getByUsername(String username) {
         Account account = accountRepository.findByUsername(username);
-        Optional<CatUser> catUser = userRepository.findById(account.getUserId());
-        return catUser.orElse(null);
+        return userRepository.findById(account.getUserId());
     }
 
 }

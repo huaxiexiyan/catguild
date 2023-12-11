@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_multiple_files = false;
+option java_package = "cn.catguild.system.api";
+option java_outer_classname = "MenuClientProto";
+
+import 'api_common.proto';
+import 'menu_message.proto';
+
+// 定义消息结构体
+message listMenuByAppIdsRequest{
+  repeated int64 appIds = 1;
+}
+
+message MenuDTOResponse{
+  ApiResponse apiResponse = 1;
+  int64 menuId = 2;
+  int64 appId = 3;
+}
+
+
+
+// 定义服务
+service MenuClient{
+
+  rpc listMenuByAppIds(listMenuByAppIdsRequest) returns (MenuDTOResponse){
+
+  }
+
+}

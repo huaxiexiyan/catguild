@@ -7,8 +7,10 @@ public class SnowflakeTest {
 
     @Test
     void nextId() {
-        Snowflake snowflake = new Snowflake(1, 1);
-        System.out.println(snowflake.nextId());
+        Snowflake snowflake = new Snowflake(1, 1,true);
+        for (int i = 0; i < 10; i++) {
+            System.out.println(snowflake.nextId());
+        }
     }
 
 }

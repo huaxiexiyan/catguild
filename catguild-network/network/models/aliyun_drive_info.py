@@ -86,31 +86,24 @@ class SignInListResponse:
 class SignInGoodsResponse:
     def __init__(
         self,
-        goodsDescription: str,
-        goodsId: int,
-        goodsName: str,
-        goodsType: str,
-        isReward: bool,
-        isSignIn: bool,
-        monthSubject: str,
-        saveShareBackground: str,
-        webAndPcSignInBackground: str,
-        webAndPcSignInBackgroundV2: str,
+        **kwargs
     ):
-        self.goodsDescription = goodsDescription
-        self.goodsId = goodsId
-        self.goodsName = goodsName
-        self.goodsType = goodsType
-        self.isReward = isReward
-        self.isSignIn = isSignIn
-        self.monthSubject = monthSubject
-        self.saveShareBackground = saveShareBackground
-        self.webAndPcSignInBackground = webAndPcSignInBackground
-        self.webAndPcSignInBackgroundV2 = webAndPcSignInBackgroundV2
+        self.goodsDescription = kwargs.get('goodsDescription')
+        self.goodsId = kwargs.get('goodsId')
+        self.goodsName = kwargs.get('goodsName')
+        self.goodsType = kwargs.get('goodsType')
+        self.isReward = kwargs.get('isReward')
+        self.isSignIn = kwargs.get('isSignIn')
+        self.monthSubject = kwargs.get('monthSubject')
+        self.saveShareBackground = kwargs.get('saveShareBackground')
+        self.webAndPcSignInBackground = kwargs.get('webAndPcSignInBackground')
+        self.webAndPcSignInBackgroundV2 = kwargs.get('webAndPcSignInBackgroundV2')
+        self.webAndPcSignInBackgroundV2 = kwargs.get('webAndPcSignInBackgroundV2')
 
     def __str__(self):
         # 将对象属性转换为JSON格式字符串
         return json.dumps(self.__dict__, ensure_ascii=False, indent=2)
+
 
 class CommonResponse:
     def __init__(

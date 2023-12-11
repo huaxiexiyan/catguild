@@ -5,6 +5,7 @@ import cn.catguild.common.type.ActiveStatus;
 import cn.catguild.common.type.CatTreeNode;
 import cn.catguild.system.domain.type.MenuMeta;
 import cn.catguild.system.infrastructure.domain.type.MenuType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.Collection;
@@ -76,7 +77,12 @@ public class Menu implements CatTreeNode<Menu, Long> {
 
     @Override
     public Long getParentId() {
-        return parentMenu == null ? null : parentMenu.getId();
+        return parentMenu == null ? 0L : parentMenu.getId() == null ? 0L : parentMenu.getId();
+    }
+
+    @JsonIgnore
+    public boolean hasParentMenu(){
+        return getParentId() != 0L;
     }
 
 }

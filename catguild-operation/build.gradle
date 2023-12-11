@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'java'
+    id 'com.google.cloud.tools.jib'
+}
+
+dependencies {
+    // 自身依赖
+    implementation project(":catguild-common-api")
+
+    // spring 家族
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        transitive = true
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+
+    //cloud组件
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+
+    // 远程调用组件
+
+    // 资源服务器
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
+
+    // 持久层依赖
+    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
+
+    // 对象转换
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor  'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    // 测试框架
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+}
+
+jib {
+    to {
+        image = 'huaxiexiyan/catguild-operation:main'
+    }
+    container {
+        jvmFlags = ['-Xmx64m', '-Xms64m'] // 添加堆内存参数
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        environment = [
+                'TZ': 'Asia/Shanghai'
+        ]
+    }
+}

@@ -1,14 +1,13 @@
 package cn.catguild.auth.domain;
 
-import cn.catguild.common.entity.jpa.AbstractEntity;
+import cn.catguild.common.domain.BaseBO;
 import cn.catguild.common.type.ActiveStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Comment;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 租户（以租户为界隔离数据及权限）
@@ -18,27 +17,51 @@ import org.hibernate.annotations.Comment;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
-@Table(name = "`auth_tenant`")
-public class Tenant extends AbstractEntity {
+public class Tenant extends BaseBO {
 
-    @Comment("租户名")
-    private String name;
-
-    @Comment("唯一UID")
+    /**
+     * 唯一UID
+     */
     private Integer uid;
 
-    @Comment("注册邮箱")
+    /**
+     * 租户名
+     */
+    private String name;
+
+    /**
+     * 注册邮箱
+     */
     private String email;
 
-    @Comment("备注")
+    /**
+     * 备注
+     */
     private String remarks;
 
-    @Comment("活跃状态")
-    @Enumerated(EnumType.STRING)
-    private ActiveStatus status;
-
-    @Comment("绑定的域名，多个逗号风格")
+    /**
+     * 绑定的域名，多个逗号风格
+     */
     private String domainName;
+
+    /**
+     * 活跃状态
+     */
+    private ActiveStatus activeStatus;
+
+    private Long cBy;
+
+    private LocalDateTime cTime;
+
+    private List<Long> appIds;
+
+    @JsonIgnore
+    public void switchActiveStatus() {
+        if (this.activeStatus == ActiveStatus.ACTIVE){
+            this.activeStatus = ActiveStatus.INACTIVE;
+        }else {
+            this.activeStatus = ActiveStatus.ACTIVE;
+        }
+    }
 
 }

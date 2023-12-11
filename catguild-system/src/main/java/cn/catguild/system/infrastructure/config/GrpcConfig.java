@@ -1,11 +1,13 @@
 package cn.catguild.system.infrastructure.config;
 
 import cn.catguild.common.utility.transplant.StringPool;
+import cn.catguild.system.util.AuthUtil;
 import com.alibaba.cloud.nacos.registry.NacosRegistration;
 import com.google.common.annotations.VisibleForTesting;
 import io.grpc.*;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.interceptor.GrpcGlobalClientInterceptor;
 import net.devh.boot.grpc.common.util.GrpcUtils;
 import net.devh.boot.grpc.server.config.GrpcServerProperties;
 import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
@@ -29,12 +31,12 @@ import org.springframework.util.StringUtils;
  * @date 2023/8/2 18:40
  */
 @ImportAutoConfiguration({
-        //net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration.class,
-        //net.devh.boot.grpc.client.autoconfigure.GrpcClientMetricAutoConfiguration.class,
-        //net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration.class,
-        //net.devh.boot.grpc.client.autoconfigure.GrpcClientSecurityAutoConfiguration.class,
-        //net.devh.boot.grpc.client.autoconfigure.GrpcClientTraceAutoConfiguration.class,
-        //net.devh.boot.grpc.client.autoconfigure.GrpcDiscoveryClientAutoConfiguration.class,
+        net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration.class,
+        net.devh.boot.grpc.client.autoconfigure.GrpcClientMetricAutoConfiguration.class,
+        net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration.class,
+        net.devh.boot.grpc.client.autoconfigure.GrpcClientSecurityAutoConfiguration.class,
+        net.devh.boot.grpc.client.autoconfigure.GrpcClientTraceAutoConfiguration.class,
+        net.devh.boot.grpc.client.autoconfigure.GrpcDiscoveryClientAutoConfiguration.class,
 
         net.devh.boot.grpc.common.autoconfigure.GrpcCommonCodecAutoConfiguration.class,
         net.devh.boot.grpc.common.autoconfigure.GrpcCommonTraceAutoConfiguration.class,
@@ -57,10 +59,14 @@ import org.springframework.util.StringUtils;
 @Slf4j
 @Configuration
 public class GrpcConfig {
+
     @Autowired
     private NacosRegistration nacosRegistration;
     @Autowired
     private GrpcServerProperties grpcProperties;
+    @Autowired
+    private JwtDecoder jwtDecoder;
+
     @VisibleForTesting
     static final Metadata.Key<String> AUTHORIZATION_HEADER_KEY =
             Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
@@ -75,16 +81,45 @@ public class GrpcConfig {
             }
         }
     }
-    @Autowired
-    JwtDecoder jwtDecoder;
+
 
     @Bean
     BearerAuthenticationReader bearerAuthenticationReader(){
         return new BearerAuthenticationReader(BearerTokenAuthenticationToken::new);
     }
 
+    @GrpcGlobalClientInterceptor
+    ClientInterceptor tokenClientInterceptor() {
+        return new ClientInterceptor() {
+            @Override
+            public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method,
+                                                                       CallOptions callOptions, Channel next) {
+                return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(next.newCall(method, callOptions)) {
+                    @Override
+                    public void start(Listener<RespT> responseListener, Metadata headers) {
+                        /* put custom header */
+                        /** 添加 **/
+                        headers.put(AUTHORIZATION_HEADER_KEY, OAuth2AccessToken.TokenType.BEARER.getValue() + StringPool.SPACE + AuthUtil.getTokenValue());
+                        super.start(new ForwardingClientCallListener.SimpleForwardingClientCallListener<RespT>(responseListener) {
+                            @Override
+                            public void onHeaders(Metadata headers) {
+                                /**
+                                 * if you don't need receive header from server,
+                                 * you can use {@link io.grpc.stub.MetadataUtils#attachHeaders}
+                                 * directly to send header
+                                 */
+                                log.debug("header received from server:" + headers);
+                                super.onHeaders(headers);
+                            }
+                        }, headers);
+                    }
+                };
+            }
+        };
+    }
+
     @GrpcGlobalServerInterceptor
-    ServerInterceptor tokenClientInterceptor() {
+    ServerInterceptor tokenServerInterceptor() {
         return new ServerInterceptor() {
             @Override
             public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call,
@@ -103,9 +138,7 @@ public class GrpcConfig {
                 return next.startCall(new ForwardingServerCall.SimpleForwardingServerCall<ReqT, RespT>(call) {
                     @Override
                     public void sendHeaders(Metadata responseHeaders) {
-                        if (tokenValue != null) {
-                            responseHeaders.put(AUTHORIZATION_HEADER_KEY, tokenValue);
-                        }
+                        responseHeaders.put(AUTHORIZATION_HEADER_KEY, tokenValue);
                         super.sendHeaders(responseHeaders);
                     }
                 }, headers);

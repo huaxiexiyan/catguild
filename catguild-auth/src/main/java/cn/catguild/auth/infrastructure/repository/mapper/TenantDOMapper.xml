@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.catguild.auth.infrastructure.repository.mapper.TenantDOMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.catguild.auth.infrastructure.repository.domain.entity.TenantDO">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="remarks" property="remarks"/>
+        <result column="active_status" property="activeStatus"/>
+        <result column="domain_name" property="domainName"/>
+        <result column="c_by" property="cBy"/>
+        <result column="c_time" property="cTime"/>
+        <result column="lm_by" property="lmBy"/>
+        <result column="lm_time" property="lmTime"/>
+        <result column="de_by" property="deBy"/>
+        <result column="de_time" property="deTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, uid, name, email, remarks, active_status, domain_name, c_by, c_time, lm_by, lm_time, de_by, de_time
+    </sql>
+    <select id="selectListByLikeDomainName" resultMap="BaseResultMap">
+        SELECT *
+        FROM auth_tenant
+        WHERE de_time IS NULL
+          AND (domain_name like CONCAT(#{domainName}, ',%')
+            OR domain_name like CONCAT('%,', #{domainName}, ',%')
+            OR domain_name like CONCAT('%,', #{domainName}))
+    </select>
+
+</mapper>
