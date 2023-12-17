@@ -92,8 +92,8 @@ class CommonResponse:
         self,
         **kwargs
     ):
-        self.success = kwargs.get('success')
-        self.code = kwargs.get('code')
+        self.success =kwargs.get('success')
+        self.code =kwargs.get('code')
         self.message = kwargs.get('message')
         self.totalCount = kwargs.get('totalCount')
         self.nextToken = kwargs.get('nextToken')
@@ -107,13 +107,13 @@ class CommonResponse:
 
 
 class AccountTokenBO:
-    def __init__(self, **kwargs):
-        self.success = kwargs.get('success')
-        self.name = kwargs.get('name')
-        self.accessToken = kwargs.get('access_token')
-        self.refreshToken = kwargs.get('refresh_token')
-        self.expiresIn = kwargs.get('expires_in')
-        self.message = kwargs.get('message')
+    def __init__(self, success, name, access_token, refresh_token, expires_in, message):
+        self.success = success
+        self.name = name
+        self.accessToken = access_token
+        self.refreshToken = refresh_token
+        self.expiresIn = expires_in
+        self.message = message
 
     def __str__(self):
         # 将对象属性转换为JSON格式字符串
