@@ -23,13 +23,11 @@
     <sql id="Base_Column_List">
         id, uid, name, email, remarks, active_status, domain_name, c_by, c_time, lm_by, lm_time, de_by, de_time
     </sql>
-    <select id="selectListByLikeDomainName" resultMap="BaseResultMap">
+    <select id="selectByDomainName" resultMap="BaseResultMap">
         SELECT *
         FROM auth_tenant
         WHERE de_time IS NULL
-          AND (domain_name like CONCAT(#{domainName}, ',%')
-            OR domain_name like CONCAT('%,', #{domainName}, ',%')
-            OR domain_name like CONCAT('%,', #{domainName}))
+          AND domain_name = #{domainName}
     </select>
 
 </mapper>

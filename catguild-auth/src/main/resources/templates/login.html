@@ -70,7 +70,7 @@
     </style>
 </head>
 <body>
-<form action="/login/password" id="loginForm" method="post">
+<form action="/api/auth/login/password" id="loginForm" method="post">
     <h2>欢迎登录猫公会</h2>
     <table>
         <tr>
@@ -94,7 +94,7 @@
     <button type="submit">登录</button>
 
     <!-- 隐藏的 input 元素 -->
-    <input hidden="hidden" id="clientId" name="clientId" required type="text" />
+<!--    <input hidden="hidden" id="clientId" name="clientId" required type="text" />-->
     <input hidden="hidden" id="redirectUri" name="redirectUri" required type="text" />
     <input hidden="hidden" id="originalDomain" name="originalDomain" required type="text" />
 </form>
@@ -111,7 +111,7 @@
     }
 
     // 将获取到的值赋给对应的 input 元素
-    document.getElementById('clientId').value = getParameterByName('client_id');
+    // document.getElementById('clientId').value = getParameterByName('client_id');
     document.getElementById('redirectUri').value = getParameterByName('redirect_uri');
     document.getElementById('originalDomain').value = getParameterByName('original_domain');
 </script>

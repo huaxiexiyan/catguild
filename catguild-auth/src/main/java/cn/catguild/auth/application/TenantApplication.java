@@ -58,7 +58,7 @@ public class TenantApplication {
         userApplicationService.registerTenantAdmin(tenant);
     }
 
-    public Tenant findById(Long id) {
+    public Tenant getById(Long id) {
         return tenantRepository.findById(id);
     }
 
@@ -70,7 +70,7 @@ public class TenantApplication {
         return tenantRepository.page(query);
     }
 
-    public List<Tenant> getTenantByDomainName(String domainName) {
+    public Tenant getByDomainName(String domainName) {
         return tenantRepository.findByDomainName(domainName);
     }
 

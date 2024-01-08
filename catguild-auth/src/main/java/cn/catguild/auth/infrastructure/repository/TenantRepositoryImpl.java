@@ -81,16 +81,17 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public List<Tenant> findByDomainName(String domainName) {
-        List<TenantDO> tenantDOS = baseMapper.selectListByLikeDomainName(domainName);
-        List<Tenant> tenants = baseDataConverter.fromData(tenantDOS);
-        if (CollectionUtils.isNotEmpty(tenants)){
-            tenants.forEach(this::compileApp);
-        }
+    public Tenant findByDomainName(String domainName) {
+        TenantDO tenantDOS = baseMapper.selectByDomainName(domainName);
+        Tenant tenants = baseDataConverter.fromData(tenantDOS);
+		compileApp(tenants);
         return tenants;
     }
 
     private void compileApp(Tenant tenant) {
+		if (tenant == null){
+			return;
+		}
         ResourceQuery query = new ResourceQuery();
         query.setRefType("App");
         query.setActiveStatus(ActiveStatus.ACTIVE);

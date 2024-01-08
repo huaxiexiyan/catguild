@@ -7,6 +7,7 @@ plugins {
 dependencies {
     // 自身依赖
     implementation project(":catguild-common-api")
+    implementation project(":catguild-auth:catguild-auth-api")
 
     // spring 家族
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -20,9 +21,10 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 
     // 远程调用组件
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     // 资源服务器
-    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     // 持久层依赖
     implementation 'org.postgresql:postgresql:42.6.0'

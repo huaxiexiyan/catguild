@@ -31,7 +31,7 @@ public class TenantResource {
 
     @GetMapping("/{id}")
     public ApiResponse<Tenant> getTenant(@PathVariable("id") Long id) {
-        return ApiResponse.ok(baseApplication.findById(id));
+        return ApiResponse.ok(baseApplication.getById(id));
     }
 
     @PostMapping
@@ -48,8 +48,8 @@ public class TenantResource {
     }
 
     @GetMapping("/info")
-    public ApiResponse<List<Tenant>> getTenantByDomainName(String domainName) {
-        return ApiResponse.ok(baseApplication.getTenantByDomainName(domainName));
+    public ApiResponse<Tenant> getTenantByDomainName(String domainName) {
+        return ApiResponse.ok(baseApplication.getByDomainName(domainName));
     }
 
     @PostMapping("/{id}/sync-app-resource")

@@ -37,13 +37,13 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
             throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/login").permitAll()
                 .anyRequest().authenticated()
         ).oauth2ResourceServer(oauth2ResourceServer ->
                 oauth2ResourceServer.jwt(Customizer.withDefaults())
                         .authenticationEntryPoint((request, response, exception) -> {
                             // oauth2 认证失败导致的，还有一种可能是非oauth2认证失败导致的，比如没有传递token，但是访问受权限保护的方法
-                            if (exception instanceof OAuth2AuthenticationException) {
-                                OAuth2AuthenticationException oAuth2AuthenticationException = (OAuth2AuthenticationException) exception;
+                            if (exception instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
                                 OAuth2Error error = oAuth2AuthenticationException.getError();
                                 log.info("认证失败,异常类型:[{}],异常:[{}]", exception.getClass().getName(), error);
                             }
