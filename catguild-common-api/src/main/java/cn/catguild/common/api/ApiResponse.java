@@ -1,5 +1,6 @@
 package cn.catguild.common.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.slf4j.MDC;
 
@@ -7,6 +8,7 @@ import org.slf4j.MDC;
  * @author xiyan
  * @date 2022-03-12 17:49
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class ApiResponse<T> {
 	/**
@@ -48,7 +50,9 @@ public class ApiResponse<T> {
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 		this.showType = showType;
-		this.traceId = MDC.get("traceId");
+		if (!success) {
+			this.traceId = MDC.get("traceId");
+		}
 		this.host = host;
 	}
 
@@ -96,7 +100,7 @@ public class ApiResponse<T> {
 		return fail("400", errorMessage);
 	}
 
-	public static <T> ApiResponse<T> fail(String errorCode,String errorMessage) {
+	public static <T> ApiResponse<T> fail(String errorCode, String errorMessage) {
 		return new ApiResponse<>(errorCode, errorMessage);
 	}
 

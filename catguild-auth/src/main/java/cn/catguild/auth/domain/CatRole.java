@@ -17,6 +17,8 @@ public class CatRole  {
      */
     private Long appId;
 
+	private String appCode;
+
     /**
      * 角色名
      */

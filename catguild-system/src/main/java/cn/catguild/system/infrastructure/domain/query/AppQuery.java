@@ -1,6 +1,6 @@
 package cn.catguild.system.infrastructure.domain.query;
 
-import cn.catguild.common.entity.BaseQuery;
+import cn.catguild.common.entity.BasePageQuery;
 import cn.catguild.common.type.ActiveStatus;
 import cn.catguild.system.infrastructure.domain.AppDO;
 import lombok.Data;
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AppQuery extends BaseQuery<AppDO> {
+public class AppQuery extends BasePageQuery<AppDO> {
 
     private String name;
 

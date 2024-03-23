@@ -1,12 +1,18 @@
 package cn.catguild.common.type;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 /**
+ * @param <T> 子节点类对象
+ * @param <R> 主键ID类型
  * @author xiyan
  * @date 2022-04-25 17:44
  */
@@ -20,6 +26,9 @@ public interface CatTreeNode<T, R> {
 	 * @return 森林
 	 */
 	static <U extends CatTreeNode<U, Y>, Y> List<U> merge(List<U> allNode) {
+		if (CollectionUtils.isEmpty(allNode)) {
+			return new ArrayList<>();
+		}
 		List<U> forestRoots = new ArrayList<>();
 
 		for (U node : allNode) {
@@ -37,6 +46,35 @@ public interface CatTreeNode<T, R> {
 			}
 		}
 		return forestRoots;
+	}
+
+	static <U extends CatTreeNode<U, Y>, Y, T extends CatTreeNode<T, Y>> List<T> copy(Collection<U> sourceNode, Class<T> targetClass) {
+		if (CollectionUtils.isEmpty(sourceNode)) {
+			return new ArrayList<>();
+		}
+		return (List<T>) convertChildren(sourceNode, targetClass);
+	}
+
+	private static <U extends CatTreeNode<U, Y>, Y, T extends CatTreeNode<T, Y>> Collection<T> convertChildren(Collection<U> sourceNode, Class<T> targetClass) {
+		Collection<T> newTreeNode = new ArrayList<>();
+		for (U menu : sourceNode) {
+			T menuVO = convert(menu, targetClass);
+			newTreeNode.add(menuVO);
+		}
+		return newTreeNode;
+	}
+
+	private static <U extends CatTreeNode<U, Y>, Y, T extends CatTreeNode<T, Y>> T convert(U menu, Class<T> targetClass) {
+		try {
+			T node = targetClass.getDeclaredConstructor().newInstance();
+			BeanUtils.copyProperties(menu, node);
+			// 递归转换子菜单
+			node.setChildren(convertChildren(menu.getChildren(), targetClass));
+			return node;
+		} catch (InvocationTargetException | InstantiationException | IllegalAccessException |
+				 NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**

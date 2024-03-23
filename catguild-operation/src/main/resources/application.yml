@@ -3,6 +3,9 @@ spring:
   application:
     name: catguild-operation
   cloud:
+    openfeign:
+      okhttp:
+        enabled: true
     nacos:
       config:
         # 配置中心配置

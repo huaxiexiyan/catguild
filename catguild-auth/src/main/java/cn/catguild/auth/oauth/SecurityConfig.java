@@ -79,13 +79,15 @@ public class SecurityConfig {
 
         RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
+		// 此处是进一步判断具体权限，比如角色之类的？
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login/password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login/token").permitAll()
                         .requestMatchers(endpointsMatcher).permitAll())
-                // oauth2ResourceServer 会覆盖掉 authorizeHttpRequests 的配置，并且会默认放开 公开的端点？？
+				// 下面是选择是否要鉴权的请求，仅判断token是否有效？
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
                         .jwt(Customizer.withDefaults()))
                 .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher).disable())

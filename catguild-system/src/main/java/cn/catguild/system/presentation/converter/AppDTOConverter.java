@@ -28,9 +28,19 @@ public interface AppDTOConverter {
     List<AppClientProto.AppDTO> toDTO(List<App> apps);
 
 
-    @Mapping(source = "id",target = "menuId")
+    @Mapping(source = "menu.id",target = "menuId")
+    @Mapping(source = "app.id",target = "appId")
+    MenuMessageProto.MenuDTO toMenuDTO(App app, Menu menu);
+
+    @Mapping(source = "menu.id",target = "menuId")
     MenuMessageProto.MenuDTO toMenuDTO(Menu menu);
 
     List<MenuMessageProto.MenuDTO> toMenuDTO(List<Menu> menus);
+
+    default List<MenuMessageProto.MenuDTO> toMenuDTO(App app, List<Menu> menus) {
+        return menus.stream()
+                .map(menu -> toMenuDTO(app, menu))
+                .toList();
+    }
 
 }

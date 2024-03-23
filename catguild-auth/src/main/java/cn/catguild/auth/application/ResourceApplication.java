@@ -65,8 +65,8 @@ public class ResourceApplication {
 
     public void updateResource(Long id, Resource Resource) {
         Resource.setId(id);
-        //Resource.setLmBy(AuthUtil.getLoginId());
-        //Resource.setLmTime(LocalDateTime.now());
+        //Resource.setLastModifyBy(AuthUtil.getLoginId());
+        //Resource.setLastModifyTime(LocalDateTime.now());
         //resourceRepository.saveAndFlush(Resource);
     }
 

@@ -49,9 +49,9 @@ public class Tenant extends BaseBO {
      */
     private ActiveStatus activeStatus;
 
-    private Long cBy;
+    private Long createBy;
 
-    private LocalDateTime cTime;
+    private LocalDateTime createTime;
 
     private List<Long> appIds;
 

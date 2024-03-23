@@ -3,6 +3,9 @@ spring:
   application:
     name: catguild-auth
   cloud:
+    openfeign:
+      oauth2:
+        enabled: true
     nacos:
       config:
         # 配置中心配置

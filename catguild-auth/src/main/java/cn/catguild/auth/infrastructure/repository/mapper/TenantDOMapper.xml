@@ -11,12 +11,12 @@
         <result column="remarks" property="remarks"/>
         <result column="active_status" property="activeStatus"/>
         <result column="domain_name" property="domainName"/>
-        <result column="c_by" property="cBy"/>
-        <result column="c_time" property="cTime"/>
-        <result column="lm_by" property="lmBy"/>
-        <result column="lm_time" property="lmTime"/>
-        <result column="de_by" property="deBy"/>
-        <result column="de_time" property="deTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_modify_by" property="lastModifyBy"/>
+        <result column="last_modify_time" property="lastModifyTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="deleted_by" property="deletedBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -26,8 +26,7 @@
     <select id="selectByDomainName" resultMap="BaseResultMap">
         SELECT *
         FROM auth_tenant
-        WHERE de_time IS NULL
-          AND domain_name = #{domainName}
+        WHERE domain_name = #{domainName}
     </select>
 
 </mapper>

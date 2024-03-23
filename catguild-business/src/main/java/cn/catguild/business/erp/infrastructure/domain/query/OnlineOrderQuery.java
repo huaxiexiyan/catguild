@@ -1,7 +1,7 @@
 package cn.catguild.business.erp.infrastructure.domain.query;
 
 import cn.catguild.business.erp.infrastructure.domain.OnlineOrderDO;
-import cn.catguild.common.entity.BaseQuery;
+import cn.catguild.common.entity.BasePageQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class OnlineOrderQuery extends BaseQuery<OnlineOrderDO> {
+public class OnlineOrderQuery extends BasePageQuery<OnlineOrderDO> {
 
     private String likeOrderNum;
 

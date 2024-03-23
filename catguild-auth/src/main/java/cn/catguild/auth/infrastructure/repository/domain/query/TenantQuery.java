@@ -1,7 +1,7 @@
 package cn.catguild.auth.infrastructure.repository.domain.query;
 
 import cn.catguild.auth.infrastructure.repository.domain.entity.TenantDO;
-import cn.catguild.common.entity.BaseQuery;
+import cn.catguild.common.entity.BasePageQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,5 +11,5 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class TenantQuery extends BaseQuery<TenantDO> {
+public class TenantQuery extends BasePageQuery<TenantDO> {
 }

@@ -1,7 +1,7 @@
 package cn.catguild.auth.presentation.model;
 
 import cn.catguild.auth.domain.Resource;
-import cn.catguild.common.entity.BaseQuery;
+import cn.catguild.common.entity.BasePageQuery;
 import cn.catguild.common.type.ActiveStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ResourceQuery extends BaseQuery<Resource> {
+public class ResourceQuery extends BasePageQuery<Resource> {
 
     /**
      * 实体id

@@ -1,5 +1,0 @@
-# 日志配置
-logging:
-  level:
-    root: off
-#  config: classpath:log/logback.xml

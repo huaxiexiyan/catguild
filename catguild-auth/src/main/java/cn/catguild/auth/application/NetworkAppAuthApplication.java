@@ -1,8 +1,8 @@
 package cn.catguild.auth.application;
 
 import cn.catguild.auth.domain.NetworkAppAuthConfig;
-import cn.catguild.auth.infrastructure.NetworkAppAuthConfigRepository;
 import cn.catguild.auth.infrastructure.adapter.cache.CacheClient;
+import cn.catguild.auth.infrastructure.repository.NetworkAppAuthConfigRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

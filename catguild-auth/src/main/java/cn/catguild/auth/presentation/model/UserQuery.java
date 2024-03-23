@@ -1,7 +1,7 @@
 package cn.catguild.auth.presentation.model;
 
 import cn.catguild.auth.infrastructure.repository.domain.entity.UserDO;
-import cn.catguild.common.entity.BaseQuery;
+import cn.catguild.common.entity.BasePageQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserQuery extends BaseQuery<UserDO> {
+public class UserQuery extends BasePageQuery<UserDO> {
 
     private String name;
 

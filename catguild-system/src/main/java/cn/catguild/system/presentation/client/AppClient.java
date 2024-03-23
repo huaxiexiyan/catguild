@@ -38,7 +38,7 @@ public class AppClient extends AppClientGrpc.AppClientImplBase {
                 AppClientProto.AppDTO dto = appDTOConverter.toDTO(app);
                 if (CollectionUtils.isNotEmpty(app.getMenus())){
                     dto = dto.toBuilder()
-                            .addAllMenus(appDTOConverter.toMenuDTO(app.getMenus()))
+                            .addAllMenus(appDTOConverter.toMenuDTO(app, app.getMenus()))
                             .build();
                 }
                 return dto;

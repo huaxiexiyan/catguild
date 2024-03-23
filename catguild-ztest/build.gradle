@@ -20,7 +20,10 @@ dependencies {
     implementation 'com.alibaba:easyexcel:3.3.2'
 
     // 测试框架
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
+    testImplementation 'org.apache.velocity:velocity-engine-core:2.3'
+    testImplementation 'com.baomidou:mybatis-plus-generator:3.5.3.2'
 
     // mandatory dependencies for using Spock
     testImplementation 'org.codehaus.groovy:groovy:3.0.10'
@@ -31,4 +34,24 @@ dependencies {
     testRuntimeOnly "org.objenesis:objenesis:3.2"
     // 断言库
     testImplementation 'org.assertj:assertj-core:3.23.1'
+
+//    // 测试框架
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test:'
+//    // mandatory dependencies for using Spock
+//    testImplementation 'org.codehaus.groovy:groovy:3.0.10'
+//    testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
+//    testImplementation "org.spockframework:spock-core"
+//    // allows mocking of classes (in addition to interfaces)
+//    testRuntimeOnly 'net.bytebuddy:byte-buddy:1.12.9'
+//    testRuntimeOnly "org.objenesis:objenesis:3.2"
+//    // test dao dependencies
+    testImplementation 'com.h2database:h2:2.1.212'
+//    testImplementation 'org.codehaus.groovy:groovy-sql:3.0.10'
+//    testImplementation 'org.codehaus.groovy:groovy-xml:3.0.10'
+    testImplementation 'org.dbunit:dbunit:2.7.3'
+//    // if you are using mapstruct in test code
+////    testCompileOnly 'org.mapstruct:mapstruct:1.5.1.Final'
+////    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+//    // 断言库
+//    testImplementation 'org.assertj:assertj-core:3.23.1'
 }

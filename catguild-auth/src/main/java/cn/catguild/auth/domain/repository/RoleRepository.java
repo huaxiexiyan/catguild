@@ -11,4 +11,8 @@ import java.util.List;
 public interface RoleRepository {
     List<CatRole> findByAppIdAndUserId(Long tenantId,Long userId, Long appId);
 
+    void save(CatRole catRole);
+
+	void removeById(Long id);
+
 }

@@ -21,6 +21,8 @@ import java.util.List;
 @Data
 public class App extends BaseBO implements CatTreeNode<App, Long> {
 
+    private Long id;
+
     /**
      * 上层应用id
      */

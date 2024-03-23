@@ -38,11 +38,10 @@ public class AppAuthConfigRepositoryImpl implements AppAuthConfigRepository {
     private final IdGenerationClient idClient;
 
     @Override
-    @SuppressWarnings("unchecked")
     public ApiPage<AppAuthConfig> page(Long tenantId, AppAuthConfigQuery query) {
         IPage<AppAuthConfigCustom> page = baseMapper.selectCustomPage(tenantId, query.getIpage(), query);
         return IPageUtils.toApiPage(page, (iPage) -> {
-            List<AppAuthConfigCustom> records = (List<AppAuthConfigCustom>) iPage.getRecords();
+            List<AppAuthConfigCustom> records = iPage.getRecords();
             return records.stream()
                     .map(baseDataConverter::fromData)
                     .toList();
@@ -66,19 +65,19 @@ public class AppAuthConfigRepositoryImpl implements AppAuthConfigRepository {
             boolean exists = baseMapper.exists(Wrappers.<AppAuthConfigDO>lambdaQuery()
                     .eq(AppAuthConfigDO::getTenantId, tenantId)
                     .eq(AppAuthConfigDO::getAppAuthTypeId, appAuthConfig.getAppAuthType().getId())
-                    .eq(AppAuthConfigDO::getCBy, AuthUtil.getLoginId())
+                    .eq(AppAuthConfigDO::getCreateBy, AuthUtil.getLoginId())
             );
             if (exists) {
                 throw new BizException("授权类型重复");
             }
             data.setId(idClient.nextId());
-            data.setCBy(AuthUtil.getLoginId());
-            data.setCTime(now);
+            data.setCreateBy(AuthUtil.getLoginId());
+            data.setCreateTime(now);
             baseMapper.insert(data);
         } else {
             // 更新
-            data.setLmBy(AuthUtil.getLoginId());
-            data.setLmTime(now);
+            data.setLastModifyBy(AuthUtil.getLoginId());
+            data.setLastModifyTime(now);
             baseMapper.updateById(data);
         }
     }

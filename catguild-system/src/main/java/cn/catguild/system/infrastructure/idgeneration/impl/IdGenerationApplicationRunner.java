@@ -73,8 +73,8 @@ public class IdGenerationApplicationRunner implements ApplicationRunner {
             userUid.setId(idGenerationService.nextId());
             userUid.setUid(uid);
             // 默认设置的运维用户
-            userUid.setCBy(1L);
-            userUid.setCTime(now);
+            userUid.setCreateBy(1L);
+            userUid.setCreateTime(now);
             UIDRepository.saveAndFlush(userUid);
         });
     }

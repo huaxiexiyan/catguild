@@ -3,7 +3,7 @@ package cn.catguild.common.api;
 import cn.catguild.common.entity.CatPage;
 import lombok.Data;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author xiyan
@@ -12,7 +12,7 @@ import java.util.Collection;
 @Data
 public class ApiPage<T> {
 
-	private Collection<T> records;
+	private List<T> records;
 
 	private long current = 1;
 

@@ -37,34 +37,34 @@ public abstract class AbstractEntity {
     @Comment("记录创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
-    private LocalDateTime cTime;
+    private LocalDateTime createTime;
 
     @Comment("记录创建人id")
     @JsonIgnore
     @Column(nullable = false)
-    private Long cBy;
+    private Long createBy;
 
     /**
      * 最后修改时间
      **/
     @Comment("记录最后修改时间")
     @JsonIgnore
-    private LocalDateTime lmTime;
+    private LocalDateTime lastModifyTime;
 
     @Comment("记录最后修改人id")
     @JsonIgnore
-    private Long lmBy;
+    private Long lastModifyBy;
 
     /**
      * 删除时间
      */
     @Comment("记录逻辑删除时间")
     @JsonIgnore
-    @TableLogic(value = "null",delval = "now()")
-    private LocalDateTime deTime;
+    @TableLogic(value = "0",delval = "1")
+    private Integer isDeleted;
 
     @Comment("记录逻辑删除人id")
     @JsonIgnore
-    private Long deBy;
+    private Long deletedBy;
 
 }

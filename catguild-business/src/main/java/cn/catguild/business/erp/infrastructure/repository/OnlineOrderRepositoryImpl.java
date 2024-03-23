@@ -27,7 +27,10 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -56,16 +59,16 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
             onlineOrder.setId(idClient.nextId());
             onlineOrder.setTenantId(tenantId);
 
-            onlineOrder.setCTime(LocalDateTime.now());
-            onlineOrder.setCBy(AuthUtil.getLoginId());
+            onlineOrder.setCreateTime(LocalDateTime.now());
+            onlineOrder.setCreateBy(AuthUtil.getLoginId());
         } else {
             onlineOrder.setId(onlineOrderDB.getId());
             onlineOrder.setTenantId(onlineOrderDB.getTenantId());
 
-            onlineOrder.setCBy(onlineOrderDB.getCBy());
-            onlineOrder.setCTime(onlineOrderDB.getCTime());
-            onlineOrder.setLmTime(LocalDateTime.now());
-            onlineOrder.setLmBy(AuthUtil.getLoginId());
+            onlineOrder.setCreateBy(onlineOrderDB.getCreateBy());
+            onlineOrder.setCreateTime(onlineOrderDB.getCreateTime());
+            onlineOrder.setLastModifyTime(LocalDateTime.now());
+            onlineOrder.setLastModifyBy(AuthUtil.getLoginId());
         }
         onlineOrderRepository.saveAndFlush(onlineOrder);
         // 保存附属项
@@ -80,7 +83,7 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
             queryWrapper.like(OnlineOrderDO::getOrderNum,query.getLikeOrderNum());
         }
         IPage<OnlineOrderDO> onlineOrderDOIPage = baseMapper.selectPage(query.getIpage(), queryWrapper);
-        return IPageUtils.toApiPage(onlineOrderDOIPage, (iPage) -> (Collection<OnlineOrderDO>) iPage.getRecords());
+        return IPageUtils.toApiPage(onlineOrderDOIPage, IPage::getRecords);
     }
 
     @Override
@@ -127,8 +130,8 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
                 item.setOrderId(orderItemDO.getOrderId());
                 item.setOrderNum(orderItemDO.getOrderNum());
 
-                item.setLmTime(LocalDateTime.now());
-                item.setLmBy(AuthUtil.getLoginId());
+                item.setLastModifyTime(LocalDateTime.now());
+                item.setLastModifyBy(AuthUtil.getLoginId());
             } else {
                 // 新增
                 item.setId(idClient.nextId());
@@ -151,18 +154,18 @@ public class OnlineOrderRepositoryImpl implements OnlineOrderRepository {
             logisticsInfo.setOrderNum(orderNum);
             logisticsInfo.setOrderId(orderId);
 
-            logisticsInfo.setCTime(LocalDateTime.now());
-            logisticsInfo.setCBy(AuthUtil.getLoginId());
+            logisticsInfo.setCreateTime(LocalDateTime.now());
+            logisticsInfo.setCreateBy(AuthUtil.getLoginId());
         } else {
             logisticsInfo.setId(logisticsDB.getId());
             logisticsInfo.setTenantId(logisticsDB.getTenantId());
             logisticsInfo.setOrderNum(logisticsDB.getOrderNum());
             logisticsInfo.setOrderId(logisticsDB.getOrderId());
 
-            logisticsInfo.setCBy(logisticsDB.getCBy());
-            logisticsInfo.setCTime(logisticsDB.getCTime());
-            logisticsInfo.setLmTime(LocalDateTime.now());
-            logisticsInfo.setLmBy(AuthUtil.getLoginId());
+            logisticsInfo.setCreateBy(logisticsDB.getCreateBy());
+            logisticsInfo.setCreateTime(logisticsDB.getCreateTime());
+            logisticsInfo.setLastModifyTime(LocalDateTime.now());
+            logisticsInfo.setLastModifyBy(AuthUtil.getLoginId());
         }
         onlineOrderLogisticsRepository.saveAndFlush(logisticsInfo);
     }

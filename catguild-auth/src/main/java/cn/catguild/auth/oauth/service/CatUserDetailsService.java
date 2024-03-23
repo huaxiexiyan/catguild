@@ -2,8 +2,8 @@ package cn.catguild.auth.oauth.service;
 
 import cn.catguild.auth.domain.Account;
 import cn.catguild.auth.domain.CatUser;
-import cn.catguild.auth.infrastructure.AccountRepository;
-import cn.catguild.auth.infrastructure.UserRepository;
+import cn.catguild.auth.infrastructure.repository.AccountRepository;
+import cn.catguild.auth.infrastructure.repository.UserRepository;
 import cn.catguild.auth.oauth.grant.OAuth2Parameter;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;

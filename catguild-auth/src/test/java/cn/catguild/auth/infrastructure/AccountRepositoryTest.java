@@ -1,6 +1,7 @@
 package cn.catguild.auth.infrastructure;
 
 import cn.catguild.auth.domain.Account;
+import cn.catguild.auth.infrastructure.repository.AccountRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

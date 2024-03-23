@@ -3,10 +3,10 @@ package cn.catguild.auth.application;
 import cn.catguild.auth.domain.Account;
 import cn.catguild.auth.domain.CatUser;
 import cn.catguild.auth.domain.Tenant;
-import cn.catguild.auth.infrastructure.AccountRepository;
-import cn.catguild.auth.infrastructure.UserRepository;
 import cn.catguild.auth.infrastructure.adapter.external.client.EmailClient;
 import cn.catguild.auth.infrastructure.adapter.external.client.IdGenerationClient;
+import cn.catguild.auth.infrastructure.repository.AccountRepository;
+import cn.catguild.auth.infrastructure.repository.UserRepository;
 import cn.catguild.auth.presentation.model.UserQuery;
 import cn.catguild.common.api.ApiPage;
 import cn.catguild.common.type.ActiveStatus;
@@ -69,8 +69,8 @@ public class UserApplicationService {
         CatUser user = new CatUser();
         user.setId(idGenerationClient.nextId());
         user.setTenantId(tenant.getId());
-        user.setCBy(tenant.getCBy());
-        user.setCTime(tenant.getCTime());
+        user.setCreateBy(tenant.getCreateBy());
+        user.setCreateTime(tenant.getCreateTime());
 
         user.setName(tenant.getName() + "@超级管理员");
         user.setAuthorityType(UserAuthorityType.SUPER_ADMINISTRATOR);
@@ -81,8 +81,8 @@ public class UserApplicationService {
         Account account = new Account();
         account.setId(idGenerationClient.nextId());
         account.setTenantId(user.getTenantId());
-        account.setCBy(user.getCBy());
-        account.setCTime(user.getCTime());
+        account.setCreateBy(user.getCreateBy());
+        account.setCreateTime(user.getCreateTime());
         // 随机生成密码-并由邮件发送出去
         account.setUserId(user.getId());
         account.setUsername(tenant.getEmail());

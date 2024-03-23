@@ -2,7 +2,7 @@ package cn.catguild.business.automatic.infrastructure.domain.query;
 
 import cn.catguild.business.automatic.infrastructure.domain.entity.AppAuthConfigDO;
 import cn.catguild.business.automatic.infrastructure.domain.type.AppAuthConfigStatus;
-import cn.catguild.common.entity.BaseQuery;
+import cn.catguild.common.entity.BasePageQuery;
 import cn.catguild.common.type.ActiveStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AppAuthConfigQuery extends BaseQuery<AppAuthConfigDO> {
+public class AppAuthConfigQuery extends BasePageQuery<AppAuthConfigDO> {
 
     private String name;
 

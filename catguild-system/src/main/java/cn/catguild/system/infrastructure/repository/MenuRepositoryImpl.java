@@ -38,15 +38,15 @@ public class MenuRepositoryImpl implements MenuRepository {
         if (menu.getId() != null && menu.getId() > 0) {
             // update
             MenuDO menuDO = dataConverter.toData(menu);
-            menuDO.setLmBy(loginId);
-            menuDO.setLmTime(LocalDateTime.now());
+            menuDO.setLastModifyBy(loginId);
+            menuDO.setLastModifyTime(LocalDateTime.now());
             baseMapper.updateById(menuDO);
         } else {
             // insert
             MenuDO menuDO = dataConverter.toData(menu);
             menuDO.setId(idService.nextId());
-            menuDO.setCBy(loginId);
-            menuDO.setCTime(LocalDateTime.now());
+            menuDO.setCreateBy(loginId);
+            menuDO.setCreateTime(LocalDateTime.now());
 
             if (menuDO.getParentId() == null || menuDO.getParentId() == 0L) {
                 menuDO.setParentId(0L);

@@ -30,6 +30,8 @@ public class PermissionsApplication {
 
     private final ResourceRepository resourceRepository;
 
+	private final RoleApplication roleApplication;
+
     /**
      * 获取授权资源列表
      *
@@ -122,5 +124,21 @@ public class PermissionsApplication {
             removeResource(tenantId,ids);
         }
     }
+
+	/**
+	 * 1、获取到当前的用户在这个app下的所有角色
+	 * 2、根据角色+类型，查询出所授权的资源
+	 *
+	 * @param appCode
+	 * @param refType
+	 */
+	public void getByRefType(String appCode, Integer refType) {
+		List<CatRole> userRoles = roleApplication.getByUserIdAndAppCode(AuthUtil.getLoginId(), appCode);
+		if (CollectionUtils.isEmpty(userRoles)){
+			return;
+		}
+		List<Long> roleIds = userRoles.stream().map(CatRole::getId).toList();
+
+	}
 
 }

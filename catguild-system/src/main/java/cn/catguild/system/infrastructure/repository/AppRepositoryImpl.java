@@ -54,15 +54,15 @@ public class AppRepositoryImpl implements AppRepository {
         if (app.getId() != null && app.getId() > 0) {
             // update
             AppDO appDO = baseDataConverter.toData(app);
-            appDO.setLmBy(loginId);
-            appDO.setLmTime(LocalDateTime.now());
+            appDO.setLastModifyBy(loginId);
+            appDO.setLastModifyTime(LocalDateTime.now());
             baseMapper.updateById(appDO);
         } else {
             // insert
             AppDO appDO = baseDataConverter.toData(app);
             appDO.setId(Long.valueOf(idService.nextUID()));
-            appDO.setCBy(loginId);
-            appDO.setCTime(LocalDateTime.now());
+            appDO.setCreateBy(loginId);
+            appDO.setCreateTime(LocalDateTime.now());
             // 构建路径
             if (appDO.getParentId() == null) {
                 appDO.setParentId(0L);
@@ -128,7 +128,7 @@ public class AppRepositoryImpl implements AppRepository {
             List<AppDO> result = baseMapper.selectBatchIds(ids);
             List<App> apps = result.stream()
                     .map(baseDataConverter::fromData)
-                    .sorted(Comparator.comparing(App::getCTime))
+                    .sorted(Comparator.comparing(App::getCreateTime))
                     .toList();
             return CatTreeNode.merge(apps);
         });
@@ -228,8 +228,8 @@ public class AppRepositoryImpl implements AppRepository {
             } else {
                 // 没有，需要新增
                 am.setId(idService.nextId());
-                am.setCBy(AuthUtil.getLoginId());
-                am.setCTime(LocalDateTime.now());
+                am.setCreateBy(AuthUtil.getLoginId());
+                am.setCreateTime(LocalDateTime.now());
                 appMenuDOMapper.insert(am);
             }
         });
